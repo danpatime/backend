@@ -20,9 +20,8 @@ public class Employee extends BaseEntity{
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employer_id")
-    private Employee employer;
+    @Column(name = "EMPLOYEE_STAR_RATING")
+    private float starPoint;
 
     @Column(name = "EMPLOYEE_WORK_COUNT")
     private String workCount;
