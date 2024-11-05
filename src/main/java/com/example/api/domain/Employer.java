@@ -13,6 +13,7 @@ import java.util.List;
 public class Employer extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EMPLOYER_ID")
     private Long employerId;
 
     @Column(name = "EMPLOYER_NICKNAME")
