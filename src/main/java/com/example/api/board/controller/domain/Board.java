@@ -1,7 +1,5 @@
 package com.example.api.board.controller.domain;
 
-import com.example.api.domain.Category;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
