@@ -1,4 +1,17 @@
 package com.example.api.board.repository;
 
-public interface InnerCareerRepository {
+import com.example.api.board.controller.domain.ExternalCareerDTO;
+import com.example.api.domain.ExternalCareer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ExternalCareerRepository extends JpaRepository<ExternalCareer, Long> {
+    @Query("select new com.example.api.board.controller.domain.ExternalCareerDTO(e.Name, e.period) " +
+            "from ExternalCareer e where e.employee.employeeId = :employeeId")
+    List<ExternalCareerDTO> findAllByEmployeeEmployeeId(@Param("employeeId") Long employeeId);
 }
