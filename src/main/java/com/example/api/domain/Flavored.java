@@ -9,7 +9,9 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "FLAVORED")
+@Table(name = "flavored", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"employee_id", "category_id"})
+})
 public class Flavored extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

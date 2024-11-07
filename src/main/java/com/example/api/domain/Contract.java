@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Contract extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long contractId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SUGGEST_ID")

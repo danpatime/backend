@@ -14,14 +14,9 @@ import java.util.List;
 public class Category extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CATEGORY_ID")
     private Long categoryId;
-
+    @Column(name = "CATEGORY_NAME")
     private String categoryName;
-
-    @OneToMany(mappedBy = "category")
-    private List<BusinessCategory> businessCategories = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category")
-    private List<Flavored> flavoredList = new ArrayList<>();
 }
 
