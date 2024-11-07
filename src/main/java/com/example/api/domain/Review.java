@@ -1,13 +1,17 @@
 package com.example.api.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "REVIEW")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review extends BaseEntity {
 
     @Id
@@ -19,6 +23,5 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_CONTENT")
     private String reviewContent;
-
 }
 

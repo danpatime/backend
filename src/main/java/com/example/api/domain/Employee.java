@@ -14,18 +14,16 @@ import static jakarta.persistence.FetchType.*;
 public class Employee extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employer_id")
-    private Employee employer;
-
+    @Column(name = "EMPLOYEE_STAR_RATING")
+    private float starPoint;
     @Column(name = "EMPLOYEE_WORK_COUNT")
-    private String workCount;
+    private int workCount;
     @Column(name = "EMPLOYEE_NICKNAME")
     private String nickname;
 

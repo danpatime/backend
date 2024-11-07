@@ -1,6 +1,7 @@
 package com.example.api.domain;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @Table(name = "CHAT_ROOM")
 public class ChatRoom {
 

@@ -1,7 +1,9 @@
 package com.example.api.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,11 +20,22 @@ public class ExternalCareer extends BaseEntity{
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private Employee employee;
 
     @Column(name = "BUSINESS_NAME")
     private String Name;
     @Column(name = "PART_TIME_PERIOD")
     private String period;
+
+    public ExternalCareer(Employee employee, String name, String period) {
+        this.employee = employee;
+        Name = name;
+        this.period = period;
+    }
+
+    public ExternalCareer() {
+
+    }
 }
 

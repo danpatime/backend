@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -15,6 +17,10 @@ public class Employer extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMPLOYER_ID")
     private Long employerId;
+
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Column(name = "EMPLOYER_NICKNAME")
     private String nickname;
