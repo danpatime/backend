@@ -11,7 +11,9 @@ import java.util.List;
 
 @Repository
 public interface ExternalCareerRepository extends JpaRepository<ExternalCareer, Long> {
-    @Query("select new com.example.api.board.controller.domain.ExternalCareerDTO(e.Name, e.period) " +
+    @Query("select new com.example.api.board.controller.domain.ExternalCareerDTO(e.id, e.Name, e.period) " +
             "from ExternalCareer e where e.employee.employeeId = :employeeId")
-    List<ExternalCareerDTO> findAllByEmployeeEmployeeId(@Param("employeeId") Long employeeId);
+    List<ExternalCareerDTO> findAllDTOByEmployeeEmployeeId(@Param("employeeId") Long employeeId);
+
+    List<ExternalCareer> findAllByEmployeeEmployeeId(Long employeeId);
 }

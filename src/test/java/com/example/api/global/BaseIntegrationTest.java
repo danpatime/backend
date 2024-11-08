@@ -148,6 +148,6 @@ public class BaseIntegrationTest {
 //        flavoredRepository.save(flavored);
 
         flavoredCategoryList = new ArrayList<>();
-        flavoredCategoryList.addAll(flavoredRepository.findAllFlavoredByEmployeeId(1L));
+        flavoredCategoryList.addAll(flavoredRepository.findAllCategoryDTOByEmployeeId(1L));
     }
 }

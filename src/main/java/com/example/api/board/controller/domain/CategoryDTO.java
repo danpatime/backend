@@ -1,14 +1,12 @@
 package com.example.api.board.controller.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 public class CategoryDTO {
     private Long categoryId;
     private String categoryName;
