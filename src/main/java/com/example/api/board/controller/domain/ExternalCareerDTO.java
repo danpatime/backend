@@ -1,16 +1,15 @@
 package com.example.api.board.controller.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 public class ExternalCareerDTO {
+    private long id;
     private String Name;
     private String period;
 }
