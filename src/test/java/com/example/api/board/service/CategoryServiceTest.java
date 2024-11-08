@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@SpringBootTest
 class CategoryServiceTest extends BaseIntegrationTest {
     @Autowired CategoryService categoryService;
 
