@@ -3,15 +3,13 @@ package com.example.api.board.controller.domain;
 import com.example.api.domain.Category;
 import com.example.api.domain.ExternalCareer;
 import com.example.api.domain.PossibleBoard;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class MyInfoDTO {

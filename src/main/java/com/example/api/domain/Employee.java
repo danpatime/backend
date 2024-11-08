@@ -26,5 +26,7 @@ public class Employee extends BaseEntity{
     private int workCount;
     @Column(name = "EMPLOYEE_NICKNAME")
     private String nickname;
+    @Column(name = "EMPLOYEE_OPEN_STATUS", columnDefinition = "boolean DEFAULT true")
+    private Boolean openStatus;
 }
 

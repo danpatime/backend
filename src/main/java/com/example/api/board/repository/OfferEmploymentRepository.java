@@ -16,5 +16,5 @@ public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment
             "join Business b on o.business.businessId = b.businessId "+
             "join Review r on o.suggestId = r.suggestId " +
             "where o.employee.employeeId = :employeeId")
-    List<InnerCareerDTO> findAllInnerCareerDTOByEmployeeId(@Param("employeeId") long employeeId);
+    List<InnerCareerDTO> findAllDTOByEmployeeId(@Param("employeeId") long employeeId);
 }

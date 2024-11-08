@@ -1,10 +1,7 @@
 package com.example.api.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,7 @@ import static jakarta.persistence.FetchType.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class PossibleBoard extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +23,11 @@ public class PossibleBoard extends BaseEntity{
     private Employee employee;
 
     @Column(name = "POSSIBLE_START_TIME")
+    @EqualsAndHashCode.Include
     private LocalDateTime startTime;
 
     @Column(name = "POSSIBLE_END_TIME")
+    @EqualsAndHashCode.Include
     private LocalDateTime endTime;
 
     public PossibleBoard(Employee employee, LocalDateTime startTime, LocalDateTime endTime) {
