@@ -1,17 +1,19 @@
 package com.example.api.board.controller.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PossibleBoardDTO {
+    private long id;
+
+    @EqualsAndHashCode.Include
     private LocalDateTime startTime;
+
+    @EqualsAndHashCode.Include
     private LocalDateTime endTime;
 }

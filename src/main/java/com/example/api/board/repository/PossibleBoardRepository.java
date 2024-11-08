@@ -11,7 +11,9 @@ import java.util.List;
 
 @Repository
 public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
-    @Query("select new com.example.api.board.controller.domain.PossibleBoardDTO(p.startTime, p.endTime) " +
+    List<PossibleBoard> findAllByEmployeeEmployeeId(Long employeeId);
+
+    @Query("select new com.example.api.board.controller.domain.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
             "from PossibleBoard p where p.employee.employeeId = :employeeId")
-    List<PossibleBoardDTO> findAllPossibleBoardByEmployeeEmployeeId(@Param("employeeId")Long employeeId);
+    List<PossibleBoardDTO> findAllDTOByEmployeeEmployeeId(@Param("employeeId")Long employeeId);
 }
