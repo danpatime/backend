@@ -29,7 +29,6 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
-
     public boolean updateUserInfo(Long employeeId, MyInfoDTO myInfo) {
         return employeeRepository.findByEmployeeId(employeeId).map(employee -> {
             setUserInfo(employee, myInfo);
@@ -41,7 +40,6 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
-
     void setUserInfo(Employee employee, MyInfoDTO myInfo) {
         Account account = employee.getAccount();
 
