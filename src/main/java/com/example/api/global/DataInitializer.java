@@ -2,6 +2,7 @@ package com.example.api.global;
 
 import com.example.api.board.repository.*;
 import com.example.api.domain.*;
+import com.example.api.employer.repository.ScrapRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class DataInitializer {
     @Autowired private PossibleBoardRepository possibleBoardRepository;
     @Autowired private ReviewRepository reviewRepository;
     @Autowired private ExternalCareerRepository externalCareerRepository;
+    @Autowired private ScrapRepository scrapRepository;
 
     @PostConstruct
     void setUpData() {
@@ -109,5 +111,10 @@ public class DataInitializer {
         flavored.setCategory(categoryRepository.findById(1L).get());
         flavored.setEmployee(employeeRepository.findById(1L).get());
         flavoredRepository.save(flavored);
+
+        Scrap scrap = new Scrap();
+        scrap.setEmployee(employee);
+        scrap.setEmployer(employer);
+        scrapRepository.save(scrap);
     }
 }
