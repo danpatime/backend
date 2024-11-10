@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 public class Contract extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="CONTRACT_ID")
     private Long contractId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SUGGEST_ID")
+    @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID")
     private OfferEmployment offerEmployment;
 
     @Column(name = "CONTRACT_START_TIME")
