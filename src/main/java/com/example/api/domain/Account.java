@@ -20,8 +20,6 @@ public class Account extends BaseEntity {
     private String loginId;
     @Column(name = "ACCOUNT_PASSWORD")
     private String password;
-    @Column(name = "ACCOUNT_NICKNAME")
-    private String nickname;
     @Column(name = "ACCOUNT_NAME")
     private String name;
     @Column(name = "ACCOUNT_SEX")
