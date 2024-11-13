@@ -1,31 +1,68 @@
 package com.example.api.service;
 
-import java.util.Date;
+import com.example.api.DTO.AccountDto;
+import com.example.api.DTO.BusinessAccountDto;
 import com.example.api.domain.Account;
+import com.example.api.domain.Business;
 import com.example.api.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.example.api.repository.BusinessRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AccountService {
+    private final AccountRepository accountRepository;
+    private final BusinessRepository businessRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    public AccountService(AccountRepository accountRepository, BusinessRepository businessRepository) {
+        this.accountRepository = accountRepository;
+        this.businessRepository = businessRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
-    public Account registerAccount(Account account) {
-        if (accountRepository.existsByEmail(account.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용중인 이메일입니다.");
+    @Transactional
+    public void signupIndividual(AccountDto accountDto) {
+        if (accountRepository.existsByLoginId(accountDto.getLoginId())) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
 
-        if (account.getPassword().length() < 8) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 8자리 이상이어야 합니다.");
+        Account account = new Account();
+        mapCommonFields(account, accountDto);
+        accountRepository.save(account);
+
+    }
+
+    @Transactional
+    public void signupBusiness(BusinessAccountDto businessAccountDto) {
+        if (accountRepository.existsByLoginId(businessAccountDto.getLoginId())) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
 
-        account.setRegisteredDatetime(new Date());
+        if (businessRepository.existsByRegistrationNumber(businessAccountDto.getRegistrationNumber())) {
+            throw new IllegalArgumentException("이미 존재하는 사업자 등록번호입니다.");
+        }
 
-        return accountRepository.save(account);
+        Account account = new Account();
+        mapCommonFields(account, businessAccountDto);
+        accountRepository.save(account);
+
+        Business business = new Business();
+        business.setAccount(account); //연관관계 설정
+        business.setRegistrationNumber(businessAccountDto.getRegistrationNumber());
+        businessRepository.save(business);
+    }
+
+    private void mapCommonFields(Account account, AccountDto dto) {
+        account.setLoginId(dto.getLoginId());
+        account.setPassword(encryptPassword(dto.getPassword()));
+        account.setName(dto.getName());
+        account.setEmail(dto.getEmail());
+        account.setPhoneNumber(dto.getPhone());
+    }
+
+    private  String encryptPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
-

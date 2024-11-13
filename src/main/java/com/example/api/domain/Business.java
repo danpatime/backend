@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Business extends BaseEntity {
     private List<BusinessCategory> businessCategories = new ArrayList<>();
 
     @Column(name = "BUSINESS_NAME")
-    private String name;
+    private String businessName;
 
     @Column(name = "BUSINESS_LOCATION")
     private String location;
@@ -35,6 +36,9 @@ public class Business extends BaseEntity {
     private String representationName;
 
     @Column(name = "BUSINESS_OPEN_DATE")
-    private Date openDate;
+    private LocalDate openDate;
+
+    @Column(name = "BUSINESS_REGISTRATION_NUMBER")
+    private String registrationNumber;
 
 }
