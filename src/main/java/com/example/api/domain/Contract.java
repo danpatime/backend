@@ -55,5 +55,9 @@ public class Contract extends BaseEntity {
     public boolean isValidContractRangeTime() {
         return this.contractStartTime.isBefore(this.contractEndTime);
     }
+
+    public void succeed() {
+        this.contractSucceeded = true;
+    }
 }
 
