@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-
 import static jakarta.persistence.FetchType.*;
 
 @Entity
@@ -28,22 +27,16 @@ public class OfferEmployment {
 
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
-
     @Column(name = "SUGGEST_START_TIME")
     private LocalDateTime suggestStartTime;
-
     @Column(name = "SUGGEST_END_TIME")
     private LocalDateTime suggestEndTime;
-
     @Column(name = "SUGGEST_HOURLY_PAY")
     private int suggestHourlyPay;
-
     @Column(name = "SUGGEST_READED", columnDefinition = "boolean DEFAULT false")
     private boolean suggestReaded;
-
     @Column(name = "SUGGEST_SUCCEDED", columnDefinition = "boolean DEFAULT false")
     private boolean suggestSucceeded;
-
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
 
