@@ -3,7 +3,7 @@ package com.example.api.contracts;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
-import com.example.api.contracts.dto.SuggestedBusiness;
+import com.example.api.contracts.dto.SuggestedBusinessResponse;
 import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
@@ -22,7 +22,7 @@ public class ContractService {
     private final UpdateContractConditionManager updateContractConditionManager;
 
     @Transactional(readOnly = true)
-    public List<SuggestedBusiness> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
+    public List<SuggestedBusinessResponse> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
         return offerRepository.queryEmployersSuggests(allSuggestsForMeCommand.employeeId());
     }
 
