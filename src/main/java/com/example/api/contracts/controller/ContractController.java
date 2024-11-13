@@ -5,6 +5,7 @@ import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.contracts.dto.SuggestedBusiness;
+import com.example.api.contracts.dto.UpdateContractConditionRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -49,15 +50,5 @@ class ContractController {
         final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
         contractService.updateContract(updateCommand);
         return ResponseEntity.ok(null);
-    }
-
-    record UpdateContractConditionRequest(
-            LocalDateTime suggestStartDateTime,
-            LocalDateTime suggestEndDateTime,
-            Integer suggestHourlyPayment
-    ) {
-        UpdateContractConditionCommand toCommand(final Long contractId) {
-            return new UpdateContractConditionCommand(contractId, this.suggestStartDateTime, this.suggestEndDateTime, this.suggestHourlyPayment);
-        }
     }
 }
