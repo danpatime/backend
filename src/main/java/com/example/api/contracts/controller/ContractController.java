@@ -4,9 +4,8 @@ import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
-import com.example.api.contracts.dto.SuggestedBusiness;
+import com.example.api.contracts.dto.SuggestedBusinessResponse;
 import com.example.api.contracts.dto.UpdateContractConditionRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +23,11 @@ class ContractController {
     private final ContractService contractService;
 
     @GetMapping("/api/v1/contracts/employment-suggests")
-    public ResponseEntity<List<SuggestedBusiness>> getAllSuggest(
+    public ResponseEntity<List<SuggestedBusinessResponse>> getAllSuggest(
             @RequestParam(required = true) final Long employeeId
     ) {
         final QueryAllSuggestsForMeCommand queryAllSuggestsForMeCommand = new QueryAllSuggestsForMeCommand(employeeId);
-        final List<SuggestedBusiness> suggestedBusinesses = contractService.getAllRelatedSuggests(
+        final List<SuggestedBusinessResponse> suggestedBusinesses = contractService.getAllRelatedSuggests(
                 queryAllSuggestsForMeCommand);
         return ResponseEntity.ok(suggestedBusinesses);
     }
