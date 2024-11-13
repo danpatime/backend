@@ -25,8 +25,6 @@ public class Contract extends BaseEntity {
     private int contractHourlyPay;
     @Column(name = "CONTRACT_SUCCEDED", columnDefinition = "boolean DEFAULT false")
     private boolean contractSucceeded;
-<<<<<<< HEAD
-=======
 
     public Contract(
             final OfferEmployment offerEmployment,
@@ -41,6 +39,21 @@ public class Contract extends BaseEntity {
         this.contractHourlyPay = contractHourlyPay;
         this.contractSucceeded = contractSucceeded;
     }
->>>>>>> 9fd56a2 (#6 feat(ContractService): 알바생 제안 수락 기능 구현)
+
+    public void updateHourlyPayment(final Integer hourlyPay) {
+        this.contractHourlyPay = hourlyPay;
+    }
+
+    public void updateStartDateTime(final LocalDateTime contractStartTime) {
+        this.contractStartTime = contractStartTime;
+    }
+
+    public void updateEndDateTime(final LocalDateTime contractEndTime) {
+        this.contractEndTime = contractEndTime;
+    }
+
+    public boolean isValidContractRangeTime() {
+        return this.contractStartTime.isBefore(this.contractEndTime);
+    }
 }
 
