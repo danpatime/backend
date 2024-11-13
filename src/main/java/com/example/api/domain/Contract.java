@@ -39,5 +39,21 @@ public class Contract extends BaseEntity {
         this.contractHourlyPay = contractHourlyPay;
         this.contractSucceeded = contractSucceeded;
     }
+
+    public void updateHourlyPayment(final Integer hourlyPay) {
+        this.contractHourlyPay = hourlyPay;
+    }
+
+    public void updateStartDateTime(final LocalDateTime contractStartTime) {
+        this.contractStartTime = contractStartTime;
+    }
+
+    public void updateEndDateTime(final LocalDateTime contractEndTime) {
+        this.contractEndTime = contractEndTime;
+    }
+
+    public boolean isValidContractRangeTime() {
+        return this.contractStartTime.isBefore(this.contractEndTime);
+    }
 }
 
