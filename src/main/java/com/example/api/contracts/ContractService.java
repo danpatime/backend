@@ -6,6 +6,8 @@ import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.domain.ChatRoom;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
+import com.example.api.contracts.dto.AcceptSuggestCommand;
+import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class ContractService {
     private final ContractMapper contractMapper;
     private final ChatRoomRepository chatRoomRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
+    private final ContractRepository contractRepository;
+    private final ContractMapper contractMapper;
 
     @Transactional(readOnly = true)
     public List<SuggestedBusinessResponse> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
