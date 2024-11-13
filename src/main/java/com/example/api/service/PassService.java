@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 @Service
 public class PassService {
-
+//PASS API
     @Value("${pass.api-key}")
     private String apiKey;
 
