@@ -1,10 +1,11 @@
 package com.example.api.contracts.controller;
 
 import com.example.api.contracts.ContractService;
+import com.example.api.contracts.dto.AcceptContractCommand;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
-import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.contracts.dto.SuggestedBusinessResponse;
+import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.UpdateContractConditionRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,15 @@ class ContractController {
     ) {
         final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
         contractService.updateContract(updateCommand);
+        return ResponseEntity.ok(null);
+    }
+
+    @PostMapping("/api/v1/contracts/{contractId}/accepts")
+    public ResponseEntity<?> acceptContract(
+            @PathVariable(required = true) final Long contractId
+    ) {
+        final AcceptContractCommand acceptContractCommand = new AcceptContractCommand(contractId);
+        contractService.acceptContract(acceptContractCommand);
         return ResponseEntity.ok(null);
     }
 }
