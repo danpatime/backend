@@ -3,6 +3,8 @@ package com.example.api.contracts.controller;
 import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.AcceptContractCommand;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
+import com.example.api.contracts.dto.AddContractReviewCommand;
+import com.example.api.contracts.dto.AddContractReviewRequest;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.contracts.dto.SuggestedBusinessResponse;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;

@@ -25,6 +25,9 @@ public class Contract extends BaseEntity {
     private int contractHourlyPay;
     @Column(name = "CONTRACT_SUCCEDED", columnDefinition = "boolean DEFAULT false")
     private boolean contractSucceeded;
+    @OneToOne
+    @JoinColumn(name = "REVIEW_ID")
+    private Review review;
 
     public Contract(
             final OfferEmployment offerEmployment,
@@ -58,6 +61,11 @@ public class Contract extends BaseEntity {
 
     public void succeed() {
         this.contractSucceeded = true;
+    }
+
+    public void addReview(final Review review) {
+        this.review = review;
+        review.setContract(this);
     }
 }
 

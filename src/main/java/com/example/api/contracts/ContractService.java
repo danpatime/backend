@@ -2,9 +2,9 @@ package com.example.api.contracts;
 
 import com.example.api.contracts.dto.AcceptContractCommand;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
-import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.contracts.dto.SuggestedBusinessResponse;
+import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
