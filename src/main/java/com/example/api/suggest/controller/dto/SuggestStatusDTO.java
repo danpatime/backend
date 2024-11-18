@@ -1,4 +1,4 @@
-package com.example.api.suggest.controller.domain;
+package com.example.api.suggest.controller.dto;
 
 import lombok.*;
 
