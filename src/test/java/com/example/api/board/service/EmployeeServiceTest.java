@@ -1,5 +1,6 @@
 package com.example.api.board.service;
 
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
 import com.example.api.global.BaseIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,8 @@ class EmployeeServiceTest extends BaseIntegrationTest {
     @Test
     @DisplayName("공고 공개 여부 변경")
     void changeOpenStatus(){
-        Boolean result = employeeService.changeOpenStatus(1L, false);
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(1L);
+        Boolean result = employeeService.changeOpenStatus(employeeIdRequest , false);
         assertTrue(result);
     }
 }

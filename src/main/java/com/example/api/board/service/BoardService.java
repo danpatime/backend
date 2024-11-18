@@ -1,7 +1,8 @@
 package com.example.api.board.service;
 
 
-import com.example.api.board.controller.domain.MyInfoDTO;
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.domain.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class BoardService {
     private final PossibleBoardRepository possibleBoardRepository;
     private final FlavoredRepository flavoredRepository;
 
-    public MyInfoDTO findMyInfoById(long employeeId) {
-        MyInfoDTO myInfoDTOById = myInfoRepository.findMyInfoDTOById(employeeId);
-        myInfoDTOById.setInnerCarrerList(offerEmploymentRepository.findAllDTOByEmployeeId(employeeId));
-        myInfoDTOById.setExternalCareerList(externalCareerRepository.findAllDTOByEmployeeAccountId(employeeId));
-        myInfoDTOById.setPossibleBoardList(possibleBoardRepository.findAllDTOByEmployeeAccountId(employeeId));
-        myInfoDTOById.setFlavoredCategoryList(flavoredRepository.findAllCategoryDTOByEmployeeId(employeeId));
+    public MyInfoDTO findMyInfoById(final EmployeeIdRequest employeeIdRequest) {
+        MyInfoDTO myInfoDTOById = myInfoRepository.findMyInfoDTOById(employeeIdRequest.employeeId());
+        myInfoDTOById.setInnerCarrerList(offerEmploymentRepository.findAllDTOByEmployeeId(employeeIdRequest.employeeId()));
+        myInfoDTOById.setExternalCareerList(externalCareerRepository.findAllDTOByEmployeeAccountId(employeeIdRequest.employeeId()));
+        myInfoDTOById.setPossibleBoardList(possibleBoardRepository.findAllDTOByEmployeeAccountId(employeeIdRequest.employeeId()));
+        myInfoDTOById.setFlavoredCategoryList(flavoredRepository.findAllCategoryDTOByEmployeeId(employeeIdRequest.employeeId()));
 
         return myInfoDTOById;
     }
