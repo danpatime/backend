@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface FlavoredRepository extends JpaRepository<Flavored, Long> {
     @Query("select distinct new com.example.api.board.controller.domain.CategoryDTO(c.categoryId, c.categoryName) " +
-            "from Flavored f join Category c on f.category.categoryId = c.categoryId where f.employee.employeeId = :employeeId")
+            "from Flavored f join Category c on f.category.categoryId = c.categoryId where f.employee.accountId = :employeeId")
     List<CategoryDTO> findAllCategoryDTOByEmployeeId(@Param("employeeId") long employeeId);
 
-    List<Flavored> findAllByEmployeeEmployeeId(@Param("employeeId")Long employeeId);
+    List<Flavored> findAllByEmployeeAccountId(@Param("employeeId")Long employeeId);
 }
