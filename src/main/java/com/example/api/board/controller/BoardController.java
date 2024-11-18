@@ -45,7 +45,7 @@ public class BoardController {
         EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
         boolean updated = employeeService.updateUserInfo(employeeIdRequest, myInfo);
         if (updated) {
-            MyInfoDTO myInfoById = boardService.findMyInfoById(employeeId);
+            MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
             List<CategoryDTO> categoryList = categoryService.getAllCategories();
             return ResponseEntity.ok(new Board(myInfoById, categoryList));
         } else {
