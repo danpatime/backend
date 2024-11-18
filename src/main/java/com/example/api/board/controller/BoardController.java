@@ -1,8 +1,9 @@
 package com.example.api.board.controller;
 
-import com.example.api.board.controller.domain.CategoryDTO;
-import com.example.api.board.controller.domain.Board;
-import com.example.api.board.controller.domain.MyInfoDTO;
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.Board;
+import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.board.service.BoardService;
 import com.example.api.board.service.CategoryService;
 import com.example.api.board.service.EmployeeService;
@@ -21,15 +22,17 @@ public class BoardController {
     private final EmployeeService employeeService;
 
     @GetMapping("/api/v1/possible-board/form/{employeeId}")
-    public Board findBoardByEmployeeId(@PathVariable("employeeId") Long employeeId) {
-        MyInfoDTO myInfoById = boardService.findMyInfoById(employeeId);
+    public Board findBoardByEmployeeId(@PathVariable() final Long employeeId) {
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
+        MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
         List<CategoryDTO> categoryList = categoryService.getAllCategories();
         return new Board(myInfoById, categoryList);
     }
 
     @PostMapping("/api/v1/{employeeId}")
     public ResponseEntity changeOpenStatus(@PathVariable("employeeId") Long employeeId, @RequestParam ("openStatus") Boolean openStatus) {
-        boolean updated = employeeService.changeOpenStatus(employeeId, openStatus);
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
+        boolean updated = employeeService.changeOpenStatus(employeeIdRequest, openStatus);
         if (updated) {
             return ResponseEntity.ok("사용자 정보가 성공적으로 업데이트되었습니다.");
         } else {
@@ -39,7 +42,8 @@ public class BoardController {
 
     @PostMapping("/api/v1/possible-board/submit/{employeeId}")
     public ResponseEntity submitBoard(@PathVariable("employeeId") Long employeeId, @RequestBody MyInfoDTO myInfo) {
-        boolean updated = employeeService.updateUserInfo(employeeId, myInfo);
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
+        boolean updated = employeeService.updateUserInfo(employeeIdRequest, myInfo);
         if (updated) {
             MyInfoDTO myInfoById = boardService.findMyInfoById(employeeId);
             List<CategoryDTO> categoryList = categoryService.getAllCategories();

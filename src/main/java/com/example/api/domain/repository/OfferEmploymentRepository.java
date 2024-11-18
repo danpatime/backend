@@ -1,6 +1,6 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.controller.domain.InnerCareerDTO;
+import com.example.api.board.controller.domain.response.InnerCareerDTO;
 import com.example.api.domain.OfferEmployment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

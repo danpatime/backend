@@ -1,8 +1,8 @@
 package com.example.api.board.controller;
 
-import com.example.api.board.controller.domain.Board;
-import com.example.api.board.controller.domain.CategoryDTO;
-import com.example.api.board.controller.domain.MyInfoDTO;
+import com.example.api.board.controller.domain.response.Board;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.global.BaseIntegrationTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

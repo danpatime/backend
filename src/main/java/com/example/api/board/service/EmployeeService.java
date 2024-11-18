@@ -1,6 +1,10 @@
 package com.example.api.board.service;
 
-import com.example.api.board.controller.domain.*;
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.ExternalCareerDTO;
+import com.example.api.board.controller.domain.response.MyInfoDTO;
+import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
@@ -24,15 +28,15 @@ public class EmployeeService {
     private final FlavoredRepository flavoredRepository;
     private final PossibleBoardRepository possibleBoardRepository;
 
-    public Boolean changeOpenStatus(Long employeeId, boolean openStatus) {
-        return employeeRepository.findByAccountId(employeeId).map(employee -> {
+    public Boolean changeOpenStatus(final EmployeeIdRequest employeeIdRequest, boolean openStatus) {
+        return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
             employee.setOpenStatus(openStatus);
             employeeRepository.save(employee);
             return true;
         }).orElse(false);
     }
-    public boolean updateUserInfo(Long employeeId, MyInfoDTO myInfo) {
-        return employeeRepository.findByAccountId(employeeId).map(employee -> {
+    public boolean updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
+        return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
             setUserInfo(employee, myInfo);
             employeeRepository.save(employee);
 

@@ -63,8 +63,9 @@ class ContractController {
     }
 
     @GetMapping("/api/v1/contract/{contractId}/status")
-    public ResponseEntity<ContractDTO> getContractInfo(@PathVariable("contractId") long contractId) {
-        ContractDTO contractDTO = contractService.getContractInfo(contractId);
+    public ResponseEntity<ContractDTO> getContractInfo(@PathVariable(required = true) final Long contractId) {
+        final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId);
+        ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
         return ResponseEntity.ok(contractDTO);
     }
 }
