@@ -10,7 +10,7 @@ import static jakarta.persistence.FetchType.*;
 @Getter
 @Setter
 @Table(name = "flavored", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"employee_id", "category_id"})
+        @UniqueConstraint(columnNames = {"account_id", "category_id"})
 })
 public class Flavored extends BaseEntity{
     @Id
@@ -24,6 +24,6 @@ public class Flavored extends BaseEntity{
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "employee_id")
-    private Employee employee;
+    private Account employee;
 
 }

@@ -24,7 +24,7 @@ public class OfferEmployment {
     private Business business;
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "EMPLOYEE_ID")
-    private Employee employee;
+    private Account employee;
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
     @Column(name = "SUGGEST_START_TIME")

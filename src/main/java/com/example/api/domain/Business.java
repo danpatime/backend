@@ -21,8 +21,8 @@ public class Business extends BaseEntity {
     private Long businessId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_EMPLOYER_ID", referencedColumnName = "EMPLOYER_ID")
-    private Employer employer;
+    @JoinColumn(name = "BUSINESS_EMPLOYER_ID")
+    private Account employer;
 
     @OneToMany(mappedBy = "business")
     private List<BusinessCategory> businessCategories = new ArrayList<>();
