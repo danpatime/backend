@@ -9,6 +9,7 @@ import com.example.api.employer.controller.dto.LikeEmployeeDTO;
 import com.example.api.employer.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class EmployerService {
     private final ExternalCareerRepository externalCareerRepository;
     private final FlavoredRepository flavoredRepository;
 
-
+    @Transactional(readOnly = true)
     public List<LikeEmployeeDTO> getLikeEmployee(final EmployeeIdRequest employeeIdRequest) {
         Set<Long> employeeIds = scrapRepository.findAllByEmployerId(employeeIdRequest.employeeId()).stream()
                 .map(scrap -> scrap.getEmployee().getAccountId())
