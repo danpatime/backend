@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "SCRAP")
 public class Scrap extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scrapId;
