@@ -2,7 +2,8 @@ package com.example.api.suggest.service;
 
 import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.domain.OfferEmployment;
-import com.example.api.suggest.controller.domain.SuggestStatusDTO;
+import com.example.api.suggest.controller.dto.SuggestStatusDTO;
+import com.example.api.suggest.controller.dto.request.BusinessIdRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class SuggestService {
     private final OfferEmploymentRepository offerEmploymentRepository;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
-    public List<SuggestStatusDTO> getSuggestStatus(long businessId) {
-        List<OfferEmployment> offerList = offerEmploymentRepository.findAllByBusinessBusinessId(businessId);
+    public List<SuggestStatusDTO> getSuggestStatus(final BusinessIdRequest businessIdRequest) {
+        List<OfferEmployment> offerList = offerEmploymentRepository.findAllByBusinessBusinessId(businessIdRequest.BusinessId());
         List<SuggestStatusDTO> suggestStatusDTOList = new ArrayList<>();
 
         String status;
