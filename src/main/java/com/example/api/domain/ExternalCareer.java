@@ -3,7 +3,6 @@ package com.example.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +38,6 @@ public class ExternalCareer extends BaseEntity{
     }
 
     public ExternalCareer() {
-
     }
 }
 
