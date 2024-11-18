@@ -21,7 +21,7 @@ public class PossibleBoard extends BaseEntity{
     private Long possibleId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "EMPLOYEE_ID")
     private Account employee;
 
     @Column(name = "POSSIBLE_START_TIME")

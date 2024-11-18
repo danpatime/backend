@@ -23,7 +23,7 @@ public class Flavored extends BaseEntity{
     private Category category;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "employee_id")
     private Account employee;
 
 }
