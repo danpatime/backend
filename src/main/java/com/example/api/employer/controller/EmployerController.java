@@ -1,6 +1,7 @@
 package com.example.api.employer.controller;
 
-import com.example.api.employer.controller.domain.LikeEmployeeDTO;
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.employer.controller.dto.LikeEmployeeDTO;
 import com.example.api.employer.service.EmployerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ public class EmployerController {
     private final EmployerService employerService;
 
     @GetMapping("/api/v1/employees/favorites/{employerId}")
-    public ResponseEntity getLikeEmployee(@PathVariable("employerId") Long employerId) {
-        List<LikeEmployeeDTO> result = employerService.getLikeEmployee(employerId);
+    public ResponseEntity getLikeEmployee(@PathVariable() Long employerId) {
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employerId);
+        List<LikeEmployeeDTO> result = employerService.getLikeEmployee(employeeIdRequest);
         return ResponseEntity.ok(result);
     }
 }
