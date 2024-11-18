@@ -4,9 +4,9 @@ import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import com.example.api.suggest.controller.dto.request.BusinessIdRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class SuggestService {
     private final OfferEmploymentRepository offerEmploymentRepository;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
+    @Transactional(readOnly = true)
     public List<SuggestStatusDTO> getSuggestStatus(final BusinessIdRequest businessIdRequest) {
         List<OfferEmployment> offerList = offerEmploymentRepository.findAllByBusinessBusinessId(businessIdRequest.BusinessId());
         List<SuggestStatusDTO> suggestStatusDTOList = new ArrayList<>();

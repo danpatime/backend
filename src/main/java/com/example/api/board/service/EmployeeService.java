@@ -10,9 +10,9 @@ import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
 import com.example.api.domain.repository.PossibleBoardRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -28,6 +27,7 @@ public class EmployeeService {
     private final FlavoredRepository flavoredRepository;
     private final PossibleBoardRepository possibleBoardRepository;
 
+    @Transactional
     public Boolean changeOpenStatus(final EmployeeIdRequest employeeIdRequest, boolean openStatus) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
             employee.setOpenStatus(openStatus);
@@ -35,6 +35,7 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
+    @Transactional
     public boolean updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
             setUserInfo(employee, myInfo);

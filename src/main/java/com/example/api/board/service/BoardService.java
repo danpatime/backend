@@ -4,13 +4,12 @@ package com.example.api.board.service;
 import com.example.api.board.controller.domain.request.EmployeeIdRequest;
 import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.domain.repository.*;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class BoardService {
     private final MyInfoRepository myInfoRepository;
@@ -19,6 +18,7 @@ public class BoardService {
     private final PossibleBoardRepository possibleBoardRepository;
     private final FlavoredRepository flavoredRepository;
 
+    @Transactional(readOnly = true)
     public MyInfoDTO findMyInfoById(final EmployeeIdRequest employeeIdRequest) {
         MyInfoDTO myInfoDTOById = myInfoRepository.findMyInfoDTOById(employeeIdRequest.employeeId());
         myInfoDTOById.setInnerCarrerList(offerEmploymentRepository.findAllDTOByEmployeeId(employeeIdRequest.employeeId()));

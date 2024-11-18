@@ -54,6 +54,7 @@ public class ContractService {
                 .orElseThrow();
     }
 
+    @Transactional(readOnly = true)
     public ContractDTO getContractInfo(final AcceptContractCommand contractStatusCommand) {
         BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractStatusCommand.contractId());
         EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractStatusCommand.contractId());
