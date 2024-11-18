@@ -1,4 +1,4 @@
-package com.example.api.employer.controller.domain;
+package com.example.api.employer.controller.dto;
 
 import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.board.controller.domain.response.ExternalCareerDTO;
