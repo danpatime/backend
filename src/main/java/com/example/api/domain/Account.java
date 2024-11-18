@@ -40,6 +40,8 @@ public class Account extends BaseEntity {
     private float starPoint;
     @Column(name = "ACCOUNT_WORK_COUNT")
     private int workCount;
+    @Column(name = "ACCOUNT_OPEN_STATUS")
+    private boolean openStatus;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;
 }

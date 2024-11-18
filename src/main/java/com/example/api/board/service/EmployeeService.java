@@ -20,17 +20,16 @@ public class EmployeeService {
     private final ExternalCareerRepository externalCareerRepository;
     private final FlavoredRepository flavoredRepository;
     private final PossibleBoardRepository possibleBoardRepository;
-    private final CategoryRepository categoryRepository;
 
     public Boolean changeOpenStatus(Long employeeId, boolean openStatus) {
-        return employeeRepository.findByEmployeeId(employeeId).map(employee -> {
+        return employeeRepository.findByAccountId(employeeId).map(employee -> {
             employee.setOpenStatus(openStatus);
             employeeRepository.save(employee);
             return true;
         }).orElse(false);
     }
     public boolean updateUserInfo(Long employeeId, MyInfoDTO myInfo) {
-        return employeeRepository.findByEmployeeId(employeeId).map(employee -> {
+        return employeeRepository.findByAccountId(employeeId).map(employee -> {
             setUserInfo(employee, myInfo);
             employeeRepository.save(employee);
 
@@ -40,18 +39,16 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
-    void setUserInfo(Employee employee, MyInfoDTO myInfo) {
-        Account account = employee.getAccount();
-
-        account.setName(myInfo.getName());
-        account.setSex(myInfo.getSex());
-        account.setAge(myInfo.getAge());
-        account.setPhoneNumber(myInfo.getPhone());
-        account.setEmail(myInfo.getEmail());
+    void setUserInfo(Account employee, MyInfoDTO myInfo) {
+        employee.setName(myInfo.getName());
+        employee.setSex(myInfo.getSex());
+        employee.setAge(myInfo.getAge());
+        employee.setPhoneNumber(myInfo.getPhone());
+        employee.setEmail(myInfo.getEmail());
         employee.setNickname(myInfo.getNickname());
     }
-    public void updateExternalCareer(Employee employee, List<ExternalCareerDTO> newExternalCareerList) {
-        List<ExternalCareer> existList = externalCareerRepository.findAllByEmployeeEmployeeId(employee.getEmployeeId());
+    public void updateExternalCareer(Account employee, List<ExternalCareerDTO> newExternalCareerList) {
+        List<ExternalCareer> existList = externalCareerRepository.findAllByEmployeeAccountId(employee.getAccountId());
         Set<ExternalCareerDTO> newSet = new HashSet<>(newExternalCareerList);
 
         Set<ExternalCareer> toDelete = existList.stream()
@@ -68,8 +65,8 @@ public class EmployeeService {
         externalCareerRepository.deleteAll(toDelete);
         externalCareerRepository.saveAll(toAdd);
     }
-    public void updateFlavored(Employee employee, List<CategoryDTO> newCategoryList) {
-        List<Flavored> existFlavored = flavoredRepository.findAllByEmployeeEmployeeId(employee.getEmployeeId());
+    public void updateFlavored(Account employee, List<CategoryDTO> newCategoryList) {
+        List<Flavored> existFlavored = flavoredRepository.findAllByEmployeeAccountId(employee.getAccountId());
 
         Set<Long> newCategoryIds = newCategoryList.stream()
                 .map(CategoryDTO::getCategoryId)
@@ -88,8 +85,8 @@ public class EmployeeService {
         flavoredRepository.deleteAll(toDelete);
         flavoredRepository.saveAll(toAdd);
     }
-    public void updatePossibleBoard(Employee employee, List<PossibleBoardDTO> newPossibleBoard) {
-        List<PossibleBoard> existPossibleBoard = possibleBoardRepository.findAllByEmployeeEmployeeId(employee.getEmployeeId());
+    public void updatePossibleBoard(Account employee, List<PossibleBoardDTO> newPossibleBoard) {
+        List<PossibleBoard> existPossibleBoard = possibleBoardRepository.findAllByEmployeeAccountId(employee.getAccountId());
         Set<PossibleBoardDTO> newSet = new HashSet<>(newPossibleBoard);
 
         Set<PossibleBoard> toDelete = existPossibleBoard.stream()
