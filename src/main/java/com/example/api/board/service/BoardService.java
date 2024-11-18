@@ -21,8 +21,8 @@ public class BoardService {
     public MyInfoDTO findMyInfoById(long employeeId) {
         MyInfoDTO myInfoDTOById = myInfoRepository.findMyInfoDTOById(employeeId);
         myInfoDTOById.setInnerCarrerList(offerEmploymentRepository.findAllDTOByEmployeeId(employeeId));
-        myInfoDTOById.setExternalCareerList(externalCareerRepository.findAllDTOByEmployeeEmployeeId(employeeId));
-        myInfoDTOById.setPossibleBoardList(possibleBoardRepository.findAllDTOByEmployeeEmployeeId(employeeId));
+        myInfoDTOById.setExternalCareerList(externalCareerRepository.findAllDTOByEmployeeAccountId(employeeId));
+        myInfoDTOById.setPossibleBoardList(possibleBoardRepository.findAllDTOByEmployeeAccountId(employeeId));
         myInfoDTOById.setFlavoredCategoryList(flavoredRepository.findAllCategoryDTOByEmployeeId(employeeId));
 
         return myInfoDTOById;

@@ -3,8 +3,7 @@ package com.example.api.employer.service;
 import com.example.api.board.repository.EmployeeRepository;
 import com.example.api.board.repository.ExternalCareerRepository;
 import com.example.api.board.repository.FlavoredRepository;
-import com.example.api.domain.Employee;
-import com.example.api.domain.Scrap;
+import com.example.api.domain.Account;
 import com.example.api.employer.controller.domain.LikeEmployeeDTO;
 import com.example.api.employer.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +24,20 @@ public class EmployerService {
 
     public List<LikeEmployeeDTO> getLikeEmployee(Long employerId) {
         Set<Long> employeeIds = scrapRepository.findAllByEmployerId(employerId).stream()
-                .map(scrap -> scrap.getEmployee().getEmployeeId())
+                .map(scrap -> scrap.getEmployee().getAccountId())
                 .collect(Collectors.toSet());
-        List<Employee> likeEmployeeList = employeeRepository.findAllById(employeeIds);
+        List<Account> likeEmployeeList = employeeRepository.findAllById(employeeIds);
         return likeEmployeeList.stream().map(
                 employee -> new LikeEmployeeDTO(
-                        employee.getEmployeeId(),
-                        employee.getAccount().getName(),
+                        employee.getAccountId(),
+                        employee.getName(),
                         employee.getNickname(),
-                        employee.getAccount().getSex(),
-                        employee.getAccount().getAge(),
+                        employee.getSex(),
+                        employee.getAge(),
                         employee.getStarPoint(),
                         employee.getWorkCount(),
-                        externalCareerRepository.findAllDTOByEmployeeEmployeeId(employee.getEmployeeId()),
-                        flavoredRepository.findAllCategoryDTOByEmployeeId(employee.getEmployeeId())
+                        externalCareerRepository.findAllDTOByEmployeeAccountId(employee.getAccountId()),
+                        flavoredRepository.findAllCategoryDTOByEmployeeId(employee.getAccountId())
                 )
         ).collect(Collectors.toList());
     }

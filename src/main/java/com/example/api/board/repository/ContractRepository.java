@@ -12,20 +12,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("select new com.example.api.contract.controller.domain." +
-            "BusinessInfoDTO(b.businessName, b.representationName, c.contractStartTime, c.contractEndTime, b.location, a.phoneNumber, c.updatedDate) " +
+            "BusinessInfoDTO(b.businessName, b.representationName, c.contractStartTime, c.contractEndTime, b.location, e.phoneNumber, c.updatedDate) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
             "join oe.business b " +
-            "join Account a on a.id = b.employer.employerId " +
+            "join oe.employee e on e.accountId = b.employer.accountId " +
             "where c.contractId = :contractId")
     BusinessInfoDTO findBusinessDTOByContractId(@Param("contractId") long contractId);
 
     @Query("select new com.example.api.contract.controller.domain." +
-            "EmployeeInfoDTO(a.name, a.phoneNumber, e.starPoint, e.workCount) " +
+            "EmployeeInfoDTO(e.name, e.phoneNumber, e.starPoint, e.workCount) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
             "join oe.employee e " +
-            "join e.account a " +
             "where c.contractId = :contractId")
     EmployeeInfoDTO findEmployeeDTOByContractId(@Param("contractId") long contractId);
 }

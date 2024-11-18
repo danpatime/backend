@@ -31,7 +31,7 @@ public class Flavored extends BaseEntity{
     public Flavored() {
     }
 
-    public Flavored(Category category, Employee employee) {
+    public Flavored(Category category, Account employee) {
         this.category = category;
         this.employee = employee;
     }

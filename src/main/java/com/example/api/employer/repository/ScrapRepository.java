@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ScrapRepository extends JpaRepository<Scrap, Long> {
-    @Query("select s from Scrap s where s.employer.employerId = :employerId")
+    @Query("select s from Scrap s where s.employer.accountId = :employerId")
     List<Scrap> findAllByEmployerId(@Param("employerId") long employerId);
 }
