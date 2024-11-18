@@ -56,21 +56,18 @@ public class BaseIntegrationTest {
 
     @BeforeEach
     void setUpData() {
-        Account account = new Account();
-        account.setAge(30);
-        account.setEmail("johndoe@example.com");
-        account.setName("John Doe");
-        account.setSex("Male");
-        account.setPhoneNumber("123-456-7890");
-
-        Employee employee = new Employee();
-        employee.setAccount(account);
+        Account employee = new Account();
+        employee.setAge(30);
+        employee.setEmail("johndoe@example.com");
+        employee.setName("John Doe");
+        employee.setSex("Male");
+        employee.setPhoneNumber("123-456-7890");
         employee.setNickname("Johnny");
         employee.setStarPoint(3.5f);
         employee.setWorkCount(3);
         employeeRepository.save(employee);
 
-        Employer employer = new Employer();
+        Account employer = new Account();
         employer.setNickname("EmployerOne");
         employerRepository.save(employer);
 
@@ -124,8 +121,8 @@ public class BaseIntegrationTest {
         externalCareerRepository.save(externalCareer2);
 
         externalCareerList = new ArrayList<>();
-        externalCareerList.add(new ExternalCareerDTO(externalCareer1.getName(), externalCareer1.getPeriod()));
-        externalCareerList.add(new ExternalCareerDTO(externalCareer2.getName(), externalCareer2.getPeriod()));
+        externalCareerList.add(new ExternalCareerDTO(employee.getAccountId(), externalCareer1.getName(), externalCareer1.getPeriod()));
+        externalCareerList.add(new ExternalCareerDTO(employee.getAccountId(), externalCareer2.getName(), externalCareer2.getPeriod()));
 
         Review review1 = new Review(1L, 4, "Good work experience");
         reviewRepository.save(review1);
@@ -139,8 +136,8 @@ public class BaseIntegrationTest {
         possibleBoardRepository.save(possibleBoard2);
 
         possibleBoardList = new ArrayList<>();
-        possibleBoardList.add(new PossibleBoardDTO(possibleBoard1.getStartTime(), possibleBoard1.getEndTime()));
-        possibleBoardList.add(new PossibleBoardDTO(possibleBoard2.getStartTime(), possibleBoard2.getEndTime()));
+        possibleBoardList.add(new PossibleBoardDTO(employee.getAccountId(), possibleBoard1.getStartTime(), possibleBoard1.getEndTime()));
+        possibleBoardList.add(new PossibleBoardDTO(employee.getAccountId(), possibleBoard2.getStartTime(), possibleBoard2.getEndTime()));
 
 //        Flavored flavored = new Flavored();
 //        flavored.setCategory(categoryRepository.findById(1L).get());
