@@ -1,4 +1,4 @@
-package com.example.api.board.repository;
+package com.example.api.domain.repository;
 
 import com.example.api.board.controller.domain.InnerCareerDTO;
 import com.example.api.domain.OfferEmployment;

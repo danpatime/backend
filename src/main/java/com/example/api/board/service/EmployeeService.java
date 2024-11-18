@@ -1,8 +1,11 @@
 package com.example.api.board.service;
 
 import com.example.api.board.controller.domain.*;
-import com.example.api.board.repository.*;
 import com.example.api.domain.*;
+import com.example.api.domain.repository.EmployeeRepository;
+import com.example.api.domain.repository.ExternalCareerRepository;
+import com.example.api.domain.repository.FlavoredRepository;
+import com.example.api.domain.repository.PossibleBoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

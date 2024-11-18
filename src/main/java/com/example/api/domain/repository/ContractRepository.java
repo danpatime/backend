@@ -1,8 +1,7 @@
-package com.example.api.board.repository;
+package com.example.api.domain.repository;
 
-import com.example.api.contract.controller.domain.BusinessInfoDTO;
-import com.example.api.contract.controller.domain.ContractDTO;
-import com.example.api.contract.controller.domain.EmployeeInfoDTO;
+import com.example.api.contracts.dto.BusinessInfoDTO;
+import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
