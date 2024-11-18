@@ -14,9 +14,11 @@ public class Contract extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contractId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SUGGEST_ID")
     private OfferEmployment offerEmployment;
+
     @Column(name = "CONTRACT_START_TIME")
     private LocalDateTime contractStartTime;
     @Column(name = "CONTRACT_END_TIME")
