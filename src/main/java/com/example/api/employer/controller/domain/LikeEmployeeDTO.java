@@ -1,7 +1,7 @@
 package com.example.api.employer.controller.domain;
 
-import com.example.api.board.controller.domain.CategoryDTO;
-import com.example.api.board.controller.domain.ExternalCareerDTO;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.ExternalCareerDTO;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

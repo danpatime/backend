@@ -1,12 +1,11 @@
 package com.example.api.board.service;
 
-import com.example.api.board.controller.domain.CategoryDTO;
+import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.global.BaseIntegrationTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;

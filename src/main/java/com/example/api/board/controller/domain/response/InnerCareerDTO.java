@@ -1,4 +1,4 @@
-package com.example.api.board.controller.domain;
+package com.example.api.board.controller.domain.response;
 
 import com.example.api.domain.Review;
 

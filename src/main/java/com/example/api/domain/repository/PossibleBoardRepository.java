@@ -1,6 +1,6 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.controller.domain.PossibleBoardDTO;
+import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.domain.PossibleBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

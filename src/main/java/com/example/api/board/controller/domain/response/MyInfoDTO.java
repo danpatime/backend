@@ -1,8 +1,5 @@
-package com.example.api.board.controller.domain;
+package com.example.api.board.controller.domain.response;
 
-import com.example.api.domain.Category;
-import com.example.api.domain.ExternalCareer;
-import com.example.api.domain.PossibleBoard;
 import lombok.*;
 
 import java.util.List;

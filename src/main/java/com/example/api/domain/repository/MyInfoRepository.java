@@ -1,6 +1,6 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.controller.domain.MyInfoDTO;
+import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

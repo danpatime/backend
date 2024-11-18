@@ -1,6 +1,6 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.controller.domain.CategoryDTO;
+import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.domain.Flavored;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -54,9 +54,9 @@ public class ContractService {
                 .orElseThrow();
     }
 
-    public ContractDTO getContractInfo(long contractId) {
-        BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractId);
-        EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractId);
+    public ContractDTO getContractInfo(final AcceptContractCommand contractStatusCommand) {
+        BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractStatusCommand.contractId());
+        EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractStatusCommand.contractId());
         return new ContractDTO(businessDTO, employeeDTO);
     }
 }
