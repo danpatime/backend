@@ -1,9 +1,9 @@
 package com.example.api.global;
 
-import com.example.api.board.controller.domain.CategoryDTO;
-import com.example.api.board.controller.domain.ExternalCareerDTO;
-import com.example.api.board.controller.domain.InnerCareerDTO;
-import com.example.api.board.controller.domain.PossibleBoardDTO;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.ExternalCareerDTO;
+import com.example.api.board.controller.domain.response.InnerCareerDTO;
+import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.*;
 import org.junit.jupiter.api.BeforeEach;
