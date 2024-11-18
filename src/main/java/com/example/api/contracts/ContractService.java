@@ -1,10 +1,6 @@
 package com.example.api.contracts;
 
-import com.example.api.contracts.dto.AcceptContractCommand;
-import com.example.api.contracts.dto.AcceptSuggestCommand;
-import com.example.api.contracts.dto.UpdateContractConditionCommand;
-import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
-import com.example.api.contracts.dto.SuggestedBusinessResponse;
+import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
@@ -56,5 +52,11 @@ public class ContractService {
     private OfferEmployment loadOffer(final Long offerId) {
         return offerRepository.findById(offerId)
                 .orElseThrow();
+    }
+
+    public ContractDTO getContractInfo(long contractId) {
+        BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractId);
+        EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractId);
+        return new ContractDTO(businessDTO, employeeDTO);
     }
 }

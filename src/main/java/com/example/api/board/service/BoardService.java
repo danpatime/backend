@@ -2,7 +2,7 @@ package com.example.api.board.service;
 
 
 import com.example.api.board.controller.domain.MyInfoDTO;
-import com.example.api.board.repository.*;
+import com.example.api.domain.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

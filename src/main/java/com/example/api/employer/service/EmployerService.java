@@ -1,8 +1,8 @@
 package com.example.api.employer.service;
 
-import com.example.api.board.repository.EmployeeRepository;
-import com.example.api.board.repository.ExternalCareerRepository;
-import com.example.api.board.repository.FlavoredRepository;
+import com.example.api.domain.repository.EmployeeRepository;
+import com.example.api.domain.repository.ExternalCareerRepository;
+import com.example.api.domain.repository.FlavoredRepository;
 import com.example.api.domain.Account;
 import com.example.api.employer.controller.domain.LikeEmployeeDTO;
 import com.example.api.employer.repository.ScrapRepository;

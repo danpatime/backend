@@ -1,8 +1,6 @@
-package com.example.api.contract.controller.domain;
+package com.example.api.contracts.dto;
 
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode
 @Getter
