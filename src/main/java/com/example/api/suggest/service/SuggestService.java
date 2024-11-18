@@ -1,6 +1,6 @@
 package com.example.api.suggest.service;
 
-import com.example.api.board.repository.OfferEmploymentRepository;
+import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.suggest.controller.domain.SuggestStatusDTO;
 import jakarta.transaction.Transactional;

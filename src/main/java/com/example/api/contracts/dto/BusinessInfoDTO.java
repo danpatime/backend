@@ -1,4 +1,4 @@
-package com.example.api.contract.controller.domain;
+package com.example.api.contracts.dto;
 
 import lombok.*;
 
