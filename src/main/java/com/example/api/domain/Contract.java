@@ -27,7 +27,5 @@ public class Contract extends BaseEntity {
     private int contractHourlyPay;
     @Column(name = "CONTRACT_SUCCEDED", columnDefinition = "boolean DEFAULT false")
     private boolean contractSucceeded;
-
-
 }
 

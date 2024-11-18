@@ -23,7 +23,7 @@ public class OfferEmployment {
     @JoinColumn(name = "BUSINESS_ID")
     private Business business;
     @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "ACCOUNT_ID")
+    @JoinColumn(name = "EMPLOYEE_ID")
     private Account employee;
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
