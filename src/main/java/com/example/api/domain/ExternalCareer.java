@@ -20,7 +20,7 @@ public class ExternalCareer extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "account_id")
     @JsonIgnore
     private Account employee;
 
