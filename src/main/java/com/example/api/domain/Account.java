@@ -6,16 +6,9 @@ import com.example.api.auth.dto.LoginUserRequest;
 import com.example.api.board.dto.update.UpdateOpenStatusRequest;
 import com.example.api.board.dto.update.UpdateUserInfoRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Collection;
-
-import static jakarta.persistence.FetchType.*;
-
 
 @Entity
 @Getter
