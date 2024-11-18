@@ -19,16 +19,16 @@ public class ExternalCareer extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "account_id")
     @JsonIgnore
-    private Employee employee;
+    private Account employee;
 
     @Column(name = "BUSINESS_NAME")
     private String Name;
     @Column(name = "PART_TIME_PERIOD")
     private String period;
 
-    public ExternalCareer(Employee employee, String name, String period) {
+    public ExternalCareer(Account employee, String name, String period) {
         this.employee = employee;
         Name = name;
         this.period = period;

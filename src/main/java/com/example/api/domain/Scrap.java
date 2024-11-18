@@ -17,7 +17,7 @@ public class Scrap extends BaseEntity {
     private Long scrapId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Employer employer;
+    private Account employer;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Employee employee;
+    private Account employee;
 }
