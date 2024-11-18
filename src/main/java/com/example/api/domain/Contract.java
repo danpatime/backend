@@ -16,9 +16,11 @@ public class Contract extends BaseEntity {
     @Id
     @Column(name ="CONTRACT_ID")
     private Long contractId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OfferEmployment offerEmployment;
+
     @Column(name = "CONTRACT_START_TIME")
     private LocalDateTime contractStartTime;
     @Column(name = "CONTRACT_END_TIME")

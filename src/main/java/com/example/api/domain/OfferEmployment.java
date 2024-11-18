@@ -20,11 +20,9 @@ public class OfferEmployment {
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "BUSINESS_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Business business;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYEE_ID")
     private Account employee;
-
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
     @Column(name = "SUGGEST_START_TIME")
