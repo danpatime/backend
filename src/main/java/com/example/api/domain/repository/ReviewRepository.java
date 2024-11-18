@@ -1,4 +1,4 @@
-package com.example.api.board.repository;
+package com.example.api.domain.repository;
 
 import com.example.api.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.example.api.board.repository;
+package com.example.api.domain.repository;
 
 import com.example.api.board.controller.domain.ExternalCareerDTO;
 import com.example.api.domain.ExternalCareer;
