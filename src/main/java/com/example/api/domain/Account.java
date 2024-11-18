@@ -14,7 +14,7 @@ public class Account extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ACCOUNT_UNIQUE_ID")
-    private Long id;
+    private Long accountId;
 
     @Column(name = "ACCOUNT_ID")
     private String loginId;
@@ -22,6 +22,8 @@ public class Account extends BaseEntity {
     private String password;
     @Column(name = "ACCOUNT_NAME")
     private String name;
+    @Column(name = "ACCOUNT_NICKNAME")
+    private String nickname;
     @Column(name = "ACCOUNT_SEX")
     private String sex;
     @Column(name = "ACCOUNT_AGE")
@@ -34,6 +36,10 @@ public class Account extends BaseEntity {
     private String profileImage;
     @Column(name = "ACCOUNT_EMAIL")
     private String email;
+    @Column(name = "ACCOUNT_STAR_RATING")
+    private float starPoint;
+    @Column(name = "ACCOUNT_WORK_COUNT")
+    private int workCount;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;
 }
