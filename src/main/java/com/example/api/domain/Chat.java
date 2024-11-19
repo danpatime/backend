@@ -1,43 +1,47 @@
 package com.example.api.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-import static jakarta.persistence.FetchType.*;
-
-@Entity
 @Getter
-@Setter
-@EqualsAndHashCode
-@Table(name = "CHAT")
+@Document(collection = "chat")
 public class Chat {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chatId;
+    private Long id;
+    private String content;
+    private Long roomId;
+    private Long senderId;
+    private Long receiverId;
+    private Date sendTime;
+    private Boolean isRead;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "CHAT_ROOM_ID")
-    private ChatRoom chatRoom;
+    protected Chat() {
+    }
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
-    private Account account;
+    public static Chat from(chatSendRequest chatSendRequest){
+        Chat chat = new Chat();
+        chat.content = chatSendRequest.content();
+        chat.roomId = chatSendRequest.roomId();
+        chat.senderId = chatSendRequest.senderId();
+        chat.receiverId = chatSendRequest.receiverId();
+        chat.sendTime = new Date();
+        chat.isRead = false;
+        return chat;
+    }
 
-    private String chatContent;
-
-    @Column(name = "CHAT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean deleted;
-
-    @Column(name = "CHAT_REGISTER_DATE")
-    private LocalDateTime chatRegisterDate;
-
-    @PrePersist
-    protected void onCreate() {
-        this.chatRegisterDate = LocalDateTime.now();
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", roomId=" + roomId +
+                ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
+                ", sendTime=" + sendTime +
+                ", isRead=" + isRead +
+                '}';
     }
 }
