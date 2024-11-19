@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
@@ -21,8 +20,8 @@ public class Business extends BaseEntity {
     private Long businessId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_EMPLOYER_ID", referencedColumnName = "EMPLOYER_ID")
-    private Employer employer;
+    @JoinColumn(name = "BUSINESS_EMPLOYER_ID")
+    private Account employer;
 
     @OneToMany(mappedBy = "business")
     private List<BusinessCategory> businessCategories = new ArrayList<>();

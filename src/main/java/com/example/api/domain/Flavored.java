@@ -24,6 +24,6 @@ public class Flavored extends BaseEntity{
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "employee_id")
-    private Employee employee;
+    private Account employee;
 
 }

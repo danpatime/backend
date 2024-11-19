@@ -21,8 +21,8 @@ public class PossibleBoard extends BaseEntity{
     private Long possibleId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private Account employee;
 
     @Column(name = "POSSIBLE_START_TIME")
     private LocalDateTime startTime;
@@ -30,7 +30,7 @@ public class PossibleBoard extends BaseEntity{
     @Column(name = "POSSIBLE_END_TIME")
     private LocalDateTime endTime;
 
-    public PossibleBoard(Employee employee, LocalDateTime startTime, LocalDateTime endTime) {
+    public PossibleBoard(Account employee, LocalDateTime startTime, LocalDateTime endTime) {
         this.employee = employee;
         this.startTime = startTime;
         this.endTime = endTime;
