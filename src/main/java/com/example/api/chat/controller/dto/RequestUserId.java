@@ -1,4 +1,4 @@
 package com.example.api.chat.controller.dto;
 
-public record requestUserId() {
+public record RequestUserId(Long userId) {
 }
