@@ -32,5 +32,9 @@ public class ChatRoom {
         this.suggestGeneratedDate = LocalDateTime.now();
     }
 
+    public ChatRoom(OfferEmployment offerEmployment) {
+        this.offerEmployment = offerEmployment;
+        this.suggestGeneratedDate = LocalDateTime.now();
+    }
 }
 
