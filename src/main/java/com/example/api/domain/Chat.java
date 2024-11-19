@@ -11,7 +11,7 @@ import java.util.Date;
 @Document(collection = "chat")
 public class Chat {
     @Id
-    private Long id;
+    private String id;
     private String content;
     private Long roomId;
     private Long senderId;
