@@ -1,6 +1,6 @@
 package com.example.api.chat.service;
 
-import com.example.api.chat.controller.dto.RequestUserId;
+import com.example.api.chat.controller.dto.request.UserIdRequest;
 import com.example.api.chat.controller.dto.request.ChatSendRequest;
 import com.example.api.chat.controller.dto.request.ReadRequest;
 import com.example.api.chat.controller.dto.response.ChatSummaryResponse;
@@ -42,13 +42,15 @@ public class ChatService {
         return "메세지 읽기 성공~";
     }
 
-    public ChatSummaryResponse getChatSummaries(RequestUserId requestUserId) {
+    @Transactional(readOnly = true)
+    public ChatSummaryResponse getChatSummaries(UserIdRequest requestUserId) {
         List<ChatRoom> chatRooms = chatRoomRepository.findByUserId(requestUserId.userId());
         List<Long> chatRoomIds = chatRooms.stream().map(ChatRoom::getChatRoomId).toList();
         List<ChatSummary> chatSummaries = chatRepository.aggregateChatSummaries(chatRoomIds, requestUserId.userId());
         return new ChatSummaryResponse(chatRooms, chatSummaries);
     }
 
+    @Transactional(readOnly = true)
     public List<Chat> getChats(Long chatRoomId, String lastChatId) {
         return chatRepository.findChats(chatRoomId,lastChatId);
     }
