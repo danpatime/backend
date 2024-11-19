@@ -1,7 +1,9 @@
 package com.example.api.contracts;
 
+import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
+import com.example.api.domain.ChatRoom;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
 import java.util.List;
@@ -16,6 +18,7 @@ public class ContractService {
     private final OfferRepository offerRepository;
     private final ContractRepository contractRepository;
     private final ContractMapper contractMapper;
+    private final ChatRoomRepository chatRoomRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
 
     @Transactional(readOnly = true)
@@ -30,6 +33,8 @@ public class ContractService {
 
         final Contract contract = contractMapper.notYetSucceeded(offerEmployment);
         contractRepository.save(contract);
+
+        createChatRoom(offerEmployment);
     }
 
     @Transactional
@@ -52,6 +57,11 @@ public class ContractService {
     private OfferEmployment loadOffer(final Long offerId) {
         return offerRepository.findById(offerId)
                 .orElseThrow();
+    }
+
+    private void createChatRoom(final OfferEmployment offer) {
+        ChatRoom chatRoom = new ChatRoom(offer);
+        chatRoomRepository.save(chatRoom);
     }
 
     @Transactional(readOnly = true)
