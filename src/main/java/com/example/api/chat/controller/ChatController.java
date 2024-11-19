@@ -13,8 +13,7 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("/send")
-    public void sendMessage(@Payload ChatSendRequest messageRequest) {
-        String result = chatService.sendMessage(messageRequest);
-        System.out.println("result = " + result);
+    public void sendMessage(@Payload ChatSendRequest chatRequest) {
+        chatService.sendChat(chatRequest);
     }
 }

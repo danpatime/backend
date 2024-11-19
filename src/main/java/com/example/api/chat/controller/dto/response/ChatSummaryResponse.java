@@ -1,4 +1,9 @@
 package com.example.api.chat.controller.dto.response;
 
-public class ChatSummaryResponse {
+import com.example.api.chat.domain.ChatSummary;
+import com.example.api.domain.ChatRoom;
+
+import java.util.List;
+
+public record ChatSummaryResponse(List<ChatRoom> chatRooms, List<ChatSummary> chatSummaries) {
 }

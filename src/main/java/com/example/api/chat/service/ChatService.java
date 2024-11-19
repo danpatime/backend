@@ -1,13 +1,20 @@
 package com.example.api.chat.service;
 
+import com.example.api.chat.controller.dto.RequestUserId;
 import com.example.api.chat.controller.dto.request.ChatSendRequest;
+import com.example.api.chat.controller.dto.request.ReadRequest;
+import com.example.api.chat.controller.dto.response.ChatSummaryResponse;
+import com.example.api.chat.domain.ChatSummary;
 import com.example.api.chat.repository.ChatRepository;
 import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.chat.service.model.ChatSender;
 import com.example.api.domain.Chat;
+import com.example.api.domain.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,36 +24,36 @@ public class ChatService {
     private final ChatSender chatSender;
 
     @Transactional
-    public String sendMessage(ChatSendRequest request) {
-        Chat chat = saveChat(request);
-        messageSender.send(savedMessage);
+    public String sendChat(ChatSendRequest request) {
+        Chat savedChat = saveChat(request);
+        chatSender.send(savedChat);
         return "메세지 전송 성공~";
     }
 
     private Chat saveChat(ChatSendRequest request) {
         Chat chat = Chat.from(request);
-        return messageRepository.save(message);
+        return chatRepository.save(chat);
     }
 
     @Transactional
-    public String readMessages(ReadRequest request) {
-        messageRepository.markMessagesAsRead(request.roomId(), request.memberId());
-        messageSender.sendReadResponse(request);
+    public String readChats(ReadRequest request) {
+        chatRepository.markChatsAsRead(request.roomId(), request.userId());
+        chatSender.sendReadResponse(request);
         return "메세지 읽기 성공~";
     }
 
-    public ChatSummaryResponse getChatSummaries(Member loginMember) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findByMemberId(loginMember.getId());
+    public ChatSummaryResponse getChatSummaries(RequestUserId requestUserId) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findByUserId(requestUserId.userId());
         List<Long> chatRoomIds = chatRooms.stream().map(ChatRoom::getChatRoomId).toList();
-        List<ChatMessageSummary> chatMessageSummaries = messageRepository.aggregateMessageSummaries(chatRoomIds, loginMember.getId());
-        return new ChatSummaryResponse(chatRooms, chatMessageSummaries);
+        List<ChatSummary> chatSummaries = chatRepository.aggregateChatSummaries(chatRoomIds, requestUserId.userId());
+        return new ChatSummaryResponse(chatRooms, chatSummaries);
     }
 
-    public List<Message> getMessages(Long chatRoomId, String lastMessageId) {
-        return messageRepository.findMessages(chatRoomId,lastMessageId);
+    public List<Chat> getChats(Long chatRoomId, String lastChatId) {
+        return chatRepository.findChats(chatRoomId,lastChatId);
     }
 
-    public List<ChatRoom> getChatRooms(Long memberId) {
-        return chatRoomRepository.findByMemberId(memberId);
+    public List<ChatRoom> getChatRooms(Long userId) {
+        return chatRoomRepository.findByUserId(userId);
     }
 }
