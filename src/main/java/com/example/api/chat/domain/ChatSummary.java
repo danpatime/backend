@@ -1,4 +1,6 @@
-package com.example.api.chat.controller.dto.response;
+package com.example.api.chat.domain;
 
-public record ChatSummary() {
+import java.util.Date;
+
+public record ChatSummary(Long roomId, String lastMessageContent, Date lastMessageTime, Long numberOfUnreadMessages) {
 }
