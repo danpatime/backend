@@ -1,5 +1,6 @@
 package com.example.api.domain;
 
+import com.example.api.chat.controller.dto.request.ChatSendRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,7 +22,7 @@ public class Chat {
     protected Chat() {
     }
 
-    public static Chat from(chatSendRequest chatSendRequest){
+    public static Chat from(ChatSendRequest chatSendRequest){
         Chat chat = new Chat();
         chat.content = chatSendRequest.content();
         chat.roomId = chatSendRequest.roomId();
