@@ -1,9 +1,9 @@
 package com.example.api.contracts.dto;
 
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
 
 public record AcceptContractCommand(
-        @NonNull
+        @NotNull
         Long contractId
 ) {
 }
