@@ -5,7 +5,12 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
-    SERVER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "-000", "서버 에러");
+    SERVER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "-000", "서버 에러"),
+
+
+    ACCOUNT_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "찾을 수 없는 계정"),
+
+    POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
