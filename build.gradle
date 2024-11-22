@@ -41,6 +41,11 @@ dependencies {
 
     //비밀번호 암호화
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //CoolSMS 전화번호 인증
+    implementation 'net.nurigo:sdk:4.2.7'
+
+
 }
 
 tasks.named('test') {
