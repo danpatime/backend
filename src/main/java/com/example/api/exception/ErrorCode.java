@@ -24,7 +24,12 @@ public enum ErrorCode {
 
     FAIL_GENERATE_CODE(HttpStatus.INTERNAL_SERVER_ERROR, "-500", "코드 생성에 실패하였습니다."),
     FAIL_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "-501", "이메일 전송에 실패하였습니다."),
-    FAIL_SAVE_CODE(HttpStatus.INTERNAL_SERVER_ERROR, "-502", "코드 저장에 실패하였습니다.");
+    FAIL_SAVE_CODE(HttpStatus.INTERNAL_SERVER_ERROR, "-502", "코드 저장에 실패하였습니다."),
+
+
+    ACCOUNT_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "찾을 수 없는 계정"),
+
+    POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
