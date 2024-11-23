@@ -13,7 +13,7 @@ import java.util.List;
 public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
     List<PossibleBoard> findAllByEmployeeAccountId(Long employeeId);
 
-    @Query("select new com.example.api.board.controller.domain.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
+    @Query("select new com.example.api.board.controller.domain.response.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
             "from PossibleBoard p where p.employee.accountId = :employeeId")
     List<PossibleBoardDTO> findAllDTOByEmployeeAccountId(@Param("employeeId")Long employeeId);
 }
