@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment, Long> {
-    @Query("select new com.example.api.board.controller.domain.InnerCareerDTO(b.businessName, c.contractStartTime, b.representationName, r) " +
+    @Query("select new com.example.api.board.controller.domain.response.InnerCareerDTO(b.businessName, c.contractStartTime, b.representationName, r) " +
             "from OfferEmployment o " +
             "join Contract c on o.suggestId = c.contractId " +
             "join Business b on o.business.businessId = b.businessId "+
