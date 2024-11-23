@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyInfoRepository extends JpaRepository<Account, Long> {
-    @Query("select new com.example.api.board.controller.domain." +
+    @Query("select new com.example.api.board.controller.domain.response." +
             "MyInfoDTO(a.name, a.nickname, a.age, a.sex, a.email, a.phoneNumber, a.starPoint, a.workCount) " +
             "from Account a " +
             "where a.accountId = :EmployeeId")
