@@ -12,7 +12,7 @@ public class ResponseDTO {
     private String subInquiryType;
     private String title;
     private String content;
-    private int responseStatus;
+    private String inquiryStatus;
     private String processStatus;
     private String answerDate;
     private String createdBy;

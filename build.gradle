@@ -77,6 +77,10 @@ dependencies {
 
     //WIREMOCK (외부 의존성 테스트용)
     implementation 'org.wiremock.integrations:wiremock-spring-boot:3.3.0'
+
+    // ModelMapper 사용
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+
 }
 
 tasks.named('test') {
