@@ -35,6 +35,10 @@ dependencies {
 
     // env 파일 읽도록 도와주는 라이브러리
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
+    // ModelMapper 사용
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+
 }
 
 tasks.named('test') {
