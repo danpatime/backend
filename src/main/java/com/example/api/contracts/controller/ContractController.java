@@ -1,5 +1,6 @@
 package com.example.api.contracts.controller;
 
+import com.example.api.contracts.dto.ContractDTO;
 import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.AcceptContractCommand;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
@@ -59,5 +60,12 @@ class ContractController {
         final AcceptContractCommand acceptContractCommand = new AcceptContractCommand(contractId);
         contractService.acceptContract(acceptContractCommand);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/api/v1/contract/{contractId}/status")
+    public ResponseEntity<ContractDTO> getContractInfo(@PathVariable(required = true) final Long contractId) {
+        final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId);
+        ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
+        return ResponseEntity.ok(contractDTO);
     }
 }
