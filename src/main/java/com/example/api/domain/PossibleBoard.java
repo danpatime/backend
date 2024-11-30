@@ -10,7 +10,6 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class PossibleBoard extends BaseEntity{
@@ -30,7 +29,7 @@ public class PossibleBoard extends BaseEntity{
     @EqualsAndHashCode.Include
     private LocalDateTime endTime;
 
-    public PossibleBoard(Account employee, LocalDateTime startTime, LocalDateTime endTime) {
+    public PossibleBoard(final Account employee, final LocalDateTime startTime, final LocalDateTime endTime) {
         this.employee = employee;
         this.startTime = startTime;
         this.endTime = endTime;
