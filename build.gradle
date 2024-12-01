@@ -38,11 +38,14 @@ dependencies {
     // env 파일 읽도록 도와주는 라이브러리
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 
-    //회원가입 어노테이션 사용
+    //valid
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    //비밀번호 암호화
+    //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // smtp
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
