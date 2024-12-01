@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@AttributeOverride(name = "createdDate", column = @Column(name = "ACCOUNT_REGISTERED_DATETIME"))
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
     @Id
@@ -24,18 +25,16 @@ public class Account extends BaseEntity {
     private String name;
     @Column(name = "ACCOUNT_NICKNAME")
     private String nickname;
+    @Column(name = "ACCOUNT_PHONE_NUMBER")
+    private String phoneNumber;
+    @Column(name = "ACCOUNT_EMAIL")
+    private String email;
     @Column(name = "ACCOUNT_SEX")
     private String sex;
     @Column(name = "ACCOUNT_AGE")
     private int age;
-    @Column(name = "ACCOUNT_PHONE_NUMBER")
-    private String phoneNumber;
-    @Column(name = "ACCOUNT_REGISTERED_DATETIME")
-    private Date registeredDatetime;
     @Column(name = "ACCOUNT_PROFILE_IMAGE")
     private String profileImage;
-    @Column(name = "ACCOUNT_EMAIL")
-    private String email;
     @Column(name = "ACCOUNT_STAR_RATING")
     private float starPoint;
     @Column(name = "ACCOUNT_WORK_COUNT")
@@ -44,4 +43,19 @@ public class Account extends BaseEntity {
     private boolean openStatus;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;
+
+    public Account() {
+    }
+
+    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email) {
+        this.loginId = loginId;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.starPoint =  0.0f;
+        this.workCount = 0;
+        this.openStatus = true;
+    }
 }
