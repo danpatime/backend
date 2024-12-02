@@ -2,12 +2,14 @@ package com.example.api.domain;
 
 import com.example.api.chat.controller.dto.request.ChatSendRequest;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Getter
+@EqualsAndHashCode
 @Document(collection = "chat")
 public class Chat {
     @Id
