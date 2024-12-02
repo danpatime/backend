@@ -4,6 +4,7 @@ import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.board.controller.domain.response.ExternalCareerDTO;
 import com.example.api.board.controller.domain.response.InnerCareerDTO;
 import com.example.api.board.controller.domain.response.PossibleBoardDTO;
+import com.example.api.business.BusinessRepository;
 import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.*;

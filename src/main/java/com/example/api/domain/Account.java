@@ -4,6 +4,7 @@ import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.auth.dto.LoginUserRequest;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
