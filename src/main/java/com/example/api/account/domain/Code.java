@@ -14,8 +14,9 @@ public class Code {
     private String id;
     private String email;
     private String code;
+
     @Indexed(expireAfterSeconds = 600)
-    private Date createdAt;
+    private final Date createdAt;
 
     public Code(String email, String code) {
         this.email = email;
