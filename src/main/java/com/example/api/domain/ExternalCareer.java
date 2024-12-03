@@ -12,8 +12,8 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "EXTERANL_CARRER")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ExternalCareer extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

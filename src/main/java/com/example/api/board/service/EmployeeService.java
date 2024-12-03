@@ -5,19 +5,22 @@ import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.board.controller.domain.response.ExternalCareerDTO;
 import com.example.api.board.controller.domain.response.MyInfoDTO;
 import com.example.api.board.controller.domain.response.PossibleBoardDTO;
-import com.example.api.domain.*;
+import com.example.api.domain.Account;
+import com.example.api.domain.Category;
+import com.example.api.domain.ExternalCareer;
+import com.example.api.domain.Flavored;
+import com.example.api.domain.PossibleBoard;
 import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
 import com.example.api.domain.repository.PossibleBoardRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,6 +38,7 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
+
     @Transactional
     public boolean updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {

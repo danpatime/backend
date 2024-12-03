@@ -11,8 +11,8 @@ import static jakarta.persistence.FetchType.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-@EqualsAndHashCode
 public class PossibleBoard extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

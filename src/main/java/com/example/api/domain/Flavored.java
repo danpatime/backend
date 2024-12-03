@@ -10,10 +10,10 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "flavored", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"employee_id", "category_id"})
 })
-@EqualsAndHashCode(callSuper = false)
 public class Flavored extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
