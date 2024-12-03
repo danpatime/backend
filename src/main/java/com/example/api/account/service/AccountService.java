@@ -44,7 +44,7 @@ public class AccountService {
 
     @Transactional
     public String verifyEmail(final EmailCodeRequestDto request) {
-        Optional<Code> findCode = codeRepository.findCodeByEmail(request.email());
+        Optional<Code> findCode = codeRepository.findFirstByEmailOrderByCreatedAtDesc(request.email());
 
         return findCode.map(code -> {
             if (code.getCode().equals(request.code())) {
@@ -71,8 +71,11 @@ public class AccountService {
                 request.name(),
                 request.nickname(),
                 request.email(),
-                request.phoneNumber()
+                request.phoneNumber(),
+                request.nationality(),
+                request.role()
         );
+
         authRepository.save(account);
     }
 
