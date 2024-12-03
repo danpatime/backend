@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CodeRepository extends MongoRepository<Code, String> {
-    Optional<Code> findCodeByEmail(String email);
+    Optional<Code> findFirstByEmailOrderByCreatedAtDesc(String email);
 }
