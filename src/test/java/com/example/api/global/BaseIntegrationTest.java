@@ -4,6 +4,7 @@ import com.example.api.board.controller.domain.response.CategoryDTO;
 import com.example.api.board.controller.domain.response.ExternalCareerDTO;
 import com.example.api.board.controller.domain.response.InnerCareerDTO;
 import com.example.api.board.controller.domain.response.PossibleBoardDTO;
+import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,12 +107,12 @@ public class BaseIntegrationTest {
         offerEmployment.setSuggestSucceeded(false);
         offerEmploymentRepository.save(offerEmployment);
 
-        Contract contract = new Contract();
-        contract.setOfferEmployment(offerEmployment); // 일대일 관계 설정
-        contract.setContractStartTime(LocalDateTime.of(2024, 11, 10, 9, 0));
-        contract.setContractEndTime(LocalDateTime.of(2024, 11, 10, 18, 0));
-        contract.setContractHourlyPay(22000);
-        contract.setContractSucceeded(true);
+        Contract contract = new Contract(offerEmployment,
+                LocalDateTime.of(2024, 11, 10, 9, 0),
+                LocalDateTime.of(2024, 11, 10, 18, 0),
+                22000,
+        true);
+
         contractRepository.save(contract);
 
         ExternalCareer externalCareer1 = new ExternalCareer(employee, "Consultant", "24-10-01");
