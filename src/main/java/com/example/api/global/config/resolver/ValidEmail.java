@@ -12,4 +12,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface ValidEmail {
     String message() default "이메일이 유효하지 않습니다.";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }
