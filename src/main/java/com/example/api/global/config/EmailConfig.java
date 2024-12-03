@@ -24,7 +24,7 @@ public class EmailConfig {
     private String password;
 
     @Value("${spring.mail.protocol}")
-    private String protocol ;
+    private String protocol;
 
     @Value("${spring.mail.properties.mail.smtp.auth}")
     private boolean auth;
@@ -49,6 +49,7 @@ public class EmailConfig {
 
     @Bean
     public JavaMailSender javaMailSender() {
+        System.out.println("Configuring JavaMailSender with host: " + host);
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
