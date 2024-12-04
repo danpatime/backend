@@ -1,17 +1,19 @@
 package com.example.api.announcement.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.api.domain.Announcement;
 
-@Getter
-@Setter
-@Data
-public class AnnouncementResponse {
-    private Long announcementId;
-    private String announcementTitle;
-    private String announcementType;
-    private String announcementContent;
-    private int viewCount; // 조회수
-
+public record AnnouncementResponse(
+        Long announcementId,
+        String announcementTitle,
+        String announcementType,
+        String announcementContent
+) {
+    public AnnouncementResponse(Announcement announcement) {
+        this(
+                announcement.getAnnouncementId(),
+                announcement.getAnnouncementTitle(),
+                announcement.getAnnouncementType(),
+                announcement.getAnnouncementContent()
+        );
+    }
 }
