@@ -1,11 +1,11 @@
 -- ACCOUNT 테이블 초기화 데이터
 INSERT INTO account (
-    account_unique_id, account_id, account_password, account_name, account_sex,
+    account_unique_id, account_id, account_password, account_name, account_nickname, account_sex,
     account_age, account_phone_number, account_registered_datetime, account_profile_image,
-    account_email, account_deleted, created_at, updated_at
+    account_email, account_deleted, updated_at, account_nationality, account_role, account_star_rating, account_work_count, account_open_status
 ) VALUES
-      (1, 'user01', 'pass01', 'Alice', 'F', 25, '010-1234-5678', CURRENT_TIMESTAMP, 'profile1.jpg', 'alice@example.com', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-      (2, 'user02', 'pass02', 'Bob', 'M', 30, '010-2345-6789', CURRENT_TIMESTAMP, 'profile2.jpg', 'bob@example.com', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+      (1, 'user01', 'pass01', 'Alice', 'nickname1', 'F', 25, '010-1234-5678', CURRENT_TIMESTAMP, 'profile1.jpg', 'alice@example.com', false,  CURRENT_TIMESTAMP, 'KOREAN', 'EMPLOYEE', 0, 0, true),
+      (2, 'user02', 'pass02', 'Bob', 'nickname2', 'M', 30, '010-2345-6789', CURRENT_TIMESTAMP, 'profile2.jpg', 'bob@example.com', false, CURRENT_TIMESTAMP, 'KOREAN', 'EMPLOYEE', 0, 0, true);
 
 -- EMPLOYER 테이블 초기화 데이터
 INSERT INTO employer (
