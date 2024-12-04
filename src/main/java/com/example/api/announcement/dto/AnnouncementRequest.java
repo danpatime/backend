@@ -1,12 +1,14 @@
 package com.example.api.announcement.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
 
-@Getter
-@Setter
-public class AnnouncementRequest {
-    private String announcementTitle;
-    private String announcementType;
-    private String announcementContent;
+public record AnnouncementRequest(
+
+        @NonNull
+        String announcementTitle,
+        String announcementType,
+        String announcementContent
+
+        ){
+
 }
