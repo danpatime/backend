@@ -3,7 +3,10 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -15,6 +18,10 @@ public class Inquiry extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inquiryId;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
+    private Account account;
+
     private String inquiryType;
     private String subInquiryType;
     private String title;
@@ -23,12 +30,7 @@ public class Inquiry extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private InquiryStatus inquiryStatus;
 
-    private String createdBy;
-
-    private String processStatus;
-
-    @Column(name = "answer_date")
-    private String answerDate;
+    private LocalDateTime answerDate;
 
     public enum InquiryStatus {
         WAITING, COMPLETED
