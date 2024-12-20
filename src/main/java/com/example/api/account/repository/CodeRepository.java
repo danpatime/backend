@@ -1,6 +1,6 @@
 package com.example.api.account.repository;
 
-import com.example.api.account.domain.Code;
+import com.example.api.account.entity.Code;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
