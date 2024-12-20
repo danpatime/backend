@@ -13,6 +13,7 @@ import com.example.api.domain.Account;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,14 +30,14 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
 
-    public Code sendEmail(final EmailRequest request) throws BusinessException {
+    public Code sendEmail(@Valid final EmailRequest request) throws BusinessException {
         // 이미 가입된 이메일인지 검증
         validateDuplicateEmail(request);
         return mailSender.sendEmail(request);
     }
 
     @Transactional
-    public String saveCode(final Code code){
+    public String saveCode(@Valid final Code code){
         try {
             codeRepository.save(code);
 
@@ -47,7 +48,7 @@ public class AccountService {
     }
 
     @Transactional
-    public String verifyEmail(final EmailCodeRequest request) {
+    public String verifyEmail(@Valid final EmailCodeRequest request) {
         Optional<Code> findCode = codeRepository.findFirstByEmailOrderByCreatedAtDesc(request.email());
 
         return findCode.map(code -> {
@@ -60,7 +61,7 @@ public class AccountService {
     }
 
     @Transactional
-    public String signUp(final SignUpRequest request) {
+    public String signUp(@Valid final SignUpRequest request) {
         // 중복 로그인 ID 확인
         validateDuplicateLoginId(new LoginIdRequest(request.loginId()));
         // 계정 저장
