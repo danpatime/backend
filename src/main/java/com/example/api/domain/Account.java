@@ -2,9 +2,12 @@ package com.example.api.domain;
 
 import com.example.api.account.domain.Nationality;
 import com.example.api.account.domain.UserRole;
+import com.example.api.auth.dto.LoginUserRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 
 @Entity
@@ -33,9 +36,10 @@ public class Account extends BaseEntity {
     @Column(name = "ACCOUNT_NATIONALITY")
     @Enumerated(EnumType.STRING)
     private Nationality nationality;
-    @Column(name = "ACCOUNT_ROLE")
+    @ElementCollection(targetClass = UserRole.class)
+    @CollectionTable(name = "AUTHORITY", joinColumns = @JoinColumn(name = "ACCOUNT_UNIQUE_ID"))
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private Collection<UserRole> roles;
     @Column(name = "ACCOUNT_SEX")
     private String sex;
     @Column(name = "ACCOUNT_AGE")
@@ -54,7 +58,7 @@ public class Account extends BaseEntity {
     public Account() {
     }
 
-    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, UserRole role) {
+    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
@@ -62,9 +66,13 @@ public class Account extends BaseEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.nationality = nationality;
-        this.role = role;
+        this.roles = roles;
         this.starPoint =  0.0f;
         this.workCount = 0;
         this.openStatus = true;
+    }
+
+    public LoginUserRequest getLoginUser(){
+        return new LoginUserRequest(accountId);
     }
 }
