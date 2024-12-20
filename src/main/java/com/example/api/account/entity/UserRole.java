@@ -1,4 +1,4 @@
-package com.example.api.account.domain;
+package com.example.api.account.entity;
 
 public enum UserRole {
     EMPLOYEE(0, "알바생"),
@@ -23,5 +23,13 @@ public enum UserRole {
 
     public Integer getCode() {
         return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getAuthority() {
+        return "ROLE_" + this.name(); // ROLE_EMPLOYEE, ROLE_EMPLOYER 형식
     }
 }
