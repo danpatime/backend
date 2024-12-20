@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Entity
 public class RefreshToken {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tokenId")
