@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.example'
@@ -27,8 +26,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     compileOnly 'org.projectlombok:lombok'
 //    runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
@@ -36,18 +33,30 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // env 파일 읽도록 도와주는 라이브러리
+
+    // WEB SOCKET
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // MONGO DB
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // ENV
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 
-    //valid
+    // VALIDATION
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    //security
+    // SECURITY
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    // smtp
+    // SMTP
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
