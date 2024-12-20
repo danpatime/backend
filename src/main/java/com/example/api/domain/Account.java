@@ -1,7 +1,7 @@
 package com.example.api.domain;
 
-import com.example.api.account.domain.Nationality;
-import com.example.api.account.domain.UserRole;
+import com.example.api.account.entity.Nationality;
+import com.example.api.account.entity.UserRole;
 import com.example.api.auth.dto.LoginUserRequest;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.example.api.account.domain;
+package com.example.api.account.entity;
 
-import com.example.api.account.dto.request.EmailRequest;
+import com.example.api.account.dto.EmailRequest;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
