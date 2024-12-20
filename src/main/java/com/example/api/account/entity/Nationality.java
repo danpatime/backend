@@ -1,4 +1,4 @@
-package com.example.api.account.domain;
+package com.example.api.account.entity;
 
 public enum Nationality {
     KOREAN(0, "내국인"),

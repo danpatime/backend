@@ -1,4 +1,4 @@
-package com.example.api.account.dto.request;
+package com.example.api.account.dto;
 
 import com.example.api.global.config.resolver.ValidEmail;
 
