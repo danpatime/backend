@@ -18,20 +18,20 @@ public class AccountController {
     private final AccountService signUpService;
 
     @PostMapping("/email/code")
-    public ResponseEntity<?> sendEmailCode(@Valid @RequestBody final EmailRequest request) {
+    public ResponseEntity<String> sendEmailCode(@Valid @RequestBody final EmailRequest request) {
         Code code = signUpService.sendEmail(request);
         String successMessage = signUpService.saveCode(code);
         return ResponseEntity.ok(successMessage);
     }
 
     @PostMapping("/email/verification")
-    public ResponseEntity<?> verifyEmail(@Valid @RequestBody final EmailCodeRequest request) {
+    public ResponseEntity<String> verifyEmail(@Valid @RequestBody final EmailCodeRequest request) {
         String successMessage = signUpService.verifyEmail(request);
         return ResponseEntity.ok(successMessage);
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Valid @RequestBody final SignUpRequest request) {
+    public ResponseEntity<String> signUp(@Valid @RequestBody final SignUpRequest request) {
         String successMessage = signUpService.signUp(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(successMessage);
     }
