@@ -1,6 +1,6 @@
 package com.example.api.account.domain;
 
-import com.example.api.account.controller.dto.request.EmailRequestDto;
+import com.example.api.account.dto.request.EmailRequest;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public Code sendEmail(final EmailRequestDto emailRequest){
+    public Code sendEmail(final EmailRequest emailRequest){
         String code = CodeGenerator.generateCode();
 
         try {
