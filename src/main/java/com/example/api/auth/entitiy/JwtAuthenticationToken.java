@@ -47,4 +47,3 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         this.token = null;
     }
 }
-
