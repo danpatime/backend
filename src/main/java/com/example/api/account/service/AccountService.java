@@ -13,7 +13,6 @@ import com.example.api.domain.Account;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
