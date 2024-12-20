@@ -1,4 +1,4 @@
-package com.example.api.account.domain;
+package com.example.api.account.entity;
 
 import jakarta.persistence.Id;
 import lombok.Getter;
