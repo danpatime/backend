@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MailSender {
     private final JavaMailSender mailSender;
+    private final CodeGenerator codeGenerator;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
 
     public Code sendEmail(final EmailRequest emailRequest){
-        String code = CodeGenerator.generateCode();
+        String code = codeGenerator.generateCode();
 
         try {
             SimpleMailMessage message = createEmail(emailRequest.email(), code);
