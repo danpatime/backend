@@ -7,6 +7,7 @@ import com.example.api.domain.Account;
 import com.example.api.oauth2.dto.OAuth2Response;
 import com.example.api.oauth2.dto.Oauth2UserInfoRequest;
 import com.example.api.oauth2.entity.handler.OAuth2ResponseHandler;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,11 +22,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class Oauth2Service extends DefaultOAuth2UserService {
+public class CustomOauth2UserService extends DefaultOAuth2UserService {
     private final AccountRepository accountRepository;
     private final List<OAuth2ResponseHandler> oauth2ResponseHandlers;
 
     @Override
+    @Transactional
     public OAuth2User loadUser(final OAuth2UserRequest request) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(request);
         log.info(String.valueOf(oAuth2User));
