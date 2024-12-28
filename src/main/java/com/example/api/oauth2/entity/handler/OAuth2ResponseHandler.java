@@ -1,4 +1,4 @@
-package com.example.api.oauth2.entity;
+package com.example.api.oauth2.entity.handler;
 
 import com.example.api.oauth2.dto.OAuth2Response;
 
