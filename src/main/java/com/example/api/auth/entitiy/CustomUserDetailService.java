@@ -28,6 +28,6 @@ public class CustomUserDetailService {
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
                 .toList();
 
-        return new CustomUserDetails(user.getAccountId(), authorities);
+        return new CustomUserDetails(user.getAccountId(), user.getName(), user.getEmail(), authorities);
     }
 }
