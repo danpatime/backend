@@ -1,8 +1,10 @@
 package com.example.api.oauth2.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Map;
 
-public record KakaoResponse(Map<String, Object> attributes) implements OAuth2Response {
+public record KakaoResponse(@NotNull Map<String, Object> attributes) implements OAuth2Response {
 
     @Override
     public String getProvider() {

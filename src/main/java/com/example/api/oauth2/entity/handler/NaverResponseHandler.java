@@ -10,12 +10,12 @@ import java.util.Map;
 public class NaverResponseHandler implements OAuth2ResponseHandler {
 
     @Override
-    public boolean supports(String registrationId) {
+    public boolean supports(final String registrationId) {
         return "naver".equalsIgnoreCase(registrationId);
     }
 
     @Override
-    public OAuth2Response createResponse(Map<String, Object> attributes) {
+    public OAuth2Response createResponse(final Map<String, Object> attributes) {
         return new NaverResponse((Map<String, Object>) attributes.get("response"));
     }
 }
