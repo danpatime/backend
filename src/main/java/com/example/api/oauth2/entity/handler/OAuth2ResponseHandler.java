@@ -5,6 +5,6 @@ import com.example.api.oauth2.dto.OAuth2Response;
 import java.util.Map;
 
 public interface OAuth2ResponseHandler {
-    public boolean supports(String registrationId);
-    public OAuth2Response createResponse(Map<String, Object> attributes);
+    boolean supports(final String registrationId);
+    OAuth2Response createResponse(final Map<String, Object> attributes);
 }

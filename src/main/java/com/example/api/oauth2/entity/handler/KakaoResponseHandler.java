@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 @Slf4j
 public class KakaoResponseHandler implements OAuth2ResponseHandler {
     @Override
-    public boolean supports(String registrationId) {
+    public boolean supports(final String registrationId) {
         return "kakao".equalsIgnoreCase(registrationId);
     }
 
     @Override
-    public OAuth2Response createResponse( Map<String, Object> attributes) {
+    public OAuth2Response createResponse(final Map<String, Object> attributes) {
         log.info("Attributes: {}", attributes);
         return new KakaoResponse(attributes);
     }
