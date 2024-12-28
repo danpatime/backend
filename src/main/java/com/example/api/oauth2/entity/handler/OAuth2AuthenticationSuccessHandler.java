@@ -1,17 +1,17 @@
-package com.example.api.oauth2.entity;
+package com.example.api.oauth2.entity.handler;
 
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.auth.dto.AuthTokenRequest;
 import com.example.api.auth.dto.UserDetailRequest;
+import com.example.api.auth.entitiy.CustomUserDetails;
 import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.auth.service.JwtTokenProvider;
 import com.example.api.domain.Account;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
-import com.example.api.global.properties.Oauth2Properties;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.api.oauth2.entity.CookieUtils;
+import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,9 +49,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
         }
-
-        UserDetailRequest userDetailRequest = new UserDetailRequest((Long) authentication.getPrincipal(), (Collection<UserRole>) authentication.getAuthorities());
-        Account user = accountRepository.findById((Long) authentication.getPrincipal()).orElse(null);
+        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+        UserDetailRequest userDetailRequest = new UserDetailRequest(principal.getUserId(), (Collection<UserRole>) authentication.getAuthorities());
+        Account user = accountRepository.findById(principal.getUserId()).orElse(null);
         RefreshToken token = new RefreshToken(user);
         String accessToken = tokenProvider.generateAccessToken(userDetailRequest);
         String refreshToken = tokenProvider.generateRefreshToken(userDetailRequest, token.getId() );
@@ -78,7 +78,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             throw new BusinessException(ErrorCode.INVALID_REDIRECT_URI);
         }
-        return redirectUri.orElse(getDefaultTargetUrl());
+        return redirectUri.orElse("http://localhost:3000");
     }
 
     private boolean isAuthorizedRedirectUri(String uri) {

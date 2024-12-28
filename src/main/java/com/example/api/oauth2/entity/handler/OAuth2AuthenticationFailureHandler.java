@@ -1,5 +1,7 @@
-package com.example.api.oauth2.entity;
+package com.example.api.oauth2.entity.handler;
 
+import com.example.api.oauth2.entity.CookieUtils;
+import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
