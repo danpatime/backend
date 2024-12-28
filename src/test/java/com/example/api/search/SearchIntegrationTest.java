@@ -1,70 +1,66 @@
 package com.example.api.search;
 
+import com.example.api.global.BaseIntegrationTest;
 import com.example.api.search.dto.SearchCommand;
 import com.example.api.search.dto.SearchResponse;
-import com.example.api.domain.Account;
-import com.example.api.domain.PossibleBoard;
-import com.example.api.domain.Category;
-import com.example.api.domain.repository.MyInfoRepository;
-import com.example.api.domain.repository.PossibleBoardRepository;
-import com.example.api.domain.repository.CategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
-@Transactional
-class SearchServiceIntegrationTest {
+@AutoConfigureMockMvc
+class SearchIntegrationTest extends BaseIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
     @Autowired
     private SearchService searchService;
-    @Autowired
-    private MyInfoRepository myInfoRepository;
-    @Autowired
-    private PossibleBoardRepository possibleBoardRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @BeforeEach
-    void setUp() {
-        Account account = new Account();
-        account.setName("장원영");
-        account.setSex("Female");
-        account.setAge(21);
-        account.setStarPoint(4.8f);
-        account.setWorkCount();
-        myInfoRepository.save(account);
-
-        Category category = new Category();
-        category.setCategoryName("카페");
-        categoryRepository.save(category);
-
-        PossibleBoard possibleBoard = new PossibleBoard();
-        possibleBoard.setEmployee(account);
-        possibleBoard.setStartTime(LocalDateTime.of(2024, 11, 5, 9, 0));
-        possibleBoard.setEndTime(LocalDateTime.of(2024, 11, 5, 18, 0));
-        possibleBoardRepository.save(possibleBoard);
-    }
 
     @Test
-    void testSearchAccounts() {
-        SearchCommand command = new SearchCommand("카페", "09:00", "18:00");
+    void testSearchAccountsFromService() {
+        LocalDateTime startTime = LocalDateTime.of(2024, 11, 5, 9, 0);
+        LocalDateTime endTime = LocalDateTime.of(2024, 11, 5, 17, 0);
+
+        SearchCommand command = new SearchCommand("IT Services", startTime, endTime);
 
         List<SearchResponse> results = searchService.searchAccounts(command);
 
         assertEquals(1, results.size());
         SearchResponse response = results.get(0);
-        assertEquals("장원영", response.name());
-        assertEquals("Female", response.sex());
-        assertEquals(21, response.age());
-        assertEquals(4.8f, response.starPoint());
-        assertEquals(15, response.workCount());
+        assertEquals("John Doe", response.name());
+        assertEquals("Male", response.sex());
+        assertEquals(30, response.age());
+        assertEquals(3.5f, response.starPoint());
+        assertEquals(3, response.workCount());
+    }
+
+    @Test
+    void testSearchAccountsFromController() throws Exception {
+        mockMvc.perform(post("/api/search/search")
+                        .contentType("application/json")
+                        .content("""
+                        {
+                          "category": "IT Services",
+                          "startTime": "2024-11-05T09:00:00",
+                          "endTime": "2024-11-05T17:00:00"
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("John Doe"))
+                .andExpect(jsonPath("$[0].sex").value("Male"))
+                .andExpect(jsonPath("$[0].age").value(30))
+                .andExpect(jsonPath("$[0].starPoint").value(3.5))
+                .andExpect(jsonPath("$[0].workCount").value(3));
     }
 }
-

@@ -1,9 +1,10 @@
 package com.example.api.search.dto;
 
-public record JobResponse(
-        final String name,
-        final String sex,
-        final int age,
-        final float starPoint,
-        final int workCount
+import java.time.LocalDateTime;
+
+public record SearchRequest(
+        String category,
+        LocalDateTime startTime,
+        LocalDateTime endTime
 ) {}
+
