@@ -59,6 +59,12 @@ public class Account extends BaseEntity {
     public Account() {
     }
 
+    public Account(String name, String email, Collection<UserRole> roles) {
+        this.name = name;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles) {
         this.loginId = loginId;
         this.password = password;
