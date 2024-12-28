@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
     @Override
     @Transactional
-    public OAuth2User loadUser(final OAuth2UserRequest request) throws OAuth2AuthenticationException {
+    public OAuth2User loadUser(@Validated final OAuth2UserRequest request) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(request);
         log.info(String.valueOf(oAuth2User));
 
