@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
-
-    List<Announcement> findByAnnouncementTitleContaining(String keyword);
+    List<Announcement> findByAnnouncementTitleContaining(final String keyword);
 }
