@@ -6,14 +6,17 @@ public record AnnouncementResponse(
         Long announcementId,
         String announcementTitle,
         String announcementType,
-        String announcementContent
+        String announcementContent,
+        int viewCount
 ) {
     public AnnouncementResponse(Announcement announcement) {
         this(
                 announcement.getAnnouncementId(),
                 announcement.getAnnouncementTitle(),
                 announcement.getAnnouncementType(),
-                announcement.getAnnouncementContent()
+                announcement.getAnnouncementContent(),
+                announcement.getViewCount()
         );
     }
 }
+
