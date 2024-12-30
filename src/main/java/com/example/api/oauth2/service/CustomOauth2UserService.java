@@ -30,8 +30,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     @Override
     @Transactional
     public OAuth2User loadUser(@Validated final OAuth2UserRequest request) throws OAuth2AuthenticationException {
+        log.info("OAuth2UserRequest: {}", request.getAdditionalParameters());
         OAuth2User oAuth2User = super.loadUser(request);
-        log.info(String.valueOf(oAuth2User));
+        log.info("OAuth2User : {} ", oAuth2User);
 
         String registrationId = request.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = createOAuth2Response(registrationId, oAuth2User);
@@ -44,6 +45,15 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         return new CustomUserDetails(user.getAccountId(), user.getName(), user.getEmail(), user.getRoles());
     }
 
+    private OAuth2Response createOAuth2Response(final String registrationId, final OAuth2User oAuth2User) {
+        for (OAuth2ResponseHandler oauth2ResponseHandler : oauth2ResponseHandlers) {
+            if(oauth2ResponseHandler.supports(registrationId)) {
+                return oauth2ResponseHandler.createResponse(oAuth2User.getAttributes());
+            }
+        }
+        return null;
+    }
+
     private CustomUserDetails saveOauth2Account(final Oauth2UserInfoRequest userInfo) {
         Account account = new Account(
                 userInfo.name(),
@@ -52,14 +62,5 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         );
         Account savedUser = accountRepository.save(account);
         return new CustomUserDetails(savedUser.getAccountId(), savedUser.getName(), savedUser.getEmail(), savedUser.getRoles());
-    }
-
-    private OAuth2Response createOAuth2Response(final String registrationId, final OAuth2User oAuth2User) {
-        for (OAuth2ResponseHandler oauth2ResponseHandler : oauth2ResponseHandlers) {
-            if(oauth2ResponseHandler.supports(registrationId)) {
-                return oauth2ResponseHandler.createResponse(oAuth2User.getAttributes());
-            }
-        }
-        return null;
     }
 }
