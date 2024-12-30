@@ -29,6 +29,7 @@ public class AccountService {
     private final CodeRepository codeRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
+    private final AccountRepository accountRepository;
 
     public Code sendEmail(@Validated final EmailRequest request) throws BusinessException {
         // 이미 가입된 이메일인지 검증
@@ -101,5 +102,10 @@ public class AccountService {
         if (accountRepository.existsByEmail(emailRequest.email())) {
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
+    }
+
+    public Account loadAccount(final Long requestMemberId) {
+        return accountRepository.findById(requestMemberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
     }
 }
