@@ -33,7 +33,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
     // WEB SOCKET
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
@@ -69,6 +68,12 @@ dependencies {
 
     // OAUTH2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // MOCKITO
+    testImplementation "org.mockito:mockito-core:3.+"
+
+    //WIREMOCK (외부 의존성 테스트용)
+    implementation 'org.wiremock.integrations:wiremock-spring-boot:3.3.0'
 }
 
 tasks.named('test') {
