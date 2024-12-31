@@ -29,8 +29,8 @@ public class InquiryService {
     }
 
     @Transactional(readOnly = true)
-    public List<InquiryResponse> getInquiriesByUser(@Validated final Account account) {
-        final List<Inquiry> inquiries = inquiryRepository.findByCreatedBy(account);
+    public List<InquiryResponse> getInquiriesByAccountId(final Long accountId) {
+        final List<Inquiry> inquiries = inquiryRepository.findByCreatedByAccountId(accountId);
         return inquiries.stream()
                 .map(this::mapToInquiryResponse)
                 .collect(Collectors.toList());
