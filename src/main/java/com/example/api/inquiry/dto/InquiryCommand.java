@@ -1,5 +1,6 @@
 package com.example.api.inquiry.dto;
 
+import com.example.api.domain.Account;
 import org.springframework.lang.NonNull;
 import java.time.LocalDateTime;
 
@@ -11,9 +12,8 @@ public record InquiryCommand(
         String title,
         String content,
         String inquiryStatus,
-        String processStatus,
         LocalDateTime answerDate,
         @NonNull
-        Long accountId
+        Account createdBy
 ) {
 }
