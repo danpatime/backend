@@ -1,9 +1,10 @@
-package com.example.api.inquiry;
+package com.example.api.inquiry.controller;
 
 
 import com.example.api.domain.Inquiry;
-import com.example.api.inquiry.dto.RequestDTO;
-import com.example.api.inquiry.dto.ResponseDTO;
+import com.example.api.inquiry.InquiryService;
+import com.example.api.inquiry.dto.InquiryRequest;
+import com.example.api.inquiry.dto.InquiryCommand;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -21,23 +22,23 @@ public class InquiryController {
 
 
     @PostMapping("/inquiry")
-    public ResponseEntity<ResponseDTO> createInquiry(@RequestBody RequestDTO requestDTO) {
+    public ResponseEntity<InquiryCommand> createInquiry(@RequestBody InquiryRequest requestDTO) {
         Inquiry inquiry = inquiryService.saveInquiry(requestDTO);
-        ResponseDTO responseDTO = mapToResponseDTO(inquiry);
+        InquiryCommand responseDTO = mapToResponseDTO(inquiry);
         return ResponseEntity.ok(responseDTO);
     }
 
 
     @GetMapping("/my-inquiries")
-    public ResponseEntity<List<ResponseDTO>> getMyInquiries(@RequestParam String createdBy) {
+    public ResponseEntity<List<InquiryCommand>> getMyInquiries(@RequestParam String createdBy) {
         List<Inquiry> inquiries = inquiryService.getInquiriesByUser(createdBy);
-        List<ResponseDTO> responseDTOs = inquiries.stream()
+        List<InquiryCommand> responseDTOs = inquiries.stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responseDTOs);
     }
 
-    private ResponseDTO mapToResponseDTO(Inquiry inquiry) {
-        return modelMapper.map(inquiry, ResponseDTO.class);
+    private InquiryCommand mapToResponseDTO(Inquiry inquiry) {
+        return modelMapper.map(inquiry, InquiryCommand.class);
     }
 }

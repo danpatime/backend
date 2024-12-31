@@ -13,25 +13,26 @@ import static jakarta.persistence.FetchType.LAZY;
 @Setter
 @Table(name = "INQUIRY")
 public class Inquiry extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inquiryId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
-    private Account account;
+    private Account createdBy;
 
     private String inquiryType;
+
     private String subInquiryType;
+
     private String title;
+
     private String content;
 
     @Enumerated(EnumType.STRING)
     private InquiryStatus inquiryStatus;
 
     private LocalDateTime answerDate;
-
     public enum InquiryStatus {
         WAITING, COMPLETED
     }
