@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -36,6 +37,8 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final StringPath name = createString("name");
 
+    public final EnumPath<com.example.api.account.entity.Nationality> nationality = createEnum("nationality", com.example.api.account.entity.Nationality.class);
+
     public final StringPath nickname = createString("nickname");
 
     public final BooleanPath openStatus = createBoolean("openStatus");
@@ -46,7 +49,7 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final StringPath profileImage = createString("profileImage");
 
-    public final DateTimePath<java.util.Date> registeredDatetime = createDateTime("registeredDatetime", java.util.Date.class);
+    public final CollectionPath<com.example.api.account.entity.UserRole, EnumPath<com.example.api.account.entity.UserRole>> roles = this.<com.example.api.account.entity.UserRole, EnumPath<com.example.api.account.entity.UserRole>>createCollection("roles", com.example.api.account.entity.UserRole.class, EnumPath.class, PathInits.DIRECT2);
 
     public final StringPath sex = createString("sex");
 
