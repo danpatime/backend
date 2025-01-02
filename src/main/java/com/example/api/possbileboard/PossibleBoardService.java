@@ -1,6 +1,6 @@
 package com.example.api.possbileboard;
 
-import com.example.api.account.AccountService;
+import com.example.api.account.service.AccountService;
 import com.example.api.domain.Account;
 import com.example.api.domain.Category;
 import com.example.api.domain.Contract;

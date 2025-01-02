@@ -13,7 +13,7 @@ import com.example.api.domain.PossibleBoard;
 import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
-import com.example.api.domain.repository.PossibleBoardRepository;
+import com.example.api.possbileboard.PossibleBoardRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

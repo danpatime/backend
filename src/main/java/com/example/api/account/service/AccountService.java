@@ -25,7 +25,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-    private final AccountRepository authRepository;
+    private final AccountRepository accountRepository;
     private final CodeRepository codeRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
@@ -69,6 +69,12 @@ public class AccountService {
         return "회원가입이 완료되었습니다";
     }
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public Account loadAccount(final Long requestMemberId) {
+        return accountRepository.findById(requestMemberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
+    }
+
     private void saveAccount(final SignUpRequest request) {
         Collection<UserRole> roles = List.of(request.role());
         Account account = new Account(
@@ -82,17 +88,17 @@ public class AccountService {
                 roles
         );
 
-        authRepository.save(account);
+        accountRepository.save(account);
     }
 
     private void validateDuplicateLoginId(final LoginIdRequest loginIdRequest) {
-        if (authRepository.existsByLoginId(loginIdRequest.loginId())) {
+        if (accountRepository.existsByLoginId(loginIdRequest.loginId())) {
             throw new BusinessException(ErrorCode.DUPLICATE_LOGIN_ID);
         }
     }
 
     private void validateDuplicateEmail(final EmailRequest emailRequest) {
-        if (authRepository.existsByEmail(emailRequest.email())) {
+        if (accountRepository.existsByEmail(emailRequest.email())) {
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
