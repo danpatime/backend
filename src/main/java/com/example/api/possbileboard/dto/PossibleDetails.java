@@ -11,6 +11,6 @@ public record PossibleDetails(
         LocalDateTime possibleStartTime,
         LocalDateTime possibleEndTime,
         Long contractCount,
-        Integer starPoint
+        Double starPoint
 ) {
 }

@@ -40,7 +40,7 @@ class PossibleMapper {
                         .map(this::toInternalCareerResponse)
                         .toList(),
                 possibleDetails.contractCount(),
-                possibleDetails.starPoint()
+                possibleDetails.starPoint().intValue()
         );
     }
 

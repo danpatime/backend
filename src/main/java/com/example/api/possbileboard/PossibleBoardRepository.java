@@ -1,5 +1,6 @@
 package com.example.api.possbileboard;
 
+import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.domain.Category;
 import com.example.api.domain.Contract;
 import com.example.api.domain.ExternalCareer;
@@ -14,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
+public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
     @Modifying
     @Query("DELETE FROM PossibleBoard possible WHERE (possible.startTime <= :endDateTime AND possible.endTime >= :startDateTime)")
     Long deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
@@ -31,5 +32,11 @@ interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
 
     @Query("SELECT c FROM Contract c JOIN PossibleBoard p ON p.employee.accountId = c.offerEmployment.employee.accountId WHERE c.offerEmployment.employee.accountId = :possibleId AND c.contractSucceeded = TRUE ")
     List<Contract> queryInternalCareeors(@Param("possibleId") final Long possibleId);
+
+    List<PossibleBoard> findAllByEmployeeAccountId(Long employeeId);
+
+    @Query("select new com.example.api.board.controller.domain.response.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
+            "from PossibleBoard p where p.employee.accountId = :employeeId")
+    List<PossibleBoardDTO> findAllDTOByEmployeeAccountId(@Param("employeeId")Long employeeId);
 
 }
