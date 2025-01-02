@@ -6,18 +6,33 @@ import com.example.api.board.controller.domain.response.InnerCareerDTO;
 import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.business.BusinessRepository;
 import com.example.api.contracts.ContractRepository;
-import com.example.api.domain.*;
-import com.example.api.domain.repository.*;
+import com.example.api.domain.Account;
+import com.example.api.domain.Business;
+import com.example.api.domain.BusinessCategory;
+import com.example.api.domain.Category;
+import com.example.api.domain.Contract;
+import com.example.api.domain.ExternalCareer;
+import com.example.api.domain.OfferEmployment;
+import com.example.api.domain.PossibleBoard;
+import com.example.api.domain.Review;
+import com.example.api.domain.repository.CategoryRepository;
+import com.example.api.domain.repository.EmployeeRepository;
+import com.example.api.domain.repository.EmployerRepository;
+import com.example.api.domain.repository.ExternalCareerRepository;
+import com.example.api.domain.repository.FlavoredRepository;
+import com.example.api.domain.repository.MyInfoRepository;
+import com.example.api.domain.repository.OfferEmploymentRepository;
+import com.example.api.domain.repository.ReviewRepository;
+import com.example.api.possbileboard.PossibleBoardRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
