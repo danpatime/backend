@@ -1,10 +1,10 @@
 package com.example.api.domain;
 
+import com.example.api.account.entity.Location;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,8 +32,9 @@ public class Business extends BaseEntity {
     @Column(name = "BUSINESS_NAME")
     private String businessName;
 
-    @Column(name = "BUSINESS_LOCATION")
-    private String location;
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "BUSINESS_LOCATION")
+    private Location location;
 
     private String representationName;
 
@@ -50,6 +51,18 @@ public class Business extends BaseEntity {
     public void setLocation(String location) {
         this.location = location;
     }
+    public Business() {
+    }
+
+    public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, Location location) {
+        this.employer = user;
+        this.registrationNumber = businessRegistrationNumber;
+        this.businessName = businessName;
+        this.representationName = representationName;
+        this.openDate = LocalDate.parse(businessOpenDate);
+        this.location = location;
+    }
+}
 
     public Business(String businessName, String location, String representationName) {
         this.businessName = businessName;
