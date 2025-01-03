@@ -2,6 +2,11 @@ package com.example.api.global;
 
 import com.example.api.board.dto.response.InnerCareerDTO;
 import com.example.api.board.dto.response.PossibleBoardDTO;
+import com.example.api.account.entity.Location;
+import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.controller.domain.response.ExternalCareerDTO;
+import com.example.api.board.controller.domain.response.InnerCareerDTO;
+import com.example.api.board.controller.domain.response.PossibleBoardDTO;
 import com.example.api.business.BusinessRepository;
 import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.Account;
@@ -102,7 +107,7 @@ public class BaseIntegrationTest {
 
         Business business = new Business();
         business.setBusinessName("Tech Solutions Inc.");
-        business.setLocation("Seoul, South Korea");
+        business.setLocation(new Location("우편번호", "주소", "상세주소"));
         business.setRepresentationName("James");
         business.setOpenDate(LocalDate.now());
         business.setRegistrationNumber("123-456-789");

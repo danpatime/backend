@@ -6,6 +6,8 @@ import com.example.api.auth.dto.LoginUserRequest;
 import com.example.api.board.dto.update.UpdateOpenStatusRequest;
 import com.example.api.board.dto.update.UpdateUserInfoRequest;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +24,6 @@ public class Account extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ACCOUNT_UNIQUE_ID")
     private Long accountId;
-
     @Column(name = "ACCOUNT_ID")
     private String loginId;
     @Column(name = "ACCOUNT_PASSWORD")
@@ -81,6 +82,15 @@ public class Account extends BaseEntity {
         this.workCount = 0;
         this.openStatus = true;
         this.emailReceivable = emailReceivable;
+    }
+
+    public Account(String loginId, String password, String email, String phoneNumber, Nationality nationality, Collection<UserRole> roles) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.nationality = nationality;
+        this.roles = roles;
     }
 
     public LoginUserRequest getLoginUser(){
