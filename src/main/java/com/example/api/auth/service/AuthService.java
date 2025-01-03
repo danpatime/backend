@@ -1,8 +1,8 @@
 package com.example.api.auth.service;
 
+import com.example.api.account.repository.AccountRepository;
 import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.dto.*;
-import com.example.api.auth.repository.AuthRepository;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.domain.Account;
 import com.example.api.exception.BusinessException;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final AuthRepository authRepository;
+    private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
@@ -29,7 +29,7 @@ public class AuthService {
     }
 
     private Account getUserByLoginId(final String loginId) {
-        final Account user = authRepository.findUserByLoginId(loginId)
+        final Account user = accountRepository.findUserByLoginId(loginId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
 
         if(user.isDeleted())
@@ -84,6 +84,6 @@ public class AuthService {
     }
 
     private Account getUserById(final Long userId) {
-        return authRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        return accountRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
     }
 }

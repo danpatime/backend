@@ -35,7 +35,7 @@ public class QBusiness extends EntityPathBase<Business> {
 
     public final QAccount employer;
 
-    public final StringPath location = createString("location");
+    public final com.example.api.account.entity.QLocation location;
 
     public final DatePath<java.time.LocalDate> openDate = createDate("openDate", java.time.LocalDate.class);
 
@@ -65,6 +65,7 @@ public class QBusiness extends EntityPathBase<Business> {
     public QBusiness(Class<? extends Business> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.employer = inits.isInitialized("employer") ? new QAccount(forProperty("employer")) : null;
+        this.location = inits.isInitialized("location") ? new com.example.api.account.entity.QLocation(forProperty("location")) : null;
     }
 
 }
