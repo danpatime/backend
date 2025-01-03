@@ -3,11 +3,10 @@ package com.example.api.account.dto;
 import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.global.config.resolver.ValidEmail;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record SignUpRequest(
+public record SignUpEmployeeRequest(
     @NotBlank
     String loginId,
     @NotBlank
