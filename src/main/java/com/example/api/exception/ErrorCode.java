@@ -15,6 +15,7 @@ public enum ErrorCode {
     INCORRECT_PASSWORD(HttpStatus.BAD_REQUEST, "-107", "틀린 비밀번호입니다."),
     INCORRECT_DATA(HttpStatus.BAD_REQUEST, "-108", "올바르지 않은 정보입니다."),
     INVALID_REDIRECT_URI(HttpStatus.BAD_REQUEST,"-109","유효하지 않은 REDIRECT URI입니다."),
+    INVALID_BUSINESS_NUMBER(HttpStatus.BAD_REQUEST,"-110","사업자 등록 정보를 확인할 수 없습니다."),
 
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "-T1", "올바르지 않은 AccessToken입니다."),
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "-T2", "만료된 AccessToken입니다."),
