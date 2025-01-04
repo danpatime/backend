@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
+interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long>, CustomPossibleBoardRepository {
     @Modifying
     @Query("DELETE FROM PossibleBoard possible WHERE (possible.startTime <= :endDateTime AND possible.endTime >= :startDateTime)")
     Long deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
