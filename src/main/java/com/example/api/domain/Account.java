@@ -14,6 +14,8 @@ import lombok.Setter;
 
 import java.util.Collection;
 
+import static jakarta.persistence.FetchType.*;
+
 
 @Entity
 @Getter
