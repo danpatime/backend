@@ -12,10 +12,11 @@ import com.example.api.account.entity.MailSender;
 import com.example.api.domain.Account;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
@@ -29,7 +30,6 @@ public class AccountService {
     private final CodeRepository codeRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
-    private final AccountRepository accountRepository;
 
     public Code sendEmail(@Validated final EmailRequest request) throws BusinessException {
         // 이미 가입된 이메일인지 검증
@@ -70,7 +70,7 @@ public class AccountService {
         return "회원가입이 완료되었습니다";
     }
 
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public Account loadAccount(final Long requestMemberId) {
         return accountRepository.findById(requestMemberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
@@ -102,10 +102,5 @@ public class AccountService {
         if (accountRepository.existsByEmail(emailRequest.email())) {
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
-    }
-
-    public Account loadAccount(final Long requestMemberId) {
-        return accountRepository.findById(requestMemberId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
     }
 }
