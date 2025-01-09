@@ -14,12 +14,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Contract extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="CONTRACT_ID")
     private Long contractId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID")
+    @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OfferEmployment offerEmployment;
 
     @Column(name = "CONTRACT_START_TIME")
@@ -65,4 +64,3 @@ public class Contract extends BaseEntity {
         this.contractSucceeded = true;
     }
 }
-

@@ -9,7 +9,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "flavored", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"employee_id", "category_id"})
@@ -21,11 +20,11 @@ public class Flavored extends BaseEntity{
     private Long flavoredId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category category;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
 
     public Flavored() {

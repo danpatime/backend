@@ -13,7 +13,6 @@ import java.util.Collection;
 
 @Entity
 @Getter
-@Setter
 @AttributeOverride(name = "createdDate", column = @Column(name = "ACCOUNT_REGISTERED_DATETIME"))
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
@@ -38,7 +37,7 @@ public class Account extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Nationality nationality;
     @ElementCollection(targetClass = UserRole.class)
-    @CollectionTable(name = "AUTHORITY", joinColumns = @JoinColumn(name = "ACCOUNT_UNIQUE_ID"))
+    @CollectionTable(name = "AUTHORITY", joinColumns = @JoinColumn(name = "ACCOUNT_UNIQUE_ID"), foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @Enumerated(EnumType.STRING)
     private Collection<UserRole> roles;
     @Column(name = "ACCOUNT_SEX")

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "CATEGORY")
 public class Category extends BaseEntity{
@@ -30,4 +29,3 @@ public class Category extends BaseEntity{
         this.categoryName = categoryName;
     }
 }
-

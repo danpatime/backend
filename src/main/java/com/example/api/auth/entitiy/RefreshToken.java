@@ -22,7 +22,7 @@ public class RefreshToken {
     private LocalDateTime recentLogin = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
+    @JoinColumn(name = "ACCOUNT_UNIQUE_ID", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account user;
 
     protected RefreshToken() {

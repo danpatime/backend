@@ -1,4 +1,4 @@
-package com.example.api.chat.domain;
+package com.example.api.chat.dto;
 
 import java.util.Date;
 
