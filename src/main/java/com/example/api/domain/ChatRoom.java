@@ -3,7 +3,6 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,17 +10,15 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode
 @Table(name = "CHAT_ROOM")
 public class ChatRoom {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatRoomId;
 
     @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "SUGGEST_ID")
+    @JoinColumn(name = "SUGGEST_ID", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OfferEmployment offerEmployment;
 
     @Column(name = "SUGGEST_GENERATED_DATE")
@@ -37,4 +34,3 @@ public class ChatRoom {
         this.suggestGeneratedDate = LocalDateTime.now();
     }
 }
-

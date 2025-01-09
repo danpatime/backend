@@ -1,6 +1,6 @@
 package com.example.api.chat.repository;
 
-import com.example.api.chat.domain.ChatSummary;
+import com.example.api.chat.dto.ChatSummary;
 import com.example.api.domain.Chat;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import com.example.api.chat.controller.dto.request.UserIdRequest;
 import com.example.api.chat.controller.dto.request.ChatSendRequest;
 import com.example.api.chat.controller.dto.request.ReadRequest;
 import com.example.api.chat.controller.dto.response.ChatSummaryResponse;
-import com.example.api.chat.domain.ChatSummary;
+import com.example.api.chat.dto.ChatSummary;
 import com.example.api.chat.repository.ChatRepository;
 import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.chat.service.model.ChatSender;
