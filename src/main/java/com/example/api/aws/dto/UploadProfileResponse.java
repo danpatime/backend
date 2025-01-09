@@ -1,4 +1,6 @@
 package com.example.api.aws.dto;
 
-public record UploadProfileResponse() {
+import jakarta.validation.constraints.NotNull;
+
+public record UploadProfileResponse(@NotNull String path) {
 }
