@@ -38,7 +38,9 @@ public enum ErrorCode {
 
     BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러"),
 
-    CONTRACT_EXCEPTION(HttpStatus.BAD_REQUEST, "-800", "계약 도메인 에러");
+    CONTRACT_EXCEPTION(HttpStatus.BAD_REQUEST, "-800", "계약 도메인 에러"),
+
+    FILE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR,"F500", "이미지 업로드 실패");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
@@ -50,4 +52,3 @@ public enum ErrorCode {
         this.errorDescription = errorDescription;
     }
 }
-
