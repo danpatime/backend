@@ -11,7 +11,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode
 @Table(name = "OFFER_EMPLOYMENT")
 public class OfferEmployment {
@@ -20,10 +19,10 @@ public class OfferEmployment {
     private Long suggestId;
 
     @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_ID")
+    @JoinColumn(name = "BUSINESS_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Business business;
     @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "EMPLOYEE_ID")
+    @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;

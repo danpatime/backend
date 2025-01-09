@@ -11,7 +11,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "EXTERANL_CARRER")
 public class ExternalCareer extends BaseEntity{
@@ -20,7 +19,7 @@ public class ExternalCareer extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @JsonIgnore
     private Account employee;
 
@@ -40,4 +39,3 @@ public class ExternalCareer extends BaseEntity{
     public ExternalCareer() {
     }
 }
-
