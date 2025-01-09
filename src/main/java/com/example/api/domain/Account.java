@@ -88,6 +88,24 @@ public class Account extends BaseEntity {
         this.roles = roles;
     }
 
+    public Account(int age, boolean deleted, String email, String loginId, String name, Nationality nationality, String nickname, boolean openStatus, String password, String phoneNumber, String profileImage, Collection<UserRole> roles, String sex, float starPoint, int workCount) {
+        this.age = age;
+        this.deleted = deleted;
+        this.email = email;
+        this.loginId = loginId;
+        this.name = name;
+        this.nationality = nationality;
+        this.nickname = nickname;
+        this.openStatus = openStatus;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.profileImage = profileImage;
+        this.roles = roles;
+        this.sex = sex;
+        this.starPoint = starPoint;
+        this.workCount = workCount;
+    }
+
     public LoginUserRequest getLoginUser(){
         return new LoginUserRequest(accountId);
     }
