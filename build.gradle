@@ -96,6 +96,9 @@ dependencies {
 
     //WIREMOCK (외부 의존성 테스트용)
     implementation 'org.wiremock.integrations:wiremock-spring-boot:3.3.0'
+
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
