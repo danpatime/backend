@@ -14,7 +14,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS")
 @NoArgsConstructor
@@ -24,7 +23,7 @@ public class Business extends BaseEntity {
     private Long businessId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_EMPLOYER_ID")
+    @JoinColumn(name = "BUSINESS_EMPLOYER_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employer;
 
     @OneToMany(mappedBy = "business")

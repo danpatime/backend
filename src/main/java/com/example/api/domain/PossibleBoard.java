@@ -9,7 +9,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class PossibleBoard extends BaseEntity{
     private Long possibleId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "EMPLOYEE_ID")
+    @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
 
     @Column(name = "POSSIBLE_START_TIME")

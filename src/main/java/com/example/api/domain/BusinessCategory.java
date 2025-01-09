@@ -4,15 +4,11 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS_CATEGORY")
 @NoArgsConstructor
@@ -23,11 +19,11 @@ public class BusinessCategory extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_ID")
+    @JoinColumn(name = "BUSINESS_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Business business;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "CATEGOREY_ID")
+    @JoinColumn(name = "CATEGOREY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category category;
 
     public BusinessCategory(Business business, Category category) {
@@ -35,4 +31,3 @@ public class BusinessCategory extends BaseEntity{
         this.category = category;
     }
 }
-
