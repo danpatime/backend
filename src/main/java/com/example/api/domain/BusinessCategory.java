@@ -3,6 +3,7 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import static jakarta.persistence.FetchType.*;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS_CATEGORY")
+@NoArgsConstructor
 public class BusinessCategory extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +29,10 @@ public class BusinessCategory extends BaseEntity{
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "CATEGOREY_ID")
     private Category category;
+
+    public BusinessCategory(Business business, Category category) {
+        this.business = business;
+        this.category = category;
+    }
 }
 
