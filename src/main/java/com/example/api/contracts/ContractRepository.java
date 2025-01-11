@@ -39,7 +39,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join c.offerEmployment oe " +
             "join oe.employee e " +
             "join oe.business b " +
-            "where b.businessId = :businessId and c.contractSucceeded = false")
+            "where b.businessId = :businessId and c.contractSucceeded = true")
     List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
 
 }
