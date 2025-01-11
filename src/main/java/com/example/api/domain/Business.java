@@ -42,4 +42,11 @@ public class Business extends BaseEntity {
     @Column(name = "BUSINESS_REGISTRATION_NUMBER")
     private String registrationNumber;
 
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }
