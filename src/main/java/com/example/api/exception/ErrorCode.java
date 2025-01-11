@@ -30,7 +30,9 @@ public enum ErrorCode {
 
     ACCOUNT_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "찾을 수 없는 계정"),
 
-    POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러");
+    POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러"),
+
+    CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "카테고리 에러");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
