@@ -27,14 +27,4 @@ public class ReviewController {
         final List<ReviewResponse> reviews = reviewService.getReviewsByEmployee(reivewId);
         return ResponseEntity.ok(reviews);
     }
-
-    @GetMapping("/available") // 작성 가능 알바 리스트 반환
-    public ResponseEntity<List<ReviewAvailableResponse>> getAvailableReviewTargets(
-            @RequestParam(required = true) final Long contractId
-    ) {
-        final ReviewAvailableCommand reviewAvailableCommand = new ReviewAvailableCommand(contractId); // final 및 명확한 변수명
-        final List<ReviewAvailableResponse> availableEmployees =
-                reviewService.getAvailableReviewTargets(reviewAvailableCommand); // final로 결과 선언
-        return ResponseEntity.ok(availableEmployees);
-    }
 }
