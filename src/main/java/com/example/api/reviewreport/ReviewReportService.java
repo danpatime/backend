@@ -16,16 +16,13 @@ public class ReviewReportService {
 
     @Transactional
     public ReviewReportResponse reportReview(final ReviewReportCommand reviewReportCommand) {
-        validateAlreadyReported(
-                reviewReportCommand.reviewId(),
-                reviewReportCommand.employeeId()
-        );
+        validateAlreadyReported(reviewReportCommand.reviewId());
         final ReviewReport savedReport = saveReviewReport(reviewReportCommand);
         return createResponse(savedReport);
     }
 
-    private void validateAlreadyReported(final Review review, final Account employee) {
-        boolean alreadyReported = reviewReportRepository.existsByReviewAndEmployee(review, employee);
+    private void validateAlreadyReported(final Review review) {
+        boolean alreadyReported = reviewReportRepository.existsByReview(review);
         if (alreadyReported) {
             throw new IllegalStateException("이미 신고된 리뷰입니다.");
         }

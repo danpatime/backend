@@ -21,13 +21,9 @@ public class ReviewReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REVIEW_ID")
     private Review review;
-
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "EMPLOYEE_ID")
-    private Account employee;
 
     @Column(name = "REASON")
     private String reason;

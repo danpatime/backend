@@ -6,7 +6,11 @@ import com.example.api.domain.ReviewReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ReviewReportRepository extends JpaRepository<ReviewReport, Long> {
-    boolean existsByReviewAndEmployee(Review review, Account employee);
+    boolean existsByReview(Review review);
+
+    Optional<ReviewReport> findByReview(Review review);
 }

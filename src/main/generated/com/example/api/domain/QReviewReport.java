@@ -22,8 +22,6 @@ public class QReviewReport extends EntityPathBase<ReviewReport> {
 
     public static final QReviewReport reviewReport = new QReviewReport("reviewReport");
 
-    public final QAccount employee;
-
     public final StringPath reason = createString("reason");
 
     public final NumberPath<Long> reportId = createNumber("reportId", Long.class);
@@ -48,7 +46,6 @@ public class QReviewReport extends EntityPathBase<ReviewReport> {
 
     public QReviewReport(Class<? extends ReviewReport> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
         this.review = inits.isInitialized("review") ? new QReview(forProperty("review")) : null;
     }
 

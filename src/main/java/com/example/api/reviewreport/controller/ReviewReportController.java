@@ -1,6 +1,5 @@
 package com.example.api.reviewreport.controller;
 
-import com.example.api.domain.Account;
 import com.example.api.domain.Review;
 import com.example.api.reviewreport.ReviewReportService;
 import com.example.api.reviewreport.dto.ReviewReportCommand;
@@ -16,13 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewReportController {
     private final ReviewReportService reviewReportService;
 
-    @PostMapping("/{accountId}/{reviewId}/report")
+    @PostMapping("/{reviewId}/report")
     public ResponseEntity<ReviewReportResponse> reportReview(
-            @PathVariable final Review reviewId,
-            @PathVariable final Account employeeId,
+            @PathVariable(required = true) final Review reviewId,
             @RequestBody final ReviewReportRequest reviewReportRequest
     ) {
-        final ReviewReportCommand reviewReportCommand = reviewReportRequest.toCommand(reviewId, employeeId);
+        final ReviewReportCommand reviewReportCommand = reviewReportRequest.toCommand(reviewId);
         final ReviewReportResponse response = reviewReportService.reportReview(reviewReportCommand);
         return ResponseEntity.ok(response);
     }
