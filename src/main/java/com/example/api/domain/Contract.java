@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Setter
 @Getter
 @Table(name = "CONTRACT")
 @EqualsAndHashCode(callSuper = false)
