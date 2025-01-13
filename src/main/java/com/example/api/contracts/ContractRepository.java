@@ -3,6 +3,7 @@ package com.example.api.contracts;
 import com.example.api.contracts.dto.BusinessInfoDTO;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join oe.employee e " +
             "where c.contractId = :contractId")
     EmployeeInfoDTO findEmployeeDTOByContractId(@Param("contractId") long contractId);
+
+    @Query("SELECT c FROM Contract c JOIN FETCH c.offerEmployment JOIN FETCH c.offerEmployment.business.employer WHERE c.contractId = :contractId")
+    Optional<Contract> loadContractWithOfferEmployment(@Param("contractId") final Long contractId);
 }
