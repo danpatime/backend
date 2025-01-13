@@ -3,6 +3,7 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import static jakarta.persistence.FetchType.*;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS")
+@NoArgsConstructor
 public class Business extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,5 +50,11 @@ public class Business extends BaseEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Business(String businessName, String location, String representationName) {
+        this.businessName = businessName;
+        this.location = location;
+        this.representationName = representationName;
     }
 }

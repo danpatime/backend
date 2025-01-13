@@ -1,5 +1,6 @@
 package com.example.api.business.update;
 
+import com.example.api.business.domain.BusinessRepresentationName;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
 import java.util.Objects;
@@ -13,7 +14,8 @@ public class UpdateBusinessRepresentationNameHandler implements BusinessUpdateHa
     @Override
     public void update(Business business, ModifyBusinessCommand command) {
         if (Objects.nonNull(command.representationName())) {
-            business.setRepresentationName(command.representationName());
+            final BusinessRepresentationName representationName = new BusinessRepresentationName(command.representationName());
+            business.setRepresentationName(representationName.getRepresentationName());
         }
     }
 }

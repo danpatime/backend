@@ -1,5 +1,6 @@
 package com.example.api.business.update;
 
+import com.example.api.business.domain.BusinessName;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
 import java.util.Objects;
@@ -13,7 +14,8 @@ class UpdateBusinessNameHandler implements BusinessUpdateHandler {
     @Override
     public void update(Business business, ModifyBusinessCommand command) {
         if (Objects.nonNull(command.businessName())) {
-            business.setBusinessName(command.businessName());
+            final BusinessName businessName = new BusinessName(command.businessName());
+            business.setBusinessName(businessName.getName());
         }
     }
 }
