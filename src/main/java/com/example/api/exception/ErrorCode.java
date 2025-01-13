@@ -34,8 +34,10 @@ public enum ErrorCode {
 
     CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "카테고리 에러"),
 
-    BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러");
 
+    BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러"),
+
+    CONTRACT_EXCEPTION(HttpStatus.BAD_REQUEST, "-800", "계약 도메인 에러");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

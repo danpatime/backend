@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "REVIEW")
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Review extends BaseEntity {
@@ -25,5 +24,14 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_CONTENT")
     private String reviewContent;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Contract contract;
+
+    public Review(int reviewStarPoint, String reviewContent, Contract contract) {
+        this.reviewStarPoint = reviewStarPoint;
+        this.reviewContent = reviewContent;
+        this.contract = contract;
+    }
 }
 
