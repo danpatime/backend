@@ -33,6 +33,8 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final StringPath email = createString("email");
 
+    public final BooleanPath emailReceivable = createBoolean("emailReceivable");
+
     public final StringPath loginId = createString("loginId");
 
     public final StringPath name = createString("name");

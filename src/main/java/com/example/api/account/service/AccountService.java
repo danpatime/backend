@@ -86,7 +86,8 @@ public class AccountService {
                 request.email(),
                 request.phoneNumber(),
                 request.nationality(),
-                roles
+                roles,
+                request.emailReceivable()
         );
 
         accountRepository.save(account);

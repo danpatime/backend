@@ -55,6 +55,8 @@ public class Account extends BaseEntity {
     private boolean openStatus;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;
+    @Column(name = "ACCOUNT_EMAIL_RECEIVABLE", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean emailReceivable = false;
 
     public Account() {
     }
@@ -65,7 +67,7 @@ public class Account extends BaseEntity {
         this.roles = roles;
     }
 
-    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles) {
+    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles, final Boolean emailReceivable) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
@@ -77,6 +79,7 @@ public class Account extends BaseEntity {
         this.starPoint =  0.0f;
         this.workCount = 0;
         this.openStatus = true;
+        this.emailReceivable = emailReceivable;
     }
 
     public LoginUserRequest getLoginUser(){
