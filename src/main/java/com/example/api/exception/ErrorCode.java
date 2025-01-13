@@ -32,7 +32,8 @@ public enum ErrorCode {
 
     POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러"),
 
-    CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "카테고리 에러");
+    CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "카테고리 에러"),
+    BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
