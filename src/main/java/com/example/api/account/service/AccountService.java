@@ -76,6 +76,13 @@ public class AccountService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
     }
 
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteAccount(final Long requestMemberId) {
+        final Account account = accountRepository.findById(requestMemberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
+        account.setDeleted(true);
+    }
+
     private void saveAccount(final SignUpRequest request) {
         Collection<UserRole> roles = List.of(request.role());
         Account account = new Account(

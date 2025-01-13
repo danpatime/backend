@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService signUpService;
+    private final AccountService accountService;
 
     @PostMapping("/email/code")
     public ResponseEntity<String> sendEmailCode(@Valid @RequestBody final EmailRequest request) {
@@ -34,5 +36,18 @@ public class AccountController {
     public ResponseEntity<String> signUp(@Valid @RequestBody final SignUpRequest request) {
         String successMessage = signUpService.signUp(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(successMessage);
+    }
+
+    /**
+     * @param memberId
+     * 현재, 로그인된 사용자에 대해서만 계정 삭제 요청이 가능하도록 구현
+     * @return
+     */
+    @DeleteMapping("/my")
+    public ResponseEntity<String> deleteAccount(
+            @AuthenticationPrincipal final Long memberId
+    ) {
+        accountService.deleteAccount(memberId);
+        return ResponseEntity.ok("delete account");
     }
 }
