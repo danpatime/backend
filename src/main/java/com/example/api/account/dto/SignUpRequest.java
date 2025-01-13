@@ -23,6 +23,8 @@ public record SignUpRequest(
     @NotNull
     UserRole role,
     @NotBlank
-    String phoneNumber
+    String phoneNumber,
+    @NotNull
+    Boolean emailReceivable
 ) {
 }
