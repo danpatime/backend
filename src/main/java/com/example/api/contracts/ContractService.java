@@ -33,7 +33,11 @@ public class ContractService {
 
         final Contract contract = contractMapper.notYetSucceeded(offerEmployment);
         contractRepository.save(contract);
+    }
 
+    @Transactional
+    public void createChatRoom(@Validated final AcceptSuggestCommand acceptSuggestCommand) {
+        final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
         createChatRoom(offerEmployment);
     }
 
