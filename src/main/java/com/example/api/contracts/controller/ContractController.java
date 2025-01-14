@@ -36,6 +36,14 @@ class ContractController {
         return ResponseEntity.ok(null);
     }
 
+    @PostMapping("/api/v1/contracts/suggests/{suggestId}/chatroom")
+    public ResponseEntity<?> createChatRoom(
+            @RequestBody final AcceptSuggestCommand acceptSuggestCommand
+    ) {
+        contractService.createChatRoom(acceptSuggestCommand);
+        return ResponseEntity.ok(null);
+    }
+
     @PutMapping("/api/v1/contracts/{contractId}")
     public ResponseEntity<?> updateContractCondition(
             @PathVariable(required = true) final Long contractId,
