@@ -1,5 +1,6 @@
-package com.example.api.announcement;
+package com.example.api.announcement.controller;
 
+import com.example.api.announcement.AnnouncementService;
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;

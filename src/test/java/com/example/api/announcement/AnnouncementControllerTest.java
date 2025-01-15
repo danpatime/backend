@@ -1,5 +1,6 @@
 package com.example.api.announcement;
 
+import com.example.api.announcement.controller.AnnouncementController;
 import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;
 import org.junit.jupiter.api.BeforeEach;
