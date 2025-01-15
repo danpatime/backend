@@ -28,6 +28,10 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "WORKER_ID")
     private Account employee;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CONTRACT_ID")
+    private Contract contract;
+
     @Column(name = "REVIEW_STAR_POINT")
     private int reviewStarPoint;
 

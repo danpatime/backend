@@ -1,5 +1,6 @@
 package com.example.api.review;
 
+import com.example.api.domain.repository.ReviewRepository;
 import com.example.api.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
