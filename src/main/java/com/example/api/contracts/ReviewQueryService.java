@@ -19,7 +19,7 @@ public class ReviewQueryService {
         final List<Review> reviews = reviewRepository.loadReviewsByEmployerId(command.employerId());
         return reviews.stream()
                 .map(review -> new ReviewResponse(
-                        review.getSuggestId(),
+                        review.getReviewId(),
                         review.getContract().getContractId(),
                         review.getReviewContent(),
                         review.getReviewStarPoint()))

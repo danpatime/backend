@@ -76,7 +76,7 @@ public class AccountService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public void deleteAccount(final Long requestMemberId) {
         final Account account = accountRepository.findById(requestMemberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));

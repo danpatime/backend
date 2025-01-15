@@ -60,11 +60,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     }
 
     private void setResponse(final HttpServletRequest request, final HttpServletResponse response, final UserDetailRequest userDetailRequest) {
-        AuthTokenRequest authToken = generateAndSaveAuthToken(userDetailRequest);
+        AuthTokenRequest authTokenRequest = generateAndSaveAuthToken(userDetailRequest);
         clearAuthenticationAttributes(request, response);
 
-        Cookie accessTokenCookie = generateAccessCookie(authToken.accessToken());
-        Cookie refreshTokenCookie = generateRefreshCookie(authToken.refreshToken());
+        Cookie accessTokenCookie = generateAccessCookie(authTokenRequest.accessToken());
+        Cookie refreshTokenCookie = generateRefreshCookie(authTokenRequest.refreshToken());
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
     }

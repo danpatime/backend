@@ -56,4 +56,8 @@ public class Business extends BaseEntity {
         this.location = location;
         this.representationName = representationName;
     }
+
+    public void setRepresentationName(String representationName) {
+        this.representationName = representationName;
+    }
 }
