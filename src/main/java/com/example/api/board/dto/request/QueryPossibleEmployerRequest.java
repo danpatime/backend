@@ -1,12 +1,10 @@
-package com.example.api.board.controller.domain.response;
+package com.example.api.board.dto.request;
 
 import java.time.LocalDateTime;
 
-public record PossibleEmployeeResponse(
-        Long accountId,
+public record QueryPossibleEmployerRequest(
         String name,
         Integer age,
-        String sex,
         LocalDateTime possibleStartDateTime,
         LocalDateTime possibleEndDateTime
 ) {

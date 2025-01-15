@@ -1,9 +1,9 @@
 package com.example.api.board.controller;
 
-import com.example.api.board.controller.domain.request.EmployeeIdRequest;
-import com.example.api.board.controller.domain.response.Board;
-import com.example.api.board.controller.domain.response.CategoryDTO;
-import com.example.api.board.controller.domain.response.MyInfoDTO;
+import com.example.api.board.dto.request.EmployeeIdRequest;
+import com.example.api.board.dto.response.Board;
+import com.example.api.board.dto.response.CategoryDTO;
+import com.example.api.board.dto.response.MyInfoDTO;
 import com.example.api.board.service.BoardService;
 import com.example.api.board.service.CategoryService;
 import com.example.api.board.service.EmployeeService;

@@ -3,6 +3,8 @@ package com.example.api.domain;
 import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.auth.dto.LoginUserRequest;
+import com.example.api.board.dto.update.UpdateOpenStatusRequest;
+import com.example.api.board.dto.update.UpdateUserInfoRequest;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -83,5 +85,18 @@ public class Account extends BaseEntity {
 
     public LoginUserRequest getLoginUser(){
         return new LoginUserRequest(accountId);
+    }
+
+    public void updateOpenStatus(UpdateOpenStatusRequest request){
+        this.openStatus = request.openStatus();
+    }
+
+    public void updateUserInfo(UpdateUserInfoRequest request){
+        this.name = request.name();
+        this.sex = request.sex();
+        this.age = request.age();
+        this.phoneNumber = request.phoneNumber();
+        this.email = request.email();
+        this.nickname = request.nickname();
     }
 }
