@@ -1,4 +1,5 @@
 package com.example.api.reviewavailable.dto;
 
-public record ReviewAvailableCommand() {
-}
+public record ReviewAvailableCommand(
+        Long businessId
+) {}

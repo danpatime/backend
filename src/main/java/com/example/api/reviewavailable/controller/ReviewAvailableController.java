@@ -16,16 +16,15 @@ import java.util.List;
 @RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewAvailableController {
-        private final ReviewAvailableService reviewAvailableService;
+    private final ReviewAvailableService reviewAvailableService;
 
-        @GetMapping("/available")
-        public ResponseEntity<List<ReviewAvailableResponse>> getAvailableReviewTargets(
-                @RequestParam(required = true) final Long contractId
-        ) {
-            final ReviewAvailableCommand reviewAvailableCommand = new ReviewAvailableCommand(contractId);
-            final List<ReviewAvailableResponse> availableEmployees =
-                    reviewAvailableService.getAvailableReviewTargets(reviewAvailableCommand);
-            return ResponseEntity.ok(availableEmployees);
-        }
+    @GetMapping("/available")
+    public ResponseEntity<List<ReviewAvailableResponse>> getAvailableReviewTargets(
+            @RequestParam(required = true) Long businessId
+    ) {
+        ReviewAvailableCommand command = new ReviewAvailableCommand(businessId);
+        List<ReviewAvailableResponse> availableEmployees = reviewAvailableService.getAvailableReviewTargets(command);
+        return ResponseEntity.ok(availableEmployees);
     }
 }
+
