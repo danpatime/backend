@@ -22,7 +22,7 @@ public class AuthService {
     private final TokenRepository tokenRepository;
 
     @Transactional
-    public AuthTokenRequest login(@Validated final LoginRequest request) {
+    public LoginSuccessResponse login(@Validated final LoginRequest request) {
         final Account user = getUserByLoginId(request.loginId());
         checkPassword(request, user);
         return generateAuthToken(user);
@@ -44,11 +44,11 @@ public class AuthService {
         }
     }
 
-    private AuthTokenRequest generateAuthToken(final Account user) {
+    private LoginSuccessResponse generateAuthToken(final Account user) {
         String accessToken = jwtTokenProvider.generateAccessToken(new UserDetailRequest(user.getAccountId(), user.getRoles()));
         String refreshToken = generateRefreshToken(user);
-
-        return new AuthTokenRequest(accessToken,refreshToken);
+        String role = user.getRoles().stream().findFirst().get().getAuthority();    // 회원가입 시에 무조건 역할이 들어가기에 바로 get으로 꺼냄
+        return new LoginSuccessResponse(accessToken,refreshToken, user.getAccountId().toString(), role);
     }
 
     private String generateRefreshToken(final Account user) {
@@ -66,7 +66,7 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthTokenRequest refreshAuthToken(@Validated final RefreshTokenRequest request){
+    public LoginSuccessResponse refreshAuthToken(@Validated final RefreshTokenRequest request){
         if(!jwtTokenProvider.isNotExpiredToken(request.refreshToken())){
             throw new BusinessException(ErrorCode.EXPIRED_REFRESH_TOKEN);
         }
@@ -77,10 +77,10 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthTokenRequest logout(@Validated final LoginUserRequest loginUserRequest) {
+    public LoginSuccessResponse logout(@Validated final LoginUserRequest loginUserRequest) {
         Account user = getUserById(loginUserRequest.userId());
         tokenRepository.deleteAllByUser(user);
-        return new AuthTokenRequest(null, null);
+        return new LoginSuccessResponse(null, null, null, null);
     }
 
     private Account getUserById(final Long userId) {

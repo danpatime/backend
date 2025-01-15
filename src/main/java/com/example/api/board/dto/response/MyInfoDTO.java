@@ -1,4 +1,4 @@
-package com.example.api.board.controller.domain.response;
+package com.example.api.board.dto.response;
 
 import lombok.*;
 
