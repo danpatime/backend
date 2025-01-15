@@ -44,6 +44,49 @@ dependencies {
 
     // ENV
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
+    // VALIDATION
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // SECURITY
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // SMTP
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Query DSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // 인메모리 몽고디비 flapdoodle
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.6.0'
+
+    // OAUTH2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // MOCKITO
+    testImplementation "org.mockito:mockito-core:3.+"
+
+    //WIREMOCK (외부 의존성 테스트용)
+    implementation 'org.wiremock.integrations:wiremock-spring-boot:3.3.0'
+
+    // ModelMapper 사용
+    //객체 간 매핑 처리
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+    //객체 간 매핑 처리
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+
 }
 
 tasks.named('test') {
