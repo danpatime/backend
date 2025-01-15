@@ -1,6 +1,6 @@
 package com.example.api.employer.controller;
 
-import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.employer.controller.dto.LikeEmployeeDTO;
 import com.example.api.employer.service.EmployerService;
 import lombok.RequiredArgsConstructor;

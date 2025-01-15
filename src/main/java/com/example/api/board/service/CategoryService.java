@@ -1,6 +1,6 @@
 package com.example.api.board.service;
 
-import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.dto.response.CategoryDTO;
 import com.example.api.domain.repository.CategoryRepository;
 import com.example.api.domain.Category;
 import lombok.RequiredArgsConstructor;

@@ -45,6 +45,6 @@ public enum UserRole implements GrantedAuthority {
     }
 
     public String getAuthority() {
-        return "ROLE_" + this.name(); // ROLE_EMPLOYEE, ROLE_EMPLOYER 형식
+        return this.name();
     }
 }

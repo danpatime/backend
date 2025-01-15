@@ -37,8 +37,8 @@ public class PossibleBoardService {
     public PossibleDetailsResponse queryPossibleDetails(final QueryPossibleDetailsCommand queryPossibleDetailsCommand) {
         final PossibleDetails possibleDetails = possibleBoardRepository.queryPossibleDetails(queryPossibleDetailsCommand.possibleId());
         final List<Category> categories = possibleBoardRepository.queryFlavoredCategories(queryPossibleDetailsCommand.possibleId());
-        final List<ExternalCareer> externalCareers = possibleBoardRepository.queryExternalCareeors(queryPossibleDetailsCommand.possibleId());
-        final List<Contract> contracts = possibleBoardRepository.queryInternalCareeors(queryPossibleDetailsCommand.possibleId());
+        final List<ExternalCareer> externalCareers = possibleBoardRepository.queryExternalCareers(queryPossibleDetailsCommand.possibleId());
+        final List<Contract> contracts = possibleBoardRepository.queryInternalCareers(queryPossibleDetailsCommand.possibleId());
 
         return possibleMapper.toPossibleDetailsResponse(possibleDetails, categories, externalCareers, contracts);
     }
