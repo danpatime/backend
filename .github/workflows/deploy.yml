@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew clean test
 
       - name : build
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       - name: copy file to Develop server via ssh key
         uses: appleboy/scp-action@v0.1.7
