@@ -4,9 +4,12 @@ import com.example.api.contracts.dto.BusinessInfoDTO;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
 import java.util.Optional;
+import com.example.api.reviewavailable.dto.ReviewAvailableResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("select new com.example.api.contracts.dto." +
@@ -26,6 +29,17 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "where c.contractId = :contractId")
     EmployeeInfoDTO findEmployeeDTOByContractId(@Param("contractId") long contractId);
 
+
     @Query("SELECT c FROM Contract c JOIN FETCH c.offerEmployment JOIN FETCH c.offerEmployment.business.employer WHERE c.contractId = :contractId")
     Optional<Contract> loadContractWithOfferEmployment(@Param("contractId") final Long contractId);
+
+    @Query("select new com.example.api.reviewavailable.dto." +
+            "ReviewAvailableResponse(e.accountId, e.name) " +
+            "from Contract c " +
+            "join c.offerEmployment oe " +
+            "join oe.employee e " +
+            "join oe.business b " +
+            "where b.businessId = :businessId and c.contractSucceeded = true")
+    List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
+
 }
