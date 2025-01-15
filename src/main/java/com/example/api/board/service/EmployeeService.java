@@ -1,10 +1,13 @@
 package com.example.api.board.service;
 
-import com.example.api.board.controller.domain.request.EmployeeIdRequest;
-import com.example.api.board.controller.domain.response.CategoryDTO;
-import com.example.api.board.controller.domain.response.ExternalCareerDTO;
-import com.example.api.board.controller.domain.response.MyInfoDTO;
-import com.example.api.board.controller.domain.response.PossibleBoardDTO;
+import com.example.api.board.dto.request.EmployeeIdRequest;
+import com.example.api.board.dto.response.CategoryDTO;
+import com.example.api.board.dto.response.ExternalCareerDTO;
+import com.example.api.board.dto.response.MyInfoDTO;
+import com.example.api.board.dto.response.PossibleBoardDTO;
+import com.example.api.board.dto.update.UpdateOpenStatusRequest;
+import com.example.api.board.dto.update.UpdateUserInfoRequest;
+import com.example.api.board.entitiy.update.UpdateAccountConditionManager;
 import com.example.api.domain.Account;
 import com.example.api.domain.Category;
 import com.example.api.domain.ExternalCareer;
@@ -30,11 +33,12 @@ public class EmployeeService {
     private final ExternalCareerRepository externalCareerRepository;
     private final FlavoredRepository flavoredRepository;
     private final PossibleBoardRepository possibleBoardRepository;
+    private final UpdateAccountConditionManager updateAccountConditionManager;
 
     @Transactional
     public Boolean changeOpenStatus(final EmployeeIdRequest employeeIdRequest, boolean openStatus) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
-            employee.setOpenStatus(openStatus);
+            updateAccountConditionManager.updateAccount(employee, new UpdateOpenStatusRequest(openStatus));
             employeeRepository.save(employee);
             return true;
         }).orElse(false);
@@ -43,7 +47,15 @@ public class EmployeeService {
     @Transactional
     public boolean updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
-            setUserInfo(employee, myInfo);
+            updateAccountConditionManager.updateAccount(employee, new UpdateUserInfoRequest(
+                            myInfo.getName(),
+                            myInfo.getSex(),
+                            myInfo.getAge(),
+                            myInfo.getPhone(),
+                            myInfo.getEmail(),
+                            myInfo.getNickname()
+                    )
+            );
             employeeRepository.save(employee);
 
             updateExternalCareer(employee, myInfo.getExternalCareerList());
@@ -52,14 +64,7 @@ public class EmployeeService {
             return true;
         }).orElse(false);
     }
-    void setUserInfo(Account employee, MyInfoDTO myInfo) {
-        employee.setName(myInfo.getName());
-        employee.setSex(myInfo.getSex());
-        employee.setAge(myInfo.getAge());
-        employee.setPhoneNumber(myInfo.getPhone());
-        employee.setEmail(myInfo.getEmail());
-        employee.setNickname(myInfo.getNickname());
-    }
+
     public void updateExternalCareer(Account employee, List<ExternalCareerDTO> newExternalCareerList) {
         List<ExternalCareer> existList = externalCareerRepository.findAllByEmployeeAccountId(employee.getAccountId());
         Set<ExternalCareerDTO> newSet = new HashSet<>(newExternalCareerList);

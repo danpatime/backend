@@ -22,21 +22,21 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthTokenRequest> login(@Valid @RequestBody final LoginRequest loginRequest) {
-        AuthTokenRequest authTokenRequest = authService.login(loginRequest);
-        return ResponseEntity.ok(authTokenRequest);
+    public ResponseEntity<LoginSuccessResponse> login(@Valid @RequestBody final LoginRequest loginRequest) {
+        LoginSuccessResponse loginSuccessResponse = authService.login(loginRequest);
+        return ResponseEntity.ok(loginSuccessResponse);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthTokenRequest> refresh(@Valid @RequestBody final RefreshTokenRequest refreshTokenRequest) {
-        AuthTokenRequest authTokenRequest = authService.refreshAuthToken(refreshTokenRequest);
-        return ResponseEntity.ok(authTokenRequest);
+    public ResponseEntity<LoginSuccessResponse> refresh(@Valid @RequestBody final RefreshTokenRequest refreshTokenRequest) {
+        LoginSuccessResponse loginSuccessResponse = authService.refreshAuthToken(refreshTokenRequest);
+        return ResponseEntity.ok(loginSuccessResponse);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<AuthTokenRequest> logout(@AuthenticationPrincipal final Object principal) {
+    public ResponseEntity<LoginSuccessResponse> logout(@AuthenticationPrincipal final Object principal) {
         Long userId = Long.parseLong(principal.toString());
-        AuthTokenRequest authTokenRequest = authService.logout(new LoginUserRequest(userId));
-        return ResponseEntity.ok(authTokenRequest);
+        LoginSuccessResponse loginSuccessResponse = authService.logout(new LoginUserRequest(userId));
+        return ResponseEntity.ok(loginSuccessResponse);
     }
 }

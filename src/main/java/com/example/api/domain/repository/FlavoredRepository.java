@@ -1,6 +1,6 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.controller.domain.response.CategoryDTO;
+import com.example.api.board.dto.response.CategoryDTO;
 import com.example.api.domain.Flavored;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface FlavoredRepository extends JpaRepository<Flavored, Long> {
-    @Query("select distinct new com.example.api.board.controller.domain.response.CategoryDTO(c.categoryId, c.categoryName) " +
+    @Query("select distinct new com.example.api.board.dto.response.CategoryDTO(c.categoryId, c.categoryName) " +
             "from Flavored f join Category c on f.category.categoryId = c.categoryId where f.employee.accountId = :employeeId")
     List<CategoryDTO> findAllCategoryDTOByEmployeeId(@Param("employeeId") long employeeId);
 
