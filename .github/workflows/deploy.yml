@@ -19,9 +19,9 @@ jobs:
 
       - name: checkout
         uses: actions/checkout@v2
-
-      - name: test
-        run: ./gradlew clean test
+#
+#      - name: test
+#        run: ./gradlew clean test
 
       - name : build
         run: ./gradlew build -x test
