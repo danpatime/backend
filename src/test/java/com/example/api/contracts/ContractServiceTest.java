@@ -1,6 +1,7 @@
 package com.example.api.contracts;
 
 import com.example.api.JpaTestWithInitData;
+import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.domain.ChatRoom;
 import com.example.api.domain.Contract;
