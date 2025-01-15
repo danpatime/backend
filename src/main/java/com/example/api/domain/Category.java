@@ -21,6 +21,10 @@ public class Category extends BaseEntity{
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
+    private Account account;
+
     public Category() {
     }
 
