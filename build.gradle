@@ -82,6 +82,8 @@ dependencies {
     //객체 간 매핑 처리
     implementation 'org.modelmapper:modelmapper:3.1.0'
 
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 }
 
 tasks.named('test') {
