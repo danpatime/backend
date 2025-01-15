@@ -1,17 +1,15 @@
 package com.example.api.auth.controller;
 
-import com.example.api.auth.dto.AuthTokenRequest;
 import com.example.api.auth.dto.LoginRequest;
+import com.example.api.auth.dto.LoginSuccessResponse;
 import com.example.api.auth.dto.LoginUserRequest;
 import com.example.api.auth.dto.RefreshTokenRequest;
 import com.example.api.auth.service.AuthService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

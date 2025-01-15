@@ -1,8 +1,5 @@
 package com.example.api.board.service;
 
-import com.example.api.board.controller.domain.request.EmployeeIdRequest;
-import com.example.api.board.controller.domain.response.MyInfoDTO;
-import com.example.api.domain.repository.*;
 import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.board.dto.response.MyInfoDTO;
 import com.example.api.domain.repository.ExternalCareerRepository;

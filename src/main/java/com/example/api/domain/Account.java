@@ -99,4 +99,8 @@ public class Account extends BaseEntity {
         this.email = request.email();
         this.nickname = request.nickname();
     }
+
+    public void setDeleted(boolean deleted){
+        this.deleted = deleted;
+    }
 }
