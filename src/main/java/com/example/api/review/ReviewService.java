@@ -5,6 +5,7 @@ import com.example.api.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
@@ -23,7 +24,9 @@ public class ReviewService {
 
 
     @Transactional
-    public List<ReviewResponse> getReviewsByEmployee(final Long reviewId) {
+    public List<ReviewResponse> getReviewsByEmployee(
+            @Validated final Long reviewId
+    ) {
         return reviewRepository.findReviewsByDynamicQuery(reviewId)
                 .stream()
                 .map(ReviewResponse::from)
