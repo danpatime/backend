@@ -1,13 +1,12 @@
 package com.example.api.announcement;
 
 import com.example.api.announcement.dto.AnnouncementCommand;
-import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;
 import com.example.api.domain.Announcement;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class AnnouncementService {
 
     @Transactional
     public AnnouncementResponse createAnnouncement(
-            final AnnouncementCommand command
+            @Validated final AnnouncementCommand command
     ) {
         Announcement announcement = new Announcement();
         announcement.setAnnouncementTitle(command.announcementTitle());
@@ -38,7 +37,7 @@ public class AnnouncementService {
 
     @Transactional
     public AnnouncementResponse getAnnouncement(
-            final Long announcementId
+            @Validated final Long announcementId
     ) {
         final Announcement announcement = findAnnouncementById(announcementId);
         return new AnnouncementResponse(announcement);
@@ -46,8 +45,8 @@ public class AnnouncementService {
 
     @Transactional
     public AnnouncementResponse updateAnnouncement(
-            final Long announcementId,
-            final AnnouncementCommand command
+            @Validated final Long announcementId,
+            @Validated final AnnouncementCommand command
     ) {
         Announcement announcement = findAnnouncementById(announcementId);
         announcement.setAnnouncementTitle(command.announcementTitle());
@@ -59,7 +58,7 @@ public class AnnouncementService {
 
     @Transactional
     public void deleteAnnouncement(
-            final Long announcementId
+            @Validated final Long announcementId
     ) {
         final Announcement announcement = findAnnouncementById(announcementId);
         announcementRepository.delete(announcement);
@@ -67,7 +66,7 @@ public class AnnouncementService {
 
     @Transactional
     public List<AnnouncementResponse> searchAnnouncements(
-            final String keyword
+            @Validated final String keyword
     ) {
         final List<Announcement> announcements = announcementRepository.findByAnnouncementTitleContaining(keyword);
         return announcements.stream()
@@ -76,14 +75,13 @@ public class AnnouncementService {
     }
 
     private Announcement findAnnouncementById(
-            final Long announcementId
+            @Validated final Long announcementId
     ) {
         return announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new RuntimeException(getErrorMessage("announcement.not.found")));
     }
 
     private String getErrorMessage(final String key) {
-        // 실제 메시지 로직 (ex: MessageSource 사용)
         return key;
     }
 }
