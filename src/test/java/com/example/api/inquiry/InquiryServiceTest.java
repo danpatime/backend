@@ -1,7 +1,7 @@
 package com.example.api.inquiry;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+import com.example.api.account.entity.Nationality;
+import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Inquiry;
@@ -37,18 +37,17 @@ class InquiryServiceTest {
         accountRepository.deleteAll();
         inquiryRepository.deleteAll();
 
-        Account account = new Account();
-        account.setAccountId(1L);
-        account.setName("Alice");
-        account.setEmail("alice@example.com");
-        account.setAge(25);
-        account.setSex("F");
-        account.setPhoneNumber("010-1234-5678");
-        account.setProfileImage("user-uploads/1/profile.png");
-        account.setStarPoint(4.5f);
-        account.setWorkCount(10);
-        account.setOpenStatus(true);
-        account.setDeleted(false);
+        Account account = new Account(
+                "user01",
+                "password123",
+                "Alice",
+                "nickname01",
+                "010-1234-5678",
+                "alice@example.com",
+                Nationality.KOREAN,
+                List.of(UserRole.EMPLOYEE),
+                false
+        );
         accountRepository.save(account);
     }
 
@@ -113,10 +112,4 @@ class InquiryServiceTest {
         assertThat(inquiry).isNotNull();
         assertThat(inquiry.getTitle()).isEqualTo("Test Title");
     }
-=======
-public class InquiryServiceController {
->>>>>>> 2f6b5cc (#53 feat(ReviewCommand): DTO 작성)
-=======
-public class InquiryServiceTest {
->>>>>>> 0ff3ba1 (#53 feat(ReviewService): 서비스 코드 구현)
 }
