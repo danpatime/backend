@@ -1,4 +1,4 @@
-package com.example.api.domain.repository;
+package com.example.api.review;
 
 import com.example.api.domain.Review;
 import java.util.List;
@@ -12,4 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT r FROM Review r JOIN FETCH r.contract WHERE r.contract.offerEmployment.business.employer.accountId = :employerId")
     List<Review> loadReviewsByEmployerId(@Param("employerId") Long employerId);
+
+    @Query("SELECT r FROM Review r WHERE (:reviewId IS NULL OR r.reviewId = :reviewId)")
+    List<Review> findReviewsByDynamicQuery(@Param("reviewId") Long reviewId);
 }

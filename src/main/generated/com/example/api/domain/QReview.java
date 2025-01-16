@@ -29,7 +29,11 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
+<<<<<<< HEAD
     public final QOfferEmployment offerEmployment;
+=======
+    public final QAccount employee;
+>>>>>>> ace3d7a (#69 test(ReviewServiceTest): 테스트 코드 추가)
 
     public final StringPath reviewContent = createString("reviewContent");
 
@@ -39,6 +43,8 @@ public class QReview extends EntityPathBase<Review> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
+
+    public final QBusiness writer;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -58,8 +64,13 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+<<<<<<< HEAD
         this.contract = inits.isInitialized("contract") ? new QContract(forProperty("contract"), inits.get("contract")) : null;
         this.offerEmployment = inits.isInitialized("offerEmployment") ? new QOfferEmployment(forProperty("offerEmployment"), inits.get("offerEmployment")) : null;
+=======
+        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
+        this.writer = inits.isInitialized("writer") ? new QBusiness(forProperty("writer"), inits.get("writer")) : null;
+>>>>>>> ace3d7a (#69 test(ReviewServiceTest): 테스트 코드 추가)
     }
 
 }
