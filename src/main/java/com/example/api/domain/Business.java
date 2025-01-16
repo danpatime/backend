@@ -60,4 +60,16 @@ public class Business extends BaseEntity {
     public void setRepresentationName(String representationName) {
         this.representationName = representationName;
     }
+    public Business(String businessName, String location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
+        this.businessName = businessName;
+        this.location = location;
+        this.representationName = representationName;
+        this.employer = employer;
+        this.openDate = openDate;
+        this.registrationNumber = registrationNumber;
+    }
 }
+
+
+
+
