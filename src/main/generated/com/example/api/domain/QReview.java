@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.example.api.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
@@ -75,3 +76,5 @@ public class QReview extends EntityPathBase<Review> {
 
 }
 
+=======
+>>>>>>> 326d0a2 (#65 feat(OfferEmploymentService): 서비스 코드 작성)
