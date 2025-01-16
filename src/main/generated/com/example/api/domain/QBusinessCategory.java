@@ -55,7 +55,7 @@ public class QBusinessCategory extends EntityPathBase<BusinessCategory> {
     public QBusinessCategory(Class<? extends BusinessCategory> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.business = inits.isInitialized("business") ? new QBusiness(forProperty("business"), inits.get("business")) : null;
-        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
+        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category"), inits.get("category")) : null;
     }
 
 }

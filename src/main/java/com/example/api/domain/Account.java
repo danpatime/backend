@@ -115,4 +115,8 @@ public class Account extends BaseEntity {
     public void setDeleted(boolean deleted){
         this.deleted = deleted;
     }
+
+    public void setOpenStatus(boolean openStatus) {
+        this.openStatus = openStatus;
+    }
 }
