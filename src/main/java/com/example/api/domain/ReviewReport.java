@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -17,22 +19,16 @@ import java.time.LocalDateTime;
 public class ReviewReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long reportId;
 
-    @Column(name = "review_id", nullable = false)
-    private Long reviewId;
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "REVIEW_ID")
+    private Review review;
 
-    @Column(name = "employee_id", nullable = false)
-    private Long employeeId;
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private Account employee;
 
-    @Column(name = "reason", nullable = false)
+    @Column(name = "REASON")
     private String reason;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
