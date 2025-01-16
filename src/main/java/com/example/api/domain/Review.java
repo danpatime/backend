@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "REVIEW")
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Review extends BaseEntity {
     @Id
     @Column(name ="REVIEW_ID")
@@ -37,7 +37,6 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_CONTENT")
     private String reviewContent;
-
     public Review(int reviewStarPoint, String reviewContent, Contract contract) {
         this.reviewStarPoint = reviewStarPoint;
         this.reviewContent = reviewContent;
