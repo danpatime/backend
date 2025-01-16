@@ -1,7 +1,7 @@
 package com.example.api.contracts.controller;
 
 import com.example.api.contracts.ReviewQueryService;
-import com.example.api.contracts.ReviewService;
+import com.example.api.contracts.ContractReviewService;
 import com.example.api.contracts.dto.AddReviewCommand;
 import com.example.api.contracts.dto.QueryEmployersReviewCommand;
 import com.example.api.contracts.dto.ReviewResponse;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/contracts")
-public class ReviewController {
-    private final ReviewService reviewService;
+public class ContractReviewController {
+    private final ContractReviewService contractReviewService;
     private final ReviewQueryService reviewQueryService;
 
 
@@ -44,7 +44,7 @@ public class ReviewController {
             @AuthenticationPrincipal final Long memberId
     ) {
         final AddReviewCommand command = request.toCommand(memberId);
-        reviewService.saveReview(command);
+        contractReviewService.saveReview(command);
         return ResponseEntity.ok(null);
     }
 

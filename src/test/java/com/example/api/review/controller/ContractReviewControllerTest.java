@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ReviewController.class)
-public class ReviewControllerTest {
+public class ContractReviewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

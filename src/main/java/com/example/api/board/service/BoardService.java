@@ -6,6 +6,7 @@ import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
 import com.example.api.domain.repository.MyInfoRepository;
 import com.example.api.domain.repository.OfferEmploymentRepository;
+import com.example.api.possbileboard.PossibleBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

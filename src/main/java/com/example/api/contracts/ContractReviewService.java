@@ -4,9 +4,9 @@ import com.example.api.contracts.dto.AddReviewCommand;
 import com.example.api.domain.Business;
 import com.example.api.domain.Contract;
 import com.example.api.domain.Review;
-import com.example.api.domain.repository.ReviewRepository;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
+import com.example.api.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ContractReviewService {
     private final ContractRepository contractRepository;
     private final ReviewRepository reviewRepository;
 

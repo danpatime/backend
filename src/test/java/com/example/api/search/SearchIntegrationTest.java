@@ -1,6 +1,5 @@
 package com.example.api.search;
 
-import com.example.api.global.BaseIntegrationTest;
 import com.example.api.search.dto.SearchCommand;
 import com.example.api.search.dto.SearchResponse;
 import org.junit.jupiter.api.Test;

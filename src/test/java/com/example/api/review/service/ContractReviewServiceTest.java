@@ -2,7 +2,6 @@ package com.example.api.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.api.global.BaseIntegrationTest;
 import com.example.api.review.ReviewService;
 import com.example.api.review.dto.ReviewCommand;
 import com.example.api.review.dto.ReviewResponse;
@@ -14,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-public class ReviewServiceTest extends BaseIntegrationTest {
+public class ContractReviewServiceTest extends BaseIntegrationTest {
     @Autowired
     private ReviewService reviewService;
 

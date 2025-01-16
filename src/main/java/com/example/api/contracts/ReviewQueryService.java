@@ -3,8 +3,9 @@ package com.example.api.contracts;
 import com.example.api.contracts.dto.QueryEmployersReviewCommand;
 import com.example.api.contracts.dto.ReviewResponse;
 import com.example.api.domain.Review;
-import com.example.api.domain.repository.ReviewRepository;
 import java.util.List;
+
+import com.example.api.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
