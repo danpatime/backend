@@ -47,13 +47,9 @@ public class BoardController {
     @PostMapping("/api/v1/possible-board/submit/{employeeId}")
     public ResponseEntity submitBoard(@PathVariable("employeeId") Long employeeId, @RequestBody MyInfoDTO myInfo) {
         EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
-        boolean updated = employeeService.updateUserInfo(employeeIdRequest, myInfo);
-        if (updated) {
-            MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
-            List<CategoryDTO> categoryList = categoryService.getAllCategories();
-            return ResponseEntity.ok(new Board(myInfoById, categoryList));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자를 찾을 수 없습니다.");
-        }
+        employeeService.updateUserInfo(employeeIdRequest, myInfo);
+        MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
+        List<CategoryDTO> categoryList = categoryService.getAllCategories();
+        return ResponseEntity.ok(new Board(myInfoById, categoryList));
     }
 }

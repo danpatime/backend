@@ -48,10 +48,18 @@ public class Business extends BaseEntity {
         this.businessName = businessName;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
-    public Business() {
+
+    public void setRepresentationName(String representationName) {
+        this.representationName = representationName;
+    }
+
+    public Business(String businessName, Location location, String representationName) {
+        this.businessName = businessName;
+        this.location = location;
+        this.representationName = representationName;
     }
 
     public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, Location location) {
@@ -62,18 +70,8 @@ public class Business extends BaseEntity {
         this.openDate = LocalDate.parse(businessOpenDate);
         this.location = location;
     }
-}
 
-    public Business(String businessName, String location, String representationName) {
-        this.businessName = businessName;
-        this.location = location;
-        this.representationName = representationName;
-    }
-
-    public void setRepresentationName(String representationName) {
-        this.representationName = representationName;
-    }
-    public Business(String businessName, String location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
+    public Business(String businessName, Location location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;

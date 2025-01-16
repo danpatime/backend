@@ -21,7 +21,7 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     Long deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
                                           @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 
-    @Query("SELECT new com.example.api.possbileboard.dto.PossibleDetails(p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime, COUNT (p), CAST(COALESCE(AVG(r.reviewStarPoint),0) as INTEGER)) FROM PossibleBoard p INNER JOIN Account a INNER JOIN Contract c INNER JOIN Review r WHERE p.possibleId = :possibleId GROUP BY p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime")
+    @Query("SELECT new com.example.api.possbileboard.dto.PossibleDetails(p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime, COUNT (p), CAST(COALESCE(AVG(r.reviewStarPoint),0) as float)) FROM PossibleBoard p INNER JOIN Account a INNER JOIN Contract c INNER JOIN Review r WHERE p.possibleId = :possibleId GROUP BY p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime")
     PossibleDetails queryPossibleDetails(@Param("possibleId") final Long possibleId);
 
     @Query("SELECT f.category FROM Flavored f JOIN Account a JOIN PossibleBoard p WHERE p.possibleId = :possibleId")
@@ -34,12 +34,6 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     List<Contract> queryInternalCareers(@Param("possibleId") final Long possibleId);
 
     List<PossibleBoard> findAllByEmployeeAccountId(Long employeeId);
-
-    @Query("select new com.example.api.board.controller.domain.response.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
-            "from PossibleBoard p where p.employee.accountId = :employeeId")
-    List<PossibleBoardDTO> findAllDTOByEmployeeAccountId(@Param("employeeId")Long employeeId);
-
-}
 
     @Query("select new com.example.api.board.dto.response.PossibleBoardDTO(p.possibleId, p.startTime, p.endTime) " +
             "from PossibleBoard p where p.employee.accountId = :employeeId")
