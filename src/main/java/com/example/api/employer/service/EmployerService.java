@@ -1,10 +1,12 @@
 package com.example.api.employer.service;
 
-import com.example.api.board.dto.request.EmployeeIdRequest;
+import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.business.BusinessRepository;
 import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
 import com.example.api.domain.Account;
+import com.example.api.employer.controller.dto.EmployerBusinessesRequest;
 import com.example.api.employer.controller.dto.LikeEmployeeDTO;
 import com.example.api.employer.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class EmployerService {
     private final EmployeeRepository employeeRepository;
     private final ExternalCareerRepository externalCareerRepository;
     private final FlavoredRepository flavoredRepository;
+    private final BusinessRepository businessRepository;
 
     @Transactional(readOnly = true)
     public List<LikeEmployeeDTO> getLikeEmployee(final EmployeeIdRequest employeeIdRequest) {
@@ -42,5 +45,10 @@ public class EmployerService {
                         flavoredRepository.findAllCategoryDTOByEmployeeId(employee.getAccountId())
                 )
         ).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<EmployerBusinessesRequest> getEmployerBusinessList(final EmployeeIdRequest employeeIdRequest) {
+        return businessRepository.findBusinessesByEmployeeId(employeeIdRequest.employeeId());
     }
 }

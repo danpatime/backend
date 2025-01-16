@@ -1,10 +1,10 @@
 package com.example.api.domain;
 
-import com.example.api.account.entity.Location;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS")
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Business extends BaseEntity {
     private Long businessId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_EMPLOYER_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "BUSINESS_EMPLOYER_ID")
     private Account employer;
 
     @OneToMany(mappedBy = "business")
@@ -32,9 +33,8 @@ public class Business extends BaseEntity {
     @Column(name = "BUSINESS_NAME")
     private String businessName;
 
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "BUSINESS_LOCATION")
-    private Location location;
+    @Column(name = "BUSINESS_LOCATION")
+    private String location;
 
     private String representationName;
 
@@ -48,39 +48,19 @@ public class Business extends BaseEntity {
         this.businessName = businessName;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setRepresentationName(String representationName) {
-        this.representationName = representationName;
-    }
-
-    public Business(String businessName, Location location, String representationName) {
+    public Business(String businessName, String location, String representationName) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;
     }
 
-    public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, Location location) {
-        this.employer = user;
-        this.registrationNumber = businessRegistrationNumber;
-        this.businessName = businessName;
-        this.representationName = representationName;
-        this.openDate = LocalDate.parse(businessOpenDate);
-        this.location = location;
-    }
-
-    public Business(String businessName, Location location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
-        this.businessName = businessName;
-        this.location = location;
-        this.representationName = representationName;
+    public Business(Account employer, String businessName, String location) {
         this.employer = employer;
-        this.openDate = openDate;
-        this.registrationNumber = registrationNumber;
+        this.businessName = businessName;
+        this.location = location;
     }
 }
-
-
-
-
