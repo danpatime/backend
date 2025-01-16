@@ -1,5 +1,6 @@
 package com.example.api.domain;
 
+import com.example.api.offeremployment.dto.OfferEmploymentCommand;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,21 +22,29 @@ public class OfferEmployment {
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "BUSINESS_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Business business;
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EMPLOYEE_ID")
     private Account employee;
+
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
+
     @Column(name = "SUGGEST_START_TIME")
     private LocalDateTime suggestStartTime;
+
     @Column(name = "SUGGEST_END_TIME")
     private LocalDateTime suggestEndTime;
+
     @Column(name = "SUGGEST_HOURLY_PAY")
     private int suggestHourlyPay;
+
     @Column(name = "SUGGEST_READED", columnDefinition = "boolean DEFAULT false")
     private boolean suggestReaded;
+
     @Column(name = "SUGGEST_SUCCEDED", columnDefinition = "boolean DEFAULT false")
     private boolean suggestSucceeded;
+
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
 
@@ -48,4 +57,3 @@ public class OfferEmployment {
         this.suggestSucceeded = true;
     }
 }
-
