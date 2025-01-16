@@ -14,14 +14,12 @@ import com.example.api.domain.Business;
 import com.example.api.exception.BusinessException;
 import com.example.api.exception.ErrorCode;
 import com.example.api.global.properties.VendorProperties;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,9 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -44,7 +40,6 @@ public class AccountService {
     private final CodeRepository codeRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
-    private final AccountRepository accountRepository;
     private final BusinessRepository businessRepository;
     private final RestTemplate restTemplate;
     private final VendorProperties vendorProperties;
@@ -97,7 +92,6 @@ public class AccountService {
         return "회원가입이 완료되었습니다";
     }
 
-    private void saveEmployeeAccount(final SignUpEmployeeRequest request) {
     @Transactional(readOnly = true)
     public Account loadAccount(final Long requestMemberId) {
         return accountRepository.findById(requestMemberId)
@@ -110,8 +104,7 @@ public class AccountService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
         account.setDeleted(true);
     }
-
-    private void saveAccount(final SignUpRequest request) {
+    private Account saveEmployeeAccount(final SignUpEmployeeRequest request) {
         Collection<UserRole> roles = List.of(request.role());
         Account account = new Account(
                 request.loginId(),
@@ -124,7 +117,7 @@ public class AccountService {
                 roles,
                 request.emailReceivable()
         );
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
 
     private void saveEmployerAccount(final SignUpEmployerRequest request) {
@@ -162,11 +155,6 @@ public class AccountService {
         if (accountRepository.existsByEmail(emailRequest.email())) {
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
-    }
-
-    public Account loadAccount(final Long requestMemberId) {
-        return accountRepository.findById(requestMemberId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
     }
 
     @Transactional

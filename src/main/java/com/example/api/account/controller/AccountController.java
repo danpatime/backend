@@ -61,10 +61,4 @@ public class AccountController {
         String successMessage = signUpService.verifyBusinessNumber(request);
         return ResponseEntity.ok(successMessage);
     }
-
-    @PostMapping("/sign-up/employer")
-    public ResponseEntity<String> signUpEmployer(@Valid @RequestBody final SignUpEmployerRequest request) {
-        String successMessage = signUpService.signUpEmployer(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(successMessage);
-    }
 }

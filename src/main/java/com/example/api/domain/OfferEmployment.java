@@ -2,9 +2,7 @@ package com.example.api.domain;
 
 import com.example.api.offeremployment.dto.OfferEmploymentCommand;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +12,7 @@ import static jakarta.persistence.FetchType.*;
 @Getter
 @EqualsAndHashCode
 @Table(name = "OFFER_EMPLOYMENT")
+@NoArgsConstructor
 public class OfferEmployment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +46,24 @@ public class OfferEmployment {
 
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
+
+    public static OfferEmployment fromCommand(OfferEmploymentCommand offerEmploymentCommand, Account employee, Business business) {
+        return new OfferEmployment(
+                business,
+                employee,
+                offerEmploymentCommand.suggestStartTime(),
+                offerEmploymentCommand.suggestEndTime(),
+                offerEmploymentCommand.suggestHourlyPay()
+        );
+    }
+
+    public OfferEmployment(Business business, Account employee, LocalDateTime suggestStartTime, LocalDateTime suggestEndTime, int suggestHourlyPay) {
+        this.business = business;
+        this.employee = employee;
+        this.suggestStartTime = suggestStartTime;
+        this.suggestEndTime = suggestEndTime;
+        this.suggestHourlyPay = suggestHourlyPay;
+    }
 
     @PrePersist
     protected void onCreate() {
