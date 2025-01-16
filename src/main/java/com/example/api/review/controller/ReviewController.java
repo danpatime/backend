@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package com.example.api.review.controller;
 
 import com.example.api.review.ReviewService;
@@ -31,5 +32,10 @@ public class ReviewController {
 }
 =======
 package com.example.api.review.controller;public class ReviewController {
+=======
+package com.example.api.review.controller;
+
+public class ReviewController {
+>>>>>>> 0ff3ba1 (#53 feat(ReviewService): 서비스 코드 구현)
 }
 >>>>>>> 2f6b5cc (#53 feat(ReviewCommand): DTO 작성)

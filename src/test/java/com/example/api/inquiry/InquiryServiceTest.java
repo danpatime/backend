@@ -1,6 +1,7 @@
 package com.example.api.inquiry;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Inquiry;
@@ -115,4 +116,7 @@ class InquiryServiceTest {
 =======
 public class InquiryServiceController {
 >>>>>>> 2f6b5cc (#53 feat(ReviewCommand): DTO 작성)
+=======
+public class InquiryServiceTest {
+>>>>>>> 0ff3ba1 (#53 feat(ReviewService): 서비스 코드 구현)
 }

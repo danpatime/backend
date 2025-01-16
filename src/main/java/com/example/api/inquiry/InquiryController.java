@@ -1,4 +1,4 @@
-package com.example.api.inquiry.controller;
+package com.example.api.inquiry;
 
 import com.example.api.domain.Account;
 import com.example.api.domain.Inquiry;
