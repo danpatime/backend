@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.example.api.review.controller;
 
 import com.example.api.review.ReviewService;
@@ -28,3 +29,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 }
+=======
+package com.example.api.review.controller;public class ReviewController {
+}
+>>>>>>> 2f6b5cc (#53 feat(ReviewCommand): DTO 작성)

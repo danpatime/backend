@@ -1,5 +1,6 @@
 package com.example.api.inquiry;
 
+<<<<<<< HEAD
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Inquiry;
@@ -111,4 +112,7 @@ class InquiryServiceTest {
         assertThat(inquiry).isNotNull();
         assertThat(inquiry.getTitle()).isEqualTo("Test Title");
     }
+=======
+public class InquiryServiceController {
+>>>>>>> 2f6b5cc (#53 feat(ReviewCommand): DTO 작성)
 }

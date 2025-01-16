@@ -15,4 +15,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT r FROM Review r WHERE (:reviewId IS NULL OR r.reviewId = :reviewId)")
     List<Review> findReviewsByDynamicQuery(@Param("reviewId") Long reviewId);
+
 }
