@@ -12,7 +12,7 @@ public record ReviewResponse(
         int reviewStarPoint,
         String reviewContent
 ) {
-    public static ReviewResponse from(Review review) {
+    public static ReviewResponse from(final Review review) {
         return new ReviewResponse(
                 review.getReviewId(),
                 review.getContract().getOfferEmployment().getBusiness().getBusinessName(),
@@ -24,4 +24,5 @@ public record ReviewResponse(
         );
     }
 }
+
 

@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 import com.example.api.domain.Review;
-import com.example.api.review.dto.*;
+import com.example.api.review.dto.ReviewCommand;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +36,7 @@ public class ReviewService {
 
     @Transactional
     public List<ReviewResponse> getReviews(@Validated final ReviewCommand reviewCommand) {
-        List<Review> reviews = reviewRepository.findReviewsByEmployee_AccountId(reviewCommand.accountId());
+        final List<Review> reviews = reviewRepository.findReviewsByEmployee_AccountId(reviewCommand.accountId());
         return mapToReviewResponses(reviews);
     }
 
@@ -59,6 +59,7 @@ public class ReviewService {
         final LocalDateTime contractEndTime = review.getContract().getContractEndTime();
         final int reviewStarPoint = review.getReviewStarPoint();
         final String reviewContent = review.getReviewContent();
+
         return new ReviewResponse(
                 review.getReviewId(),
                 businessName,
@@ -70,3 +71,4 @@ public class ReviewService {
         );
     }
 }
+
