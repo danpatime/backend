@@ -47,6 +47,9 @@ public class OfferEmployment {
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
 
+    @Column(name = "SUGGEST_FINISHED", columnDefinition = "boolean DEFAULT false")
+    private boolean suggestFinished;
+
     public static OfferEmployment fromCommand(OfferEmploymentCommand offerEmploymentCommand, Account employee, Business business) {
         return new OfferEmployment(
                 business,
