@@ -30,6 +30,8 @@ public class QOfferEmployment extends EntityPathBase<OfferEmployment> {
 
     public final DateTimePath<java.time.LocalDateTime> suggestEndTime = createDateTime("suggestEndTime", java.time.LocalDateTime.class);
 
+    public final BooleanPath suggestFinished = createBoolean("suggestFinished");
+
     public final NumberPath<Integer> suggestHourlyPay = createNumber("suggestHourlyPay", Integer.class);
 
     public final NumberPath<Long> suggestId = createNumber("suggestId", Long.class);
