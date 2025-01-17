@@ -27,7 +27,7 @@ public class OfferEmploymentController {
         return ResponseEntity.ok(offerEmploymentResponse);
     }
 
-    @PostMapping
+    @PostMapping("/complete")
     public ResponseEntity<String> completeOfferEmployment(
             @RequestBody final OfferEmploymentCompleteRequest completeRequest
     ) {
