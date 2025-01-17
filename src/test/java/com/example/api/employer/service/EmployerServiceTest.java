@@ -1,7 +1,9 @@
 package com.example.api.employer.service;
 
+import com.example.api.account.entity.Location;
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.board.controller.domain.request.EmployeeIdRequest;
+import com.example.api.account.repository.LocationRepository;
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
@@ -23,15 +25,23 @@ class EmployerServiceTest {
     private AccountRepository accountRepository;
     @Autowired
     private BusinessRepository businessRepository;
+    @Autowired
+    private LocationRepository locationRepository;
     private List<EmployerBusinessesRequest> businessesList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
         Account account = new Account();
         accountRepository.save(account);
-        Business business1 = new Business(account, "가게명1", "위치1");
-        Business business2 = new Business(account, "가게명2", "위치2");
-        Business business3 = new Business(account, "가게명3", "위치3");
+        Location location1 = new Location("zipcode1", "address1", "detailAddress1");
+        Location location2 = new Location("zipcode2", "address2", "detailAddress2");
+        Location location3 = new Location("zipcode3", "address3", "detailAddress3");
+        locationRepository.save(location1);
+        locationRepository.save(location2);
+        locationRepository.save(location3);
+        Business business1 = new Business(account, "가게명1", location1);
+        Business business2 = new Business(account, "가게명2", location2);
+        Business business3 = new Business(account, "가게명3", location3);
         businessRepository.save(business1);
         businessRepository.save(business2);
         businessRepository.save(business3);
