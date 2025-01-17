@@ -43,6 +43,6 @@ public class OfferEmploymentService {
         // 알바생 평점 조정
         Integer reviewScore = reviewRepository.findReviewStarPointBySuggestId(completeRequest.suggestId());
         // 알바 횟수 count + 1
-        accountRepository.updateWorkCountBySuggestId(completeRequest.suggestId(), reviewScore);
+        accountRepository.updateWorkCountAndStarPointBySuggestId(completeRequest.suggestId(), reviewScore);
     }
 }
