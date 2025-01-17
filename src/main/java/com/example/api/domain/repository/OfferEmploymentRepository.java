@@ -2,7 +2,9 @@ package com.example.api.domain.repository;
 
 import com.example.api.board.dto.response.InnerCareerDTO;
 import com.example.api.domain.OfferEmployment;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +30,10 @@ public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment
             "join oe.business b " +
             "where oe.suggestId = :OfferEmploymentId")
     List<Object[]> findSuggestByOfferEmploymentId(@Param("OfferEmploymentId")long OfferEmploymentId);
+
+    @Modifying
+    @Query("update OfferEmployment oe " +
+            "set oe.suggestFinished = true, oe.suggestEndTime = CURRENT_TIMESTAMP " +
+            "where oe.suggestFinished = :suggestId")
+    void updateSuggestStatusToFinishedBySuggestId(@Param("suggestId") Long suggestId);
 }

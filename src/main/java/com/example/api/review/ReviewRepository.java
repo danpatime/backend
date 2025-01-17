@@ -1,7 +1,9 @@
 package com.example.api.review;
 
 import com.example.api.domain.Review;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,6 +30,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findReviewsByAccountIdWithDetails(@Param("accountId") Long accountId);
 
     List<Review> findReviewsByEmployee_AccountId(Long accountId);
+
+    @Query("select r.reviewStarPoint from Review r where r.reviewId = :suggestId")
+    Integer findReviewStarPointBySuggestId(@Param("suggestId") Long suggestId);
 }
 
 
