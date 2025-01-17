@@ -13,10 +13,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, Long> {
-
     @Query("SELECT b FROM Business b JOIN FETCH b.employer JOIN FETCH b.businessCategories WHERE b.businessId = :businessId")
     Optional<Business> getDetails(@Param("businessId") final Long businessId);
 
-    @Query("select new com.example.api.employer.controller.dto.EmployerBusinessesRequest(b.businessName, b.location) from Business b where b.employer.accountId = :employerId")
+    @Query("select new com.example.api.employer.controller.dto.EmployerBusinessesRequest(b.businessName, b.location) from Business b where b.employer.accountId = :employerId order by b.location.id")
     List<EmployerBusinessesRequest> findBusinessesByEmployeeId(@Param("employerId")final Long employerId);
 }

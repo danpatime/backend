@@ -2,9 +2,11 @@ package com.example.api.account.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 
 @Entity
 @Getter
+@ToString
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
