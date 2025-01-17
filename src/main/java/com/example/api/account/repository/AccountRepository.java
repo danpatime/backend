@@ -34,5 +34,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
             "a.workCount = a.workCount + 1 " +
             "where a.accountId in " +
             "(select oe.employee.accountId From OfferEmployment oe where oe.suggestId = :suggestId)")
-    void updateWorkCountBySuggestId(@Param("suggestId") Long suggestId, @Param("starPoint") Integer newStarPoint);
+    void updateWorkCountAndStarPointBySuggestId(@Param("suggestId") Long suggestId, @Param("starPoint") Integer newStarPoint);
 }
