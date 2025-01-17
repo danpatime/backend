@@ -30,7 +30,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Modifying
     @Query("update Account a " +
-            "set a.starPoint = ((a.starPoint * a.workCount) + :newStarPoint) / (a.workCount+1), " +
+            "set a.starPoint = ((a.starPoint * a.workCount) + :starPoint) / (a.workCount+1), " +
             "a.workCount = a.workCount + 1 " +
             "where a.accountId in " +
             "(select oe.employee.accountId From OfferEmployment oe where oe.suggestId = :suggestId)")
