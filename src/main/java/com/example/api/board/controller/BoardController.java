@@ -11,6 +11,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +26,16 @@ public class BoardController {
     private final CategoryService categoryService;
     private final EmployeeService employeeService;
 
-    @GetMapping("/api/v1/possible-board/form/{employeeId}")
-    public Board findBoardByEmployeeId(@PathVariable() final Long employeeId) {
+    @GetMapping("/api/v1/possible-board/form")
+    public Board findBoardByEmployeeId(@AuthenticationPrincipal final Long employeeId) {
         EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
         MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
         List<CategoryDTO> categoryList = categoryService.getAllCategories();
         return new Board(myInfoById, categoryList);
     }
 
-    @PostMapping("/api/v1/{employeeId}")
-    public ResponseEntity changeOpenStatus(@PathVariable("employeeId") Long employeeId, @RequestParam ("openStatus") Boolean openStatus) {
+    @PostMapping("/api/v1")
+    public ResponseEntity changeOpenStatus(@AuthenticationPrincipal final Long employeeId, @RequestParam ("openStatus") Boolean openStatus) {
         EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
         boolean updated = employeeService.changeOpenStatus(employeeIdRequest, openStatus);
         if (updated) {
@@ -44,8 +45,8 @@ public class BoardController {
         }
     }
 
-    @PostMapping("/api/v1/possible-board/submit/{employeeId}")
-    public ResponseEntity submitBoard(@PathVariable("employeeId") Long employeeId, @RequestBody MyInfoDTO myInfo) {
+    @PostMapping("/api/v1/possible-board/submit")
+    public ResponseEntity submitBoard(@AuthenticationPrincipal final Long employeeId, @RequestBody MyInfoDTO myInfo) {
         EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
         employeeService.updateUserInfo(employeeIdRequest, myInfo);
         MyInfoDTO myInfoById = boardService.findMyInfoById(employeeIdRequest);
