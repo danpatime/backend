@@ -1,5 +1,6 @@
 package com.example.api.offeremployment;
 
+import com.example.api.account.entity.Location;
 import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
@@ -7,6 +8,7 @@ import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
 import com.example.api.domain.OfferEmployment;
+import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.offeremployment.dto.OfferEmploymentRequest;
 import com.example.api.offeremployment.dto.OfferEmploymentResponse;
 import jakarta.annotation.PostConstruct;
@@ -54,16 +56,17 @@ class OfferEmploymentServiceTest {
                 "bob@example.com", Nationality.KOREAN, List.of(UserRole.EMPLOYER), true
         );
         accountRepository.save(employer);
+
+        Business business = new Business(
+                "My Coffee Shop",
+                new Location(),
+                "Bob",
+                employer,
+                LocalDate.of(2020, 1, 1),
+                "123-45-67890"
+        );
+        businessRepository.save(business);
     }
-    Business business = new Business(
-            "My Coffee Shop",
-            "서울시 강남구",
-            "Bob",
-            employer,
-            LocalDate.of(2020, 1, 1),
-            "123-45-67890"
-    );
-    businessRepository.save(business);
 
     @Test
     @Order(1)

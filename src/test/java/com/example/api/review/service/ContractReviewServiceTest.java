@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-public class ContractReviewServiceTest extends BaseIntegrationTest {
+public class ContractReviewServiceTest {
     @Autowired
     private ReviewService reviewService;
 

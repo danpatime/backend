@@ -1,0 +1,29 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    env_file:
+        - .env
+
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - logs:/app/logs
+      - ./src:/app/src
+    environment:
+      - SPRING_DATA_MONGODB_URI=${MONGO_URI}
+    env_file:
+      - .env
+    depends_on:
+       - mongodb
+
+volumes:
+  mongodb_data:
+  logs:

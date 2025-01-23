@@ -130,4 +130,8 @@ public class Account extends BaseEntity {
     public void setOpenStatus(boolean openStatus) {
         this.openStatus = openStatus;
     }
+
+    public void setAccountId(long l) {
+        this.accountId = l;
+    }
 }
