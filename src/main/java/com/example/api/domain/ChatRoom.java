@@ -3,6 +3,7 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import static jakarta.persistence.FetchType.*;
 @Getter
 @EqualsAndHashCode
 @Table(name = "CHAT_ROOM")
+@NoArgsConstructor
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
