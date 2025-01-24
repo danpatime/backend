@@ -10,7 +10,7 @@ services:
         - .env
 
   backend:
-    build: .
+    image: taeyoungkims/danpat:latest
     container_name: backend
     ports:
       - "8080:8080"
