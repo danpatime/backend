@@ -58,6 +58,7 @@ public class AnnouncementService {
 
     @Transactional
     public void deleteAnnouncement(
+            @Validated final Long memberId,
             @Validated final Long announcementId
     ) {
         final Announcement announcement = findAnnouncementById(announcementId);

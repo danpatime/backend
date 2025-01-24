@@ -15,6 +15,6 @@ public record InquiryResponse(
         String inquiryStatus,
         LocalDateTime answerDate,
         @NonNull
-        Account createdBy
+        Long createdBy
 ) {
 }

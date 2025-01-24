@@ -4,7 +4,7 @@ import com.example.api.domain.Review;
 import java.time.LocalDateTime;
 
 public record ReviewResponse(
-        Long reviewId, //Id
+        Long reviewId,
         String businessName,
         Long businessId,
         LocalDateTime contractStartTime,
