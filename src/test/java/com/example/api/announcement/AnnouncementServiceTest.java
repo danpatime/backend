@@ -1,96 +1,117 @@
 package com.example.api.announcement;
 
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementResponse;
 import com.example.api.domain.Announcement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.DisplayName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.util.List;
 import java.util.Optional;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import java.util.Arrays;
 
+@SpringBootTest
 class AnnouncementServiceTest {
-    @InjectMocks
-    private AnnouncementService announcementService;
-    @Mock
+    @MockBean
     private AnnouncementRepository announcementRepository;
-    private static final String DEFAULT_TITLE = "공지사항 제목";
-    private static final String DEFAULT_TYPE = "공지사항";
-    private static final String DEFAULT_CONTENT = "공지사항 내용";
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+
+    @Autowired
+    private AnnouncementService announcementService;
+
+    private Announcement announcement;
+    private AnnouncementCommand announcementCommand;
+
+    public AnnouncementServiceTest() {
+        announcement = new Announcement(1L, "Test Title", "General", "Test Content", 0);
+        announcementCommand = new AnnouncementCommand(1L, "Test Title", "General", "Test Content");
     }
 
     @Test
-    void createAnnouncement_success() {
-        final AnnouncementCommand command = createMockCommand();
-        final Announcement announcement = createMockAnnouncement(command);
-        when(announcementRepository.save(any(Announcement.class)))
-                .thenReturn(announcement);
-        AnnouncementResponse response = announcementService.createAnnouncement(command);
-        assertCreateAnnouncementResponse(response);
+    @DisplayName("새로운 공지사항을 생성할 수 있어야 한다")
+    void shouldCreateAnnouncement() {
+        when(announcementRepository.save(any(Announcement.class))).thenReturn(announcement);
+        AnnouncementResponse response = announcementService.createAnnouncement(announcementCommand);
+        assertNotNull(response);
+        assertEquals("Test Title", response.announcementTitle());
+        assertEquals("General", response.announcementType());
+        assertEquals("Test Content", response.announcementContent());
         verify(announcementRepository, times(1)).save(any(Announcement.class));
     }
 
     @Test
-    void getAnnouncement_notFound() {
-        final Long announcementId = 1L;
-        when(announcementRepository.findById(announcementId))
-                .thenReturn(Optional.empty());
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            announcementService.getAnnouncement(announcementId);
-        });
-        assertThat(exception.getMessage()).isEqualTo("announcement.not.found");
-        verify(announcementRepository, times(1)).findById(announcementId);
+    @DisplayName("모든 공지사항을 조회할 수 있어야 한다")
+    void shouldGetAllAnnouncements() {
+        when(announcementRepository.findAll()).thenReturn(Arrays.asList(announcement));
+        List<AnnouncementResponse> responses = announcementService.getAllAnnouncements();
+        assertNotNull(responses);
+        assertEquals(1, responses.size());
+        assertEquals("Test Title", responses.get(0).announcementTitle());
+        verify(announcementRepository, times(1)).findAll();
     }
 
     @Test
-    void searchAnnouncements_success() {
-        final String keyword = "공지";
-        final Announcement announcement = createMockAnnouncementWithTitle(keyword);
-        when(announcementRepository.findByAnnouncementTitleContaining(keyword))
-                .thenReturn(List.of(announcement));
-        List<AnnouncementResponse> responses = announcementService.searchAnnouncements(keyword);
-        assertSearchAnnouncementResponses(responses);
-        verify(announcementRepository, times(1)).findByAnnouncementTitleContaining(keyword);
+    @DisplayName("특정 공지사항을 조회할 수 있어야 한다")
+    void shouldGetAnnouncement() {
+        when(announcementRepository.findById(1L)).thenReturn(Optional.of(announcement));
+        AnnouncementResponse response = announcementService.getAnnouncement(1L);
+        assertNotNull(response);
+        assertEquals("Test Title", response.announcementTitle());
+        verify(announcementRepository, times(1)).findById(1L);
     }
 
-    private AnnouncementCommand createMockCommand() {
-        return new AnnouncementCommand(DEFAULT_TITLE, DEFAULT_TYPE, DEFAULT_CONTENT);
+    @Test
+    @DisplayName("공지사항이 존재하지 않으면 예외가 발생해야 한다")
+    void shouldThrowExceptionWhenAnnouncementNotFound() {
+        when(announcementRepository.findById(1L)).thenReturn(Optional.empty());
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+            announcementService.getAnnouncement(1L);
+        });
+        assertEquals("announcement.not.found", thrown.getMessage());
+        verify(announcementRepository, times(1)).findById(1L);
     }
 
-    private Announcement createMockAnnouncement(AnnouncementCommand command) {
-        Announcement announcement = new Announcement();
-        announcement.setAnnouncementTitle(command.announcementTitle());
-        announcement.setAnnouncementType(command.announcementType());
-        announcement.setAnnouncementContent(command.announcementContent());
-        return announcement;
+    @Test
+    @DisplayName("공지사항을 업데이트할 수 있어야 한다")
+    void shouldUpdateAnnouncement() {
+        when(announcementRepository.findById(1L)).thenReturn(Optional.of(announcement));
+        when(announcementRepository.save(any(Announcement.class))).thenReturn(announcement);
+        AnnouncementResponse response = announcementService.updateAnnouncement(1L, announcementCommand);
+        assertNotNull(response);
+        assertEquals("Test Title", response.announcementTitle());
+        assertEquals("General", response.announcementType());
+        assertEquals("Test Content", response.announcementContent());
+
+        verify(announcementRepository, times(1)).findById(1L);
+        verify(announcementRepository, times(1)).save(any(Announcement.class));
     }
 
-    private Announcement createMockAnnouncementWithTitle(String title) {
-        Announcement announcement = new Announcement();
-        announcement.setAnnouncementTitle(DEFAULT_TITLE);
-        announcement.setAnnouncementType(DEFAULT_TYPE);
-        announcement.setAnnouncementContent(DEFAULT_CONTENT);
-        return announcement;
+    @Test
+    @DisplayName("공지사항을 삭제할 수 있어야 한다")
+    void shouldDeleteAnnouncement() {
+        when(announcementRepository.findById(1L)).thenReturn(Optional.of(announcement));
+        announcementService.deleteAnnouncement(1L, 1L);
+        verify(announcementRepository, times(1)).findById(1L);
+        verify(announcementRepository, times(1)).delete(any(Announcement.class));
     }
 
-    private void assertCreateAnnouncementResponse(AnnouncementResponse response) {
-        assertThat(response.announcementTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(response.announcementType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(response.announcementContent()).isEqualTo(DEFAULT_CONTENT);
-    }
-
-    private void assertSearchAnnouncementResponses(List<AnnouncementResponse> responses) {
-        assertThat(responses).hasSize(1);
-        assertThat(responses.get(0).announcementTitle()).isEqualTo(DEFAULT_TITLE);
+    @Test
+    @DisplayName("키워드를 사용해 공지사항을 검색할 수 있어야 한다")
+    void shouldSearchAnnouncements() {
+        when(announcementRepository.findByAnnouncementTitleContaining("Test")).thenReturn(Arrays.asList(announcement));
+        List<AnnouncementResponse> responses = announcementService.searchAnnouncements("Test");
+        assertNotNull(responses);
+        assertEquals(1, responses.size());
+        assertEquals("Test Title", responses.get(0).announcementTitle());
+        verify(announcementRepository, times(1)).findByAnnouncementTitleContaining("Test");
     }
 }
+
 
 

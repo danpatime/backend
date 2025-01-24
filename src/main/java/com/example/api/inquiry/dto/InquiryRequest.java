@@ -8,12 +8,10 @@ public record InquiryRequest(
         String inquiryType,
         String subInquiryType,
         String title,
-        String content,
-        @NonNull
-        Account createdBy
+        String content
 ) {
 
-    public InquiryCommand toCommand(final Account account) {
+    public InquiryCommand toCommand(final Long memberId) {
         return new InquiryCommand(
                 null,
                 inquiryType,
@@ -22,7 +20,7 @@ public record InquiryRequest(
                 content,
                 "WAITING",
                 null,
-                account
+                memberId
         );
     }
 }

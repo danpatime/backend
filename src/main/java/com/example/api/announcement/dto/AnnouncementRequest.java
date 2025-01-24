@@ -8,12 +8,14 @@ public record AnnouncementRequest(
         String announcementType,
         String announcementContent
 ) {
-        public AnnouncementCommand toCommand() {
+        public AnnouncementCommand toCommand(Long memberId) {
                 return new AnnouncementCommand(
+                        memberId,
                         this.announcementTitle,
                         this.announcementType,
                         this.announcementContent
                 );
         }
 }
+
 

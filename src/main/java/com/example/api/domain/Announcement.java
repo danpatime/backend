@@ -8,11 +8,10 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "ANNOUNCEMENT")
 public class Announcement extends BaseEntity {
-    @NonNull
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long announcementId;
@@ -22,4 +21,14 @@ public class Announcement extends BaseEntity {
 
     @Column(columnDefinition = "int DEFAULT 0")
     private int viewCount;
+
+    public Announcement() {}
+
+    public Announcement(Long announcementId, String announcementTitle, String announcementType, String announcementContent, int viewCount) {
+        this.announcementId = announcementId;
+        this.announcementTitle = announcementTitle;
+        this.announcementType = announcementType;
+        this.announcementContent = announcementContent;
+        this.viewCount = viewCount;
+    }
 }

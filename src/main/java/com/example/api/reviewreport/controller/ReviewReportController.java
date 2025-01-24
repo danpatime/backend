@@ -7,6 +7,7 @@ import com.example.api.reviewreport.dto.ReviewReportRequest;
 import com.example.api.reviewreport.dto.ReviewReportResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class ReviewReportController {
 
     @PostMapping("/{reviewId}/report")
     public ResponseEntity<ReviewReportResponse> reportReview(
+            @AuthenticationPrincipal final Long memberId,
             @PathVariable(required = true) final Review reviewId,
             @RequestBody final ReviewReportRequest reviewReportRequest
     ) {
