@@ -16,13 +16,14 @@ public class AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Transactional
-    public AnnouncementResponse createAnnouncement(
-            @Validated final AnnouncementCommand command
-    ) {
-        Announcement announcement = new Announcement();
-        announcement.setAnnouncementTitle(command.announcementTitle());
-        announcement.setAnnouncementType(command.announcementType());
-        announcement.setAnnouncementContent(command.announcementContent());
+    public AnnouncementResponse createAnnouncement(@Validated final AnnouncementCommand command) {
+        Announcement announcement = new Announcement(
+                null,
+                command.announcementTitle(),
+                command.announcementType(),
+                command.announcementContent(),
+                0
+        );
         Announcement savedAnnouncement = announcementRepository.save(announcement);
         return new AnnouncementResponse(savedAnnouncement);
     }
@@ -36,9 +37,7 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public AnnouncementResponse getAnnouncement(
-            @Validated final Long announcementId
-    ) {
+    public AnnouncementResponse getAnnouncement(@Validated final Long announcementId) {
         final Announcement announcement = findAnnouncementById(announcementId);
         return new AnnouncementResponse(announcement);
     }
@@ -49,9 +48,13 @@ public class AnnouncementService {
             @Validated final AnnouncementCommand command
     ) {
         Announcement announcement = findAnnouncementById(announcementId);
-        announcement.setAnnouncementTitle(command.announcementTitle());
-        announcement.setAnnouncementType(command.announcementType());
-        announcement.setAnnouncementContent(command.announcementContent());
+        announcement = new Announcement(
+                announcement.getAnnouncementId(),
+                command.announcementTitle(),
+                command.announcementType(),
+                command.announcementContent(),
+                announcement.getViewCount()
+        );
         Announcement updatedAnnouncement = announcementRepository.save(announcement);
         return new AnnouncementResponse(updatedAnnouncement);
     }
@@ -75,9 +78,7 @@ public class AnnouncementService {
                 .collect(Collectors.toList());
     }
 
-    private Announcement findAnnouncementById(
-            @Validated final Long announcementId
-    ) {
+    private Announcement findAnnouncementById(@Validated final Long announcementId) {
         return announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new RuntimeException(getErrorMessage("announcement.not.found")));
     }
@@ -86,5 +87,6 @@ public class AnnouncementService {
         return key;
     }
 }
+
 
 
