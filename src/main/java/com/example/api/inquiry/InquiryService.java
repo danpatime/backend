@@ -1,7 +1,5 @@
 package com.example.api.inquiry;
 
-import com.example.api.domain.Account;
-import com.example.api.domain.Inquiry;
 import com.example.api.inquiry.dto.InquiryCommand;
 import com.example.api.inquiry.dto.InquiryRequest;
 import com.example.api.inquiry.dto.InquiryResponse;
@@ -21,18 +19,18 @@ public class InquiryService {
     @Transactional
     public Inquiry saveInquiry(
             @Validated final InquiryRequest inquiryRequest,
-            @Validated final Account account
+            @Validated final Long memberId
     ) {
-        final InquiryCommand command = inquiryRequest.toCommand(account);
+        final InquiryCommand command = inquiryRequest.toCommand(memberId);
         final Inquiry inquiry = mapToInquiry(command);
         return inquiryRepository.save(inquiry);
     }
 
     @Transactional(readOnly = true)
     public List<InquiryResponse> getInquiriesByAccountId(
-            @Validated final Long accountId
+            @Validated final Long memberId
     ) {
-        final List<Inquiry> inquiries = inquiryRepository.findByCreatedByAccountId(accountId);
+        final List<Inquiry> inquiries = inquiryRepository.findByCreatedByAccountId(memberId);
         return inquiries.stream()
                 .map(this::mapToInquiryResponse)
                 .collect(Collectors.toList());

@@ -4,8 +4,10 @@ import com.example.api.announcement.AnnouncementService;
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,10 @@ public class AnnouncementController {
 
     @PostMapping
     public ResponseEntity<AnnouncementResponse> createAnnouncement(
-            @RequestBody final AnnouncementRequest request
+            @AuthenticationPrincipal final Long memberId,
+            @Valid @RequestBody final AnnouncementRequest request
     ) {
-        final AnnouncementCommand command = request.toCommand();
+        final AnnouncementCommand command = request.toCommand(memberId);
         final AnnouncementResponse response = announcementService.createAnnouncement(command);
         return ResponseEntity.ok(response);
     }
@@ -41,22 +44,24 @@ public class AnnouncementController {
 
     @PutMapping("/{announcementId}")
     public ResponseEntity<AnnouncementResponse> updateAnnouncement(
+            @AuthenticationPrincipal final Long memberId,
             @PathVariable(required = true) final Long announcementId,
-            @RequestBody final AnnouncementRequest request
+            @Valid @RequestBody final AnnouncementRequest request
     ) {
-        final AnnouncementCommand command = request.toCommand();
-        final AnnouncementResponse response = announcementService.updateAnnouncement(
-                announcementId, command);
+        final AnnouncementCommand command = request.toCommand(memberId);
+        final AnnouncementResponse response = announcementService.updateAnnouncement(announcementId, command);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{announcementId}")
     public ResponseEntity<Void> deleteAnnouncement(
-            @PathVariable(required = true) final Long announcementId
+            @AuthenticationPrincipal final Long memberId,
+            @PathVariable final Long announcementId
     ) {
-        announcementService.deleteAnnouncement(announcementId);
+        announcementService.deleteAnnouncement(memberId, announcementId);
         return ResponseEntity.ok().build();
     }
+
 
     @GetMapping("/search")
     public ResponseEntity<List<AnnouncementResponse>> searchAnnouncements(

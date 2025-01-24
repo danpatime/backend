@@ -17,9 +17,7 @@ public class Inquiry extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inquiryId;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
-    private Account createdBy;
+    private Long createdBy;
 
     private String inquiryType;
 

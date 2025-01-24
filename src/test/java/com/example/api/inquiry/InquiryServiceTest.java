@@ -4,7 +4,6 @@ import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.domain.Account;
-import com.example.api.domain.Inquiry;
 import com.example.api.inquiry.dto.InquiryRequest;
 import com.example.api.inquiry.dto.InquiryResponse;
 import jakarta.annotation.PostConstruct;

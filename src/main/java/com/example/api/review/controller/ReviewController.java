@@ -5,6 +5,7 @@ import com.example.api.review.dto.ReviewCommand;
 import com.example.api.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,15 +16,18 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @GetMapping // 리뷰 전체 조회
-    public ResponseEntity<List<ReviewResponse>> getAllReviews() {
+    @GetMapping
+    public ResponseEntity<List<ReviewResponse>> getAllReviews(
+            @AuthenticationPrincipal final Long memberId
+    ) {
         final List<ReviewResponse> reviews = reviewService.getAllReviews();
         return ResponseEntity.ok(reviews);
     }
 
-    @GetMapping("/{reviewId}") // 리뷰 상세 조회
+    @GetMapping("/{reviewId}")
     public ResponseEntity<List<ReviewResponse>> getReviewsByEmployee(
-            @PathVariable(required = true) Long reivewId
+            @AuthenticationPrincipal final Long memberId,
+            @PathVariable(required = true) final Long reivewId
     ) {
         final List<ReviewResponse> reviews = reviewService.getReviewsByEmployee(reivewId);
         return ResponseEntity.ok(reviews);
@@ -31,9 +35,9 @@ public class ReviewController {
 
     @GetMapping("/my/reviews")
     public ResponseEntity<List<ReviewResponse>> getMyReviews(
-            @RequestParam final Long accountId
+            @AuthenticationPrincipal final Long memberId
             ) {
-        final ReviewCommand reviewCommand = new ReviewCommand(accountId);
+        final ReviewCommand reviewCommand = new ReviewCommand(memberId);
         final List<ReviewResponse> reviews = reviewService.getReviews(reviewCommand);
         return ResponseEntity.ok(reviews);
     }

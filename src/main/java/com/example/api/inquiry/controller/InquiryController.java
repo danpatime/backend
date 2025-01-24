@@ -1,12 +1,11 @@
 package com.example.api.inquiry.controller;
 
-import com.example.api.domain.Account;
-import com.example.api.domain.Inquiry;
 import com.example.api.inquiry.InquiryService;
 import com.example.api.inquiry.dto.InquiryRequest;
 import com.example.api.inquiry.dto.InquiryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -18,11 +17,12 @@ public class InquiryController {
 
     @PostMapping("/inquiry")
     public ResponseEntity<InquiryResponse> createInquiry(
+            @AuthenticationPrincipal final Long memberId,
             @RequestBody final InquiryRequest inquiryRequest
     ) {
         final Inquiry inquiry = inquiryService.saveInquiry(
                 inquiryRequest,
-                inquiryRequest.createdBy()
+                memberId
         );
         final InquiryResponse inquiryResponse = mapToResponse(inquiry);
         return ResponseEntity.ok(inquiryResponse);
@@ -30,9 +30,9 @@ public class InquiryController {
 
     @GetMapping("/my-inquiries")
     public ResponseEntity<List<InquiryResponse>> getMyInquiries(
-            @RequestParam(required = true) final Long accountId
+            @AuthenticationPrincipal final Long memberId
     ) {
-        final List<InquiryResponse> inquiryResponses = inquiryService.getInquiriesByAccountId(accountId);
+        final List<InquiryResponse> inquiryResponses = inquiryService.getInquiriesByAccountId(memberId);
         return ResponseEntity.ok(inquiryResponses);
     }
 
