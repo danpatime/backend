@@ -12,7 +12,7 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "EXTERANL_CARRER")
+@Table(name = "EXTERNAL_CAREER")
 public class ExternalCareer extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

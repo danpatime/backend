@@ -1,5 +1,6 @@
 package com.example.api.account.entity;
 
+import com.example.api.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @ToString
-public class Location {
+public class Location extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCATION_UNIQUE_ID")
