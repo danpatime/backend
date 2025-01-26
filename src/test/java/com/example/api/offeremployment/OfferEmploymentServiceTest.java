@@ -7,6 +7,7 @@ import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
 import com.example.api.domain.OfferEmployment;
+import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.offeremployment.dto.OfferEmploymentRequest;
 import com.example.api.offeremployment.dto.OfferEmploymentResponse;
 import jakarta.annotation.PostConstruct;
@@ -21,7 +22,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class OfferEmploymentServiceTest {
 
