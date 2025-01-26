@@ -4,13 +4,11 @@ import com.example.api.domain.Account;
 import org.springframework.lang.NonNull;
 
 public record InquiryRequest(
-        @NonNull
-        String inquiryType,
+        @NonNull String inquiryType,
         String subInquiryType,
         String title,
         String content
 ) {
-
     public InquiryCommand toCommand(final Long memberId) {
         return new InquiryCommand(
                 null,

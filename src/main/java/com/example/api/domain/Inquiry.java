@@ -10,7 +10,6 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "INQUIRY")
 public class Inquiry extends BaseEntity {
     @Id
@@ -33,5 +32,17 @@ public class Inquiry extends BaseEntity {
     private LocalDateTime answerDate;
     public enum InquiryStatus {
         WAITING, COMPLETED
+    }
+
+    public Inquiry() {}
+
+    public Inquiry(Long createdBy, String inquiryType, String subInquiryType, String title, String content, InquiryStatus inquiryStatus, LocalDateTime answerDate) {
+        this.createdBy = createdBy;
+        this.inquiryType = inquiryType;
+        this.subInquiryType = subInquiryType;
+        this.title = title;
+        this.content = content;
+        this.inquiryStatus = inquiryStatus;
+        this.answerDate = answerDate;
     }
 }

@@ -1,12 +1,16 @@
 package com.example.api.inquiry.controller;
 
+import com.example.api.domain.Inquiry;
 import com.example.api.inquiry.InquiryService;
+import com.example.api.inquiry.dto.InquiryCommand;
 import com.example.api.inquiry.dto.InquiryRequest;
 import com.example.api.inquiry.dto.InquiryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,10 +24,7 @@ public class InquiryController {
             @AuthenticationPrincipal final Long memberId,
             @RequestBody final InquiryRequest inquiryRequest
     ) {
-        final Inquiry inquiry = inquiryService.saveInquiry(
-                inquiryRequest,
-                memberId
-        );
+        final Inquiry inquiry = inquiryService.saveInquiry(inquiryRequest, memberId);
         final InquiryResponse inquiryResponse = mapToResponse(inquiry);
         return ResponseEntity.ok(inquiryResponse);
     }
@@ -49,3 +50,6 @@ public class InquiryController {
         );
     }
 }
+
+
+
