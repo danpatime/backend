@@ -22,11 +22,19 @@ public class QReviewReport extends EntityPathBase<ReviewReport> {
 
     public static final QReviewReport reviewReport = new QReviewReport("reviewReport");
 
+    public final QBaseEntity _super = new QBaseEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
+
     public final StringPath reason = createString("reason");
 
     public final NumberPath<Long> reportId = createNumber("reportId", Long.class);
 
     public final QReview review;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
 
     public QReviewReport(String variable) {
         this(ReviewReport.class, forVariable(variable), INITS);
