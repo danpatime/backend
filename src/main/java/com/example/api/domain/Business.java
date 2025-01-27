@@ -80,9 +80,8 @@ public class Business extends BaseEntity {
         this.registrationNumber = registrationNumber;
     }
 
-    public Business(Account employer, String businessName, Location location) {
+    public Business(Account employer, String businessName) {
         this.employer = employer;
         this.businessName = businessName;
-        this.location = location;
     }
 }

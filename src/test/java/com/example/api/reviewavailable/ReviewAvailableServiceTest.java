@@ -1,103 +1,109 @@
-//package com.example.api.reviewavailable;
-//
-//import com.example.api.account.repository.AccountRepository;
-//import com.example.api.business.BusinessRepository;
-//import com.example.api.contracts.ContractRepository;
-//import com.example.api.domain.Account;
-//import com.example.api.domain.Business;
-//import com.example.api.domain.Contract;
-//import com.example.api.domain.OfferEmployment;
-//import com.example.api.reviewavailable.dto.ReviewAvailableCommand;
-//import com.example.api.reviewavailable.dto.ReviewAvailableResponse;
-//import org.junit.jupiter.api.*;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-//@SpringBootTest
-//class ReviewAvailableServiceTest {
-//    @Autowired
-//    private ReviewAvailableService reviewAvailableService;
-//
-//    @Autowired
-//    private ContractRepository contractRepository;
-//
-//    @Autowired
-//    private BusinessRepository businessRepository;
-//
-//    @Autowired
-//    private AccountRepository accountRepository;
-//
-//    private Business business;
-//    private Account employee1;
-//    private Account employee2;
-//
-//    @BeforeEach
-//    void setUp() {
-//        contractRepository.deleteAll();
-//        businessRepository.deleteAll();
-//        accountRepository.deleteAll();
-//
-//        business = new Business();
-//        business.setBusinessId(1L);
-//        business.setBusinessName("Test Business");
-//        business.setLocation("Seoul");
-//        businessRepository.save(business);
-//
-//        employee1 = new Account();
-//        employee1.setAccountId(1001L);
-//        employee1.setName("John Doe");
-//        employee1.setPhoneNumber("010-1234-5678");
-//        accountRepository.save(employee1);
-//
-//        employee2 = new Account();
-//        employee2.setAccountId(1002L);
-//        employee2.setName("Jane Smith");
-//        employee2.setPhoneNumber("010-8765-4321");
-//        accountRepository.save(employee2);
-//
-//        OfferEmployment offerEmployment1 = new OfferEmployment();
-//        offerEmployment1.setEmployee(employee1);
-//        offerEmployment1.setBusiness(business);
-//
-//        Contract contract1 = new Contract(); // 완료된 계약 생성
-//        contract1.setContractSucceeded(true);
-//        contract1.setOfferEmployment(offerEmployment1);
-//        contractRepository.save(contract1);
-//
-//        OfferEmployment offerEmployment2 = new OfferEmployment();
-//        offerEmployment2.setEmployee(employee2);
-//        offerEmployment2.setBusiness(business);
-//
-//        Contract contract2 = new Contract(); // 완료되지 않은 계약 생성
-//        contract2.setContractSucceeded(false);
-//        contract2.setOfferEmployment(offerEmployment2);
-//        contractRepository.save(contract2);
-//    }
-//
-//    @Test
-//    @Order(1)
-//    @DisplayName("완료된 계약이 있는 알바생 조회")
-//    void getAvailableReviewTargets_ShouldReturnCompletedContracts() {
-//        ReviewAvailableCommand command = new ReviewAvailableCommand(business.getBusinessId());
-//        List<ReviewAvailableResponse> responses = reviewAvailableService.getAvailableReviewTargets(command);
-//        assertNotNull(responses);
-//        assertEquals(1, responses.size());
-//        assertEquals(employee1.getAccountId(), responses.get(0).employeeId());
-//        assertEquals(employee1.getName(), responses.get(0).employeeName());
-//    }
-//
-//    @Test
-//    @Order(2)
-//    @DisplayName("가게 ID가 없을 때 빈 리스트 반환")
-//    void getAvailableReviewTargets_ShouldReturnEmptyListForInvalidBusinessId() {
-//        ReviewAvailableCommand command = new ReviewAvailableCommand(999L);
-//        List<ReviewAvailableResponse> responses = reviewAvailableService.getAvailableReviewTargets(command);
-//        assertNotNull(responses);
-//        assertTrue(responses.isEmpty());
-//    }
-//}
+package com.example.api.reviewavailable;
+
+import com.example.api.account.entity.UserRole;
+import com.example.api.contracts.ContractRepository;
+import com.example.api.domain.Account;
+import com.example.api.domain.Business;
+import com.example.api.domain.Contract;
+import com.example.api.domain.OfferEmployment;
+import com.example.api.reviewavailable.dto.ReviewAvailableCommand;
+import com.example.api.reviewavailable.dto.ReviewAvailableResponse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+class ReviewAvailableServiceTest {
+
+    @Autowired
+    private ContractRepository contractRepository;
+
+    @Autowired
+    private ReviewAvailableService reviewAvailableService;
+
+    private ReviewAvailableCommand reviewAvailableCommand;
+    private List<Contract> contracts;
+    private Contract completedContract;
+    private Contract incompleteContract;
+
+    @BeforeEach
+    public void setUp() {
+        Account employer = new Account("Alice Employer", "alice@business.com", List.of(UserRole.EMPLOYER));
+        Business business = new Business(employer, "Test Business");
+
+        Account employee1 = new Account("John Doe", "john.doe@email.com", List.of(UserRole.EMPLOYEE));
+        Account employee2 = new Account("Jane Smith", "jane.smith@email.com", List.of(UserRole.EMPLOYEE));
+
+        OfferEmployment offerEmployment1 = new OfferEmployment(
+                business,
+                employee1,
+                LocalDateTime.of(2025, 1, 1, 9, 0),
+                LocalDateTime.of(2025, 1, 1, 18, 0),
+                10000
+        );
+
+        OfferEmployment offerEmployment2 = new OfferEmployment(
+                business,
+                employee2,
+                LocalDateTime.of(2025, 1, 2, 9, 0),
+                LocalDateTime.of(2025, 1, 2, 18, 0),
+                12000
+        );
+
+        completedContract = new Contract(
+                offerEmployment1,
+                LocalDateTime.of(2025, 1, 1, 9, 0),
+                LocalDateTime.of(2025, 1, 1, 18, 0),
+                10000,
+                true
+        );
+
+        incompleteContract = new Contract(
+                offerEmployment2,
+                LocalDateTime.of(2025, 1, 2, 9, 0),
+                LocalDateTime.of(2025, 1, 2, 18, 0),
+                12000,
+                false
+        );
+
+        contracts = List.of(completedContract, incompleteContract);
+
+        reviewAvailableCommand = new ReviewAvailableCommand(business.getBusinessId());
+    }
+
+    @Test
+    @DisplayName("완료된 계약만 조회할 수 있어야 한다")
+    void shouldReturnCompletedContracts() {
+        when(contractRepository.findAvailableReviewsByBusinessId(reviewAvailableCommand.businessId()))
+                .thenReturn(
+                        contracts.stream()
+                                .filter(Contract::isContractSucceeded)
+                                .map(contract -> new ReviewAvailableResponse(
+                                        contract.getOfferEmployment().getEmployee().getAccountId(),
+                                        contract.getOfferEmployment().getEmployee().getName()
+                                ))
+                                .toList()
+                );
+        List<ReviewAvailableResponse> responses = reviewAvailableService.getAvailableReviewTargets(reviewAvailableCommand);
+
+        assertNotNull(responses);
+        assertEquals(1, responses.size());
+        assertEquals(completedContract.getOfferEmployment().getEmployee().getName(), responses.get(0).employeeName());
+        assertEquals(completedContract.getOfferEmployment().getEmployee().getAccountId(), responses.get(0).employeeId());
+
+        verify(contractRepository, times(1)).findAvailableReviewsByBusinessId(reviewAvailableCommand.businessId());
+
+    }
+}
+
+
+
+
