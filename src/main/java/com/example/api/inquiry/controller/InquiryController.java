@@ -24,8 +24,7 @@ public class InquiryController {
             @AuthenticationPrincipal final Long memberId,
             @RequestBody final InquiryRequest inquiryRequest
     ) {
-        final Inquiry inquiry = inquiryService.saveInquiry(inquiryRequest, memberId);
-        final InquiryResponse inquiryResponse = mapToResponse(inquiry);
+        final InquiryResponse inquiryResponse = inquiryService.saveInquiry(inquiryRequest, memberId);
         return ResponseEntity.ok(inquiryResponse);
     }
 
