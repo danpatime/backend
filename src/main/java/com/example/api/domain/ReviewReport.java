@@ -12,11 +12,10 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "REVIEW_REPORT")
 public class ReviewReport {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
@@ -27,4 +26,9 @@ public class ReviewReport {
 
     @Column(name = "REASON")
     private String reason;
+
+    public ReviewReport(Review review, String reason) {
+        this.review = review;
+        this.reason = reason;
+    }
 }

@@ -4,10 +4,11 @@ import com.example.api.domain.Review;
 import com.example.api.domain.ReviewReport;
 
 public record ReviewReportCommand(
-        Review reviewId,
+        Review review,
         String reason
 ) {
     public ReviewReport toEntity() {
-        return new ReviewReport(null, reviewId, reason);
+        return new ReviewReport(review, reason);
     }
 }
+

@@ -16,7 +16,7 @@ public class ReviewReportService {
 
     @Transactional
     public ReviewReportResponse reportReview(final ReviewReportCommand reviewReportCommand) {
-        validateAlreadyReported(reviewReportCommand.reviewId());
+        validateAlreadyReported(reviewReportCommand.review());
         final ReviewReport savedReport = saveReviewReport(reviewReportCommand);
         return createResponse(savedReport);
     }
