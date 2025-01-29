@@ -9,11 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SearchRepository extends JpaRepository<Account, Long> {
-
     @Query("SELECT DISTINCT a FROM Account a " +
             "JOIN PossibleBoard pb ON pb.employee = a " +
-            "JOIN Category c ON c.account = a " +
-            "WHERE (:category IS NULL OR c.categoryName = :category) " +
+            "JOIN FlavoredCategory fc ON fc.employee = a " +
+            "WHERE (:category IS NULL OR fc.category.categoryName = :category) " +
             "AND (:startTime IS NULL OR pb.startTime <= :startTime) " +
             "AND (:endTime IS NULL OR pb.endTime >= :endTime)")
     List<Account> searchAccountsByCategoryAndTime(
@@ -22,6 +21,3 @@ public interface SearchRepository extends JpaRepository<Account, Long> {
             @Param("endTime") LocalDateTime endTime
     );
 }
-
-
-

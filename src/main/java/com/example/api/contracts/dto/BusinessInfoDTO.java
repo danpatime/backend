@@ -1,6 +1,6 @@
 package com.example.api.contracts.dto;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ public class BusinessInfoDTO {
     private String representationName;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Location location;
+    private BusinessLocation location;
     private String businessPhone;
     private LocalDateTime signedDate;
 }

@@ -1,6 +1,6 @@
 package com.example.api.account.dto;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.global.config.resolver.ValidEmail;
@@ -23,7 +23,7 @@ public record SignUpEmployerRequest(
     @NotBlank
     String businessOpenDate,    // 개업연월일
     @NotNull
-    Location location,
+    BusinessLocation location,
     @NotNull
     Nationality nationality,    // 국적
     @NotNull

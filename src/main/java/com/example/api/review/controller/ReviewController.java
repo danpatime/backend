@@ -1,8 +1,10 @@
 package com.example.api.review.controller;
 
-import com.example.api.review.ReviewService;
+import com.example.api.review.service.ReviewService;
 import com.example.api.review.dto.ReviewCommand;
 import com.example.api.review.dto.ReviewResponse;
+import com.example.api.review.dto.ReviewAvailableCommand;
+import com.example.api.review.dto.ReviewAvailableResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,14 @@ public class ReviewController {
         final ReviewCommand reviewCommand = new ReviewCommand(accountId);
         final List<ReviewResponse> reviews = reviewService.getReviews(reviewCommand);
         return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/available")
+    public ResponseEntity<List<ReviewAvailableResponse>> getAvailableReviewTargets(
+            @RequestParam(required = true) Long businessId
+    ) {
+        ReviewAvailableCommand command = new ReviewAvailableCommand(businessId);
+        List<ReviewAvailableResponse> availableEmployees = reviewService.getAvailableReviewTargets(command);
+        return ResponseEntity.ok(availableEmployees);
     }
 }

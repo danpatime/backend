@@ -1,13 +1,13 @@
 package com.example.api.employer.service;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.repository.LocationRepository;
-import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
 import com.example.api.employer.controller.dto.EmployerBusinessesRequest;
+import com.example.api.employer.controller.dto.EmployerIdRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,9 +33,9 @@ class EmployerServiceTest {
     void setUp() {
         Account account = new Account();
         accountRepository.save(account);
-        Location location1 = new Location("zipcode1", "address1", "detailAddress1");
-        Location location2 = new Location("zipcode2", "address2", "detailAddress2");
-        Location location3 = new Location("zipcode3", "address3", "detailAddress3");
+        BusinessLocation location1 = new BusinessLocation("zipcode1", "address1", "detailAddress1");
+        BusinessLocation location2 = new BusinessLocation("zipcode2", "address2", "detailAddress2");
+        BusinessLocation location3 = new BusinessLocation("zipcode3", "address3", "detailAddress3");
         locationRepository.save(location1);
         locationRepository.save(location2);
         locationRepository.save(location3);
@@ -52,7 +52,7 @@ class EmployerServiceTest {
 
     @Test
     void testGetBusinessesByOwnerId(){
-        List<EmployerBusinessesRequest> employerBusinessList = employerService.getEmployerBusinessList(new EmployeeIdRequest(1L));
+        List<EmployerBusinessesRequest> employerBusinessList = employerService.getEmployerBusinessList(new EmployerIdRequest(1L));
         Assertions.assertThat(employerBusinessList).isEqualTo(businessesList);
     }
 }

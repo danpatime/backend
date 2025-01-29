@@ -2,8 +2,8 @@ package com.example.api.auth.entitiy;
 
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.domain.Account;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;

@@ -1,13 +1,11 @@
 package com.example.api.account.repository;
 
 import com.example.api.domain.Account;
-import com.example.api.offeremployment.dto.StarPointAndWorkCountRequest;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
@@ -35,4 +33,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
             "where a.accountId in " +
             "(select oe.employee.accountId From OfferEmployment oe where oe.suggestId = :suggestId)")
     void updateWorkCountAndStarPointBySuggestId(@Param("suggestId") Long suggestId, @Param("starPoint") Integer newStarPoint);
+
+    @Query("select a from Account a where a.accountId = :employeeId")
+    Optional<Account> findByEmployeeId(@Param("employeeId") Long employeeId);
 }

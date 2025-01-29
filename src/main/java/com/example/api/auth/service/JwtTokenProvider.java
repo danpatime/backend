@@ -1,8 +1,8 @@
 package com.example.api.auth.service;
 
 import com.example.api.auth.dto.UserDetailRequest;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

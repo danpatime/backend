@@ -1,6 +1,6 @@
 package com.example.api.board.service;
 
-import com.example.api.board.dto.response.CategoryDTO;
+import com.example.api.board.dto.response.FlavoredCategoryResponse;
 import com.example.api.domain.repository.CategoryRepository;
 import com.example.api.domain.Category;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +16,10 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> getAllCategories() {
+    public List<FlavoredCategoryResponse> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(category -> new CategoryDTO(category.getCategoryId(), category.getCategoryName()))
+                .map(category -> new FlavoredCategoryResponse(category.getCategoryId(), category.getCategoryName()))
                 .collect(Collectors.toList());
     }
 }

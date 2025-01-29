@@ -1,6 +1,6 @@
 package com.example.api.business.controller;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import com.example.api.business.BusinessQueryService;
 import com.example.api.business.BusinessService;
 import com.example.api.business.dto.AddBusinessCommand;
@@ -53,7 +53,7 @@ public class BusinessController {
     record AddBusinessRequest(
             Long requestMemberId,
             String businessName,
-            Location location,
+            BusinessLocation location,
             List<Long> categoryIds,
             String representationName
     ) {
@@ -66,7 +66,7 @@ public class BusinessController {
             @NotNull
             Long businessId,
             String businessName,
-            Location location,
+            BusinessLocation location,
             String representationName,
             List<Long> categoryId
     ) {

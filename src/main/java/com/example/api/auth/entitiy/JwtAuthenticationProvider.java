@@ -1,8 +1,8 @@
 package com.example.api.auth.entitiy;
 
 import com.example.api.auth.service.JwtTokenProvider;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

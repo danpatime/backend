@@ -7,7 +7,7 @@ import com.example.api.domain.Business;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.offeremployment.dto.*;
-import com.example.api.review.ReviewRepository;
+import com.example.api.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

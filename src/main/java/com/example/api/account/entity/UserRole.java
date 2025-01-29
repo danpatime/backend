@@ -1,7 +1,7 @@
 package com.example.api.account.entity;
 
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.security.core.GrantedAuthority;
 

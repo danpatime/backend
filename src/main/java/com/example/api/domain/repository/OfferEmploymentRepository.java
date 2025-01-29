@@ -1,8 +1,7 @@
 package com.example.api.domain.repository;
 
-import com.example.api.board.dto.response.InnerCareerDTO;
+import com.example.api.board.dto.response.InternalCareerResponse;
 import com.example.api.domain.OfferEmployment;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,13 +12,12 @@ import java.util.List;
 
 @Repository
 public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment, Long> {
-    @Query("select new com.example.api.board.dto.response.InnerCareerDTO(b.businessName, c.contractStartTime, b.representationName, r) " +
+    @Query("select new com.example.api.board.dto.response.InternalCareerResponse(o.suggestId, b.businessName, c.contractStartTime, c.contractEndTime) " +
             "from OfferEmployment o " +
             "join Contract c on o.suggestId = c.contractId " +
             "join Business b on o.business.businessId = b.businessId "+
-            "join Review r on o.suggestId = r.reviewId " +
             "where o.employee.accountId = :employeeId")
-    List<InnerCareerDTO> findAllDTOByEmployeeId(@Param("employeeId") long employeeId);
+    List<InternalCareerResponse> findAllByEmployeeId(@Param("employeeId") long employeeId);
 
     List<OfferEmployment> findAllByBusinessBusinessId(long businessId);
 

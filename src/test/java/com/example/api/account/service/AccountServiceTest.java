@@ -3,7 +3,7 @@ package com.example.api.account.service;
 import com.example.api.account.dto.BusinessNumberRequest;
 import com.example.api.account.dto.SignUpEmployerRequest;
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.exception.BusinessException;
+import com.example.api.global.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

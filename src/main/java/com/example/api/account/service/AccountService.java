@@ -2,7 +2,7 @@ package com.example.api.account.service;
 
 import com.example.api.account.dto.*;
 import com.example.api.account.entity.Code;
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.repository.CodeRepository;
@@ -11,8 +11,8 @@ import com.example.api.account.repository.LocationRepository;
 import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.VendorProperties;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -132,7 +132,7 @@ public class AccountService {
         );
         Account savedUser = accountRepository.save(account);
 
-        Location savedLocation = locationRepository.save(request.location());
+        BusinessLocation savedLocation = locationRepository.save(request.location());
         Business business = new Business(
                 savedUser,
                 request.businessRegistrationNumber(),

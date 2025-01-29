@@ -2,7 +2,6 @@ package com.example.api.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.api.review.ReviewService;
 import com.example.api.review.dto.ReviewCommand;
 import com.example.api.review.dto.ReviewResponse;
 import org.junit.jupiter.api.BeforeEach;
