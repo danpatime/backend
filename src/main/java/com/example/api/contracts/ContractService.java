@@ -7,6 +7,7 @@ import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.domain.Contract;
 
 import java.time.LocalDate;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 public class ContractService {
     private final ContractRepository contractRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
+
+
 
     @Transactional
     public void updateContract(@Validated final UpdateContractConditionCommand updateContractConditionCommand) {
