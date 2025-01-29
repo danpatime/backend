@@ -5,13 +5,19 @@ import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.dto.*;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.domain.Account;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
+import com.example.api.global.properties.JwtProperties;
+import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +26,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
+    private final JwtProperties jwtProperties;
 
     @Transactional
     public LoginSuccessResponse login(@Validated final LoginRequest request) {
@@ -47,13 +54,28 @@ public class AuthService {
     private LoginSuccessResponse generateAuthToken(final Account user) {
         String accessToken = jwtTokenProvider.generateAccessToken(new UserDetailRequest(user.getAccountId(), user.getRoles()));
         String refreshToken = generateRefreshToken(user);
+        Cookie refreshTokenCookie = genreateRefreshTokenCookie(refreshToken);
+
         String role = user.getRoles().stream().findFirst().get().getAuthority();    // 회원가입 시에 무조건 역할이 들어가기에 바로 get으로 꺼냄
-        return new LoginSuccessResponse(accessToken,refreshToken, user.getAccountId().toString(), role);
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("accessToken", accessToken);
+        responseBody.put("userId", String.valueOf(user.getAccountId()));
+        responseBody.put("userRole", role);
+        return new LoginSuccessResponse(refreshTokenCookie, responseBody);
+    }
+
+    @NotNull
+    private Cookie genreateRefreshTokenCookie(String refreshToken) {
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(Math.toIntExact(jwtProperties.getRefreshTokenValidTime()));
+        return refreshTokenCookie;
     }
 
     private String generateRefreshToken(final Account user) {
         RefreshToken token = new RefreshToken(user);
-
         if(tokenRepository.findByUser(user).isPresent()) {
             tokenRepository.deleteAllByUser(user);
         }
@@ -80,7 +102,7 @@ public class AuthService {
     public LoginSuccessResponse logout(@Validated final LoginUserRequest loginUserRequest) {
         Account user = getUserById(loginUserRequest.userId());
         tokenRepository.deleteAllByUser(user);
-        return new LoginSuccessResponse(null, null, null, null);
+        return new LoginSuccessResponse(null, null);
     }
 
     private Account getUserById(final Long userId) {

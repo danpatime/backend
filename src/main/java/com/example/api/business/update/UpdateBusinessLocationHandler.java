@@ -14,8 +14,11 @@ class UpdateBusinessLocationHandler implements BusinessUpdateHandler{
     @Override
     public void update(Business business, ModifyBusinessCommand command) {
         if (Objects.nonNull(command.location())) {
-            final BusinessLocation location = new BusinessLocation(command.location());
-            business.setLocation(location.getLocation());
+            final BusinessLocation location = new BusinessLocation(
+                    command.location().getZipcode(),
+                    command.location().getAddress(),
+                    command.location().getDetailAddress());
+            business.setLocation(location);
         }
     }
 }

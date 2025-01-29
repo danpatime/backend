@@ -18,33 +18,12 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 public class ContractService {
-    private final OfferRepository offerRepository;
     private final ContractRepository contractRepository;
-    private final ContractMapper contractMapper;
-    private final ChatRoomRepository chatRoomRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
     private final ContractRepository contractRepository;
     private final ContractMapper contractMapper;
 
-    @Transactional(readOnly = true)
-    public List<SuggestedBusinessResponse> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
-        return offerRepository.queryEmployersSuggests(allSuggestsForMeCommand.employeeId());
-    }
 
-    @Transactional
-    public void acceptSuggest(@Validated final AcceptSuggestCommand acceptSuggestCommand) {
-        final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
-        offerEmployment.succeeded();
-
-        final Contract contract = contractMapper.notYetSucceeded(offerEmployment);
-        contractRepository.save(contract);
-    }
-
-    @Transactional
-    public void createChatRoom(@Validated final AcceptSuggestCommand acceptSuggestCommand) {
-        final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
-        createChatRoom(offerEmployment);
-    }
 
     @Transactional
     public void updateContract(@Validated final UpdateContractConditionCommand updateContractConditionCommand) {
@@ -61,16 +40,6 @@ public class ContractService {
     private Contract loadContract(final Long contractId) {
         return contractRepository.findById(contractId)
                 .orElseThrow();
-    }
-
-    private OfferEmployment loadOffer(final Long offerId) {
-        return offerRepository.findById(offerId)
-                .orElseThrow();
-    }
-
-    private void createChatRoom(final OfferEmployment offer) {
-        ChatRoom chatRoom = new ChatRoom(offer);
-        chatRoomRepository.save(chatRoom);
     }
 
     @Transactional(readOnly = true)

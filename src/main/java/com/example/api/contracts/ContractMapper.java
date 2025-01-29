@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
-class ContractMapper {
+public class ContractMapper {
     public Contract notYetSucceeded(final OfferEmployment offerEmployment) {
         return new Contract(
                 offerEmployment,

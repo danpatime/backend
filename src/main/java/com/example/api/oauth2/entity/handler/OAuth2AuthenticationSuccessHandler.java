@@ -9,11 +9,12 @@ import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.auth.service.JwtTokenProvider;
 import com.example.api.domain.Account;
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
 import com.example.api.oauth2.entity.CookieUtils;
 import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,9 +29,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
@@ -43,43 +42,47 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final AccountRepository accountRepository;
     private final TokenRepository tokenRepository;
     private final JwtProperties jwtProperties;
+    private final ObjectMapper objectMapper;
 
     @Value("app.oauth2. authorized-redirect-uris")
     List<String> authorizedRedirectUris;
 
     @Override
-    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException, ServletException {
-        String targetUrl = determineTargetUrl(request, response, authentication);
-
-        if (response.isCommitted()) {
-            logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
-            return;
-        }
+    public void onAuthenticationSuccess(final HttpServletRequest request,
+                                        final HttpServletResponse response,
+                                        final Authentication authentication) throws IOException, ServletException {
+//        String targetUrl = determineTargetUrl(request, response, authentication);
+//        if (response.isCommitted()) {
+//            logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
+//            return;
+//        }
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
         UserDetailRequest userDetailRequest = new UserDetailRequest(principal.getUserId(), (Collection<UserRole>) authentication.getAuthorities());
         setResponse(request, response, userDetailRequest);
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
-    private void setResponse(final HttpServletRequest request, final HttpServletResponse response, final UserDetailRequest userDetailRequest) {
+    private void setResponse(final HttpServletRequest request,
+                             final HttpServletResponse response,
+                             final UserDetailRequest userDetailRequest) throws IOException {
         AuthTokenRequest authTokenRequest = generateAndSaveAuthToken(userDetailRequest);
         clearAuthenticationAttributes(request, response);
 
-        Cookie accessTokenCookie = generateAccessCookie(authTokenRequest.accessToken());
         Cookie refreshTokenCookie = generateRefreshCookie(authTokenRequest.refreshToken());
-        response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
-        response.addCookie(new Cookie("userId", userDetailRequest.userId().toString()));
-        response.addCookie(new Cookie("userRole", userDetailRequest.authorities().stream().findFirst().toString()));
+
+        generateResponseBody(response, userDetailRequest, authTokenRequest);
     }
 
-    @NotNull
-    private Cookie generateAccessCookie(final String accessToken) {
-        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-        accessTokenCookie.setHttpOnly(true);
-        accessTokenCookie.setPath("/");
-        accessTokenCookie.setMaxAge(jwtProperties.getAccessTokenValidTime().intValue());
-        return accessTokenCookie;
+    private void generateResponseBody(HttpServletResponse response, UserDetailRequest userDetailRequest, AuthTokenRequest authTokenRequest) throws IOException {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("accessToken", authTokenRequest.accessToken());
+        responseBody.put("userId", userDetailRequest.userId().toString());
+        responseBody.put("userRole", userDetailRequest.authorities().stream().findFirst().toString());
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        objectMapper.writeValue(response.getWriter(), responseBody);
     }
 
     @NotNull
@@ -105,15 +108,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return new AuthTokenRequest(accessToken, refreshToken);
     }
 
-    protected String determineTargetUrl(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) {
-        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-                .map(Cookie::getValue);
-
-        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new BusinessException(ErrorCode.INVALID_REDIRECT_URI);
-        }
-        return redirectUri.orElse("http://localhost:3000"); // 로그인 성공 후 리다이렉트 url
-    }
+//    protected String determineTargetUrl(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) {
+//        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+//                .map(Cookie::getValue);
+//
+//        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+//            throw new BusinessException(ErrorCode.INVALID_REDIRECT_URI);
+//        }
+//        return redirectUri.orElse("http://localhost:3000"); // 로그인 성공 후 리다이렉트 url
+//    }
 
     private boolean isAuthorizedRedirectUri(final String uri) {
         URI clientRedirectUri = URI.create(uri);

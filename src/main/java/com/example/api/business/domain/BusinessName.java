@@ -1,7 +1,7 @@
 package com.example.api.business.domain;
 
-import com.example.api.exception.BusinessException;
-import com.example.api.exception.ErrorCode;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter

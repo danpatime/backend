@@ -1,6 +1,6 @@
 package com.example.api.domain;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,7 +34,7 @@ public class Business extends BaseEntity {
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "BUSINESS_LOCATION", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Location location;
+    private BusinessLocation location;
 
     private String representationName;
 
@@ -48,7 +48,7 @@ public class Business extends BaseEntity {
         this.businessName = businessName;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(BusinessLocation location) {
         this.location = location;
     }
 
@@ -56,13 +56,13 @@ public class Business extends BaseEntity {
         this.representationName = representationName;
     }
 
-    public Business(String businessName, Location location, String representationName) {
+    public Business(String businessName, BusinessLocation location, String representationName) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;
     }
 
-    public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, Location location) {
+    public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, BusinessLocation location) {
         this.employer = user;
         this.registrationNumber = businessRegistrationNumber;
         this.businessName = businessName;
@@ -71,7 +71,7 @@ public class Business extends BaseEntity {
         this.location = location;
     }
 
-    public Business(String businessName, Location location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
+    public Business(String businessName, BusinessLocation location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;
@@ -80,7 +80,7 @@ public class Business extends BaseEntity {
         this.registrationNumber = registrationNumber;
     }
 
-    public Business(Account employer, String businessName, Location location) {
+    public Business(Account employer, String businessName, BusinessLocation location) {
         this.employer = employer;
         this.businessName = businessName;
         this.location = location;

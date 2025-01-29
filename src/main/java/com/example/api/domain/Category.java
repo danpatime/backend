@@ -3,14 +3,12 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 @Table(name = "CATEGORY")
 public class Category extends BaseEntity{
     @Id
@@ -21,15 +19,7 @@ public class Category extends BaseEntity{
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_UNIQUE_ID")
-    private Account account;
-
-    public Category() {
-    }
-
-    public Category(Long categoryId, String categoryName) {
-        this.categoryId = categoryId;
+    public Category(String categoryName) {
         this.categoryName = categoryName;
     }
 }

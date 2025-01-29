@@ -1,5 +1,14 @@
 package com.example.api.suggest.service;
 
+import com.example.api.chat.repository.ChatRoomRepository;
+import com.example.api.contracts.ContractMapper;
+import com.example.api.contracts.ContractRepository;
+import com.example.api.contracts.OfferRepository;
+import com.example.api.contracts.dto.AcceptSuggestCommand;
+import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
+import com.example.api.contracts.dto.SuggestedBusinessResponse;
+import com.example.api.domain.ChatRoom;
+import com.example.api.domain.Contract;
 import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.suggest.controller.dto.SuggestStatusDTO;
@@ -7,6 +16,7 @@ import com.example.api.suggest.controller.dto.request.BusinessIdRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +28,10 @@ import java.util.List;
 public class SuggestService {
     private final OfferEmploymentRepository offerEmploymentRepository;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+    private final OfferRepository offerRepository;
+    private final ContractRepository contractRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ContractMapper contractMapper;
 
     @Transactional(readOnly = true)
     public List<SuggestStatusDTO> getSuggestStatus(final BusinessIdRequest businessIdRequest) {
@@ -71,5 +85,35 @@ public class SuggestService {
                 businessName,
                 workTimeStr
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<SuggestedBusinessResponse> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
+        return offerRepository.queryEmployersSuggests(allSuggestsForMeCommand.employeeId());
+    }
+
+    @Transactional
+    public void acceptSuggest(@Validated final AcceptSuggestCommand acceptSuggestCommand) {
+        final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
+        offerEmployment.succeeded();
+
+        final Contract contract = contractMapper.notYetSucceeded(offerEmployment);
+        contractRepository.save(contract);
+    }
+
+    @Transactional
+    public void createChatRoom(@Validated final AcceptSuggestCommand acceptSuggestCommand) {
+        final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
+        createChatRoom(offerEmployment);
+    }
+
+    private OfferEmployment loadOffer(final Long offerId) {
+        return offerRepository.findById(offerId)
+                .orElseThrow();
+    }
+
+    private void createChatRoom(final OfferEmployment offer) {
+        ChatRoom chatRoom = new ChatRoom(offer);
+        chatRoomRepository.save(chatRoom);
     }
 }

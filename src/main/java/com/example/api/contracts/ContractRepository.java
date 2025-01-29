@@ -4,7 +4,7 @@ import com.example.api.contracts.dto.BusinessInfoDTO;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
 import java.util.Optional;
-import com.example.api.reviewavailable.dto.ReviewAvailableResponse;
+import com.example.api.review.dto.ReviewAvailableResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,7 +33,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("SELECT c FROM Contract c JOIN FETCH c.offerEmployment JOIN FETCH c.offerEmployment.business.employer WHERE c.contractId = :contractId")
     Optional<Contract> loadContractWithOfferEmployment(@Param("contractId") final Long contractId);
 
-    @Query("select new com.example.api.reviewavailable.dto." +
+    @Query("select new com.example.api.review.dto." +
             "ReviewAvailableResponse(e.accountId, e.name) " +
             "from Contract c " +
             "join c.offerEmployment oe " +

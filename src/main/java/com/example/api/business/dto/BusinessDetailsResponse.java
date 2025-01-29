@@ -1,6 +1,6 @@
 package com.example.api.business.dto;
 
-import com.example.api.account.entity.Location;
+import com.example.api.business.domain.BusinessLocation;
 
 import java.util.List;
 
@@ -8,6 +8,6 @@ public record BusinessDetailsResponse(
         String businessName,
         Long businessId,
         BusinessOwner owner,
-        Location location,
+        BusinessLocation location,
         List<CategoryInfo> categoryInfos) {
 }

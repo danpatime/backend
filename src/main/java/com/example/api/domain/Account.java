@@ -4,7 +4,7 @@ import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.auth.dto.LoginUserRequest;
 import com.example.api.board.dto.update.UpdateOpenStatusRequest;
-import com.example.api.board.dto.update.UpdateUserInfoRequest;
+import com.example.api.board.dto.update.UpdatePersonalInfoRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -114,7 +114,7 @@ public class Account extends BaseEntity {
         this.openStatus = request.openStatus();
     }
 
-    public void updateUserInfo(UpdateUserInfoRequest request){
+    public void updateUserInfo(UpdatePersonalInfoRequest request){
         this.name = request.name();
         this.sex = request.sex();
         this.age = request.age();
