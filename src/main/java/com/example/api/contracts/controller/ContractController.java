@@ -1,11 +1,13 @@
 package com.example.api.contracts.controller;
 
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.*;
 
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -60,10 +62,16 @@ class ContractController {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/api/v1/contract/{contractId}/status")
+    @GetMapping("/api/v1/contracts/{contractId}/status")
     public ResponseEntity<ContractDTO> getContractInfo(@PathVariable(required = true) final Long contractId) {
         final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId);
         ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
         return ResponseEntity.ok(contractDTO);
+    }
+
+    @GetMapping("/api/v1/contracts/schedule")
+    public ResponseEntity<List<ContractScheduleResponse>> getContractSchedule(@AuthenticationPrincipal Long employeeId){
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
+        return ResponseEntity.ok(contractService.getContractSchedule(employeeIdRequest));
     }
 }
