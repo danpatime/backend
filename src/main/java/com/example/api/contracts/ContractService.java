@@ -1,15 +1,10 @@
 package com.example.api.contracts;
 
 import com.example.api.board.dto.request.EmployeeIdRequest;
-import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
-import com.example.api.domain.ChatRoom;
-import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
-import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.domain.Contract;
-import com.example.api.domain.OfferEmployment;
 
 import java.time.LocalDate;
 import java.util.List;
