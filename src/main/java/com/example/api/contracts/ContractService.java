@@ -1,5 +1,6 @@
 package com.example.api.contracts;
 
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
@@ -9,6 +10,8 @@ import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
+
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,5 +50,10 @@ public class ContractService {
         BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractStatusCommand.contractId());
         EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractStatusCommand.contractId());
         return new ContractDTO(businessDTO, employeeDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContractScheduleResponse> getContractSchedule(final EmployeeIdRequest employeeIdRequest) {
+        return contractRepository.findContractScheduleByEmployeeId(employeeIdRequest.employeeId(), LocalDate.now().withDayOfMonth(1));
     }
 }

@@ -1,8 +1,11 @@
 package com.example.api.contracts;
 
 import com.example.api.contracts.dto.BusinessInfoDTO;
+import com.example.api.contracts.dto.ContractScheduleResponse;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
+
+import java.time.LocalDate;
 import java.util.Optional;
 import com.example.api.review.dto.ReviewAvailableResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,4 +44,10 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join oe.business b " +
             "where b.businessId = :businessId and c.contractSucceeded = true")
     List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
+
+    @Query("select new com.example.api.contracts.dto.ContractScheduleResponse(c.contractId, b.businessName, c.contractStartTime, c.contractEndTime) " +
+            "from Contract c join fetch c.offerEmployment o join fetch o.business b " +
+            "where o.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
+    List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId")Long employeeId,
+                                                                    @Param("currentMonth")LocalDate currentMonth);
 }
