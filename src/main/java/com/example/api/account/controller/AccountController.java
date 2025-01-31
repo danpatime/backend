@@ -1,16 +1,15 @@
 package com.example.api.account.controller;
 
-import com.example.api.account.dto.EmailCodeRequest;
-import com.example.api.account.dto.EmailRequest;
+import com.example.api.account.dto.*;
 import com.example.api.account.entity.Code;
 import com.example.api.account.service.AccountService;
-import com.example.api.account.dto.SignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/account")
@@ -32,9 +31,15 @@ public class AccountController {
         return ResponseEntity.ok(successMessage);
     }
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<String> signUp(@Valid @RequestBody final SignUpRequest request) {
-        String successMessage = signUpService.signUp(request);
+    @PostMapping("/sign-up/employee")
+    public ResponseEntity<String> signUpEmployee(@Valid @RequestBody final SignUpEmployeeRequest request) {
+        String successMessage = signUpService.signUpEmployee(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(successMessage);
+    }
+
+    @PostMapping("/sign-up/employer")
+    public ResponseEntity<String> signUpEmployer(@Valid @RequestBody final SignUpEmployerRequest request) {
+        String successMessage = signUpService.signUpEmployer(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(successMessage);
     }
 
@@ -49,5 +54,11 @@ public class AccountController {
     ) {
         accountService.deleteAccount(memberId);
         return ResponseEntity.ok("delete account");
+    }
+
+    @PostMapping("/validation/business-number")
+    public ResponseEntity<String> verifyBusinessNumber(@Valid @RequestBody final BusinessNumberRequest request) {
+        String successMessage = signUpService.verifyBusinessNumber(request);
+        return ResponseEntity.ok(successMessage);
     }
 }

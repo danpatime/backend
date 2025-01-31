@@ -15,6 +15,7 @@ public enum ErrorCode {
     INCORRECT_PASSWORD(HttpStatus.BAD_REQUEST, "-107", "틀린 비밀번호입니다."),
     INCORRECT_DATA(HttpStatus.BAD_REQUEST, "-108", "올바르지 않은 정보입니다."),
     INVALID_REDIRECT_URI(HttpStatus.BAD_REQUEST,"-109","유효하지 않은 REDIRECT URI입니다."),
+    INVALID_BUSINESS_NUMBER(HttpStatus.BAD_REQUEST,"-110","사업자 등록 정보를 확인할 수 없습니다."),
 
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "-T1", "올바르지 않은 AccessToken입니다."),
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "-T2", "만료된 AccessToken입니다."),
@@ -37,7 +38,9 @@ public enum ErrorCode {
 
     BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러"),
 
-    CONTRACT_EXCEPTION(HttpStatus.BAD_REQUEST, "-800", "계약 도메인 에러");
+    CONTRACT_EXCEPTION(HttpStatus.BAD_REQUEST, "-800", "계약 도메인 에러"),
+
+    FILE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR,"F500", "이미지 업로드 실패");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
@@ -49,4 +52,3 @@ public enum ErrorCode {
         this.errorDescription = errorDescription;
     }
 }
-

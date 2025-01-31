@@ -5,7 +5,6 @@ import com.example.api.board.dto.response.CategoryDTO;
 import com.example.api.board.dto.response.ExternalCareerDTO;
 import com.example.api.board.dto.response.MyInfoDTO;
 import com.example.api.board.dto.response.PossibleBoardDTO;
-import com.example.api.board.dto.update.UpdateOpenStatusRequest;
 import com.example.api.board.dto.update.UpdateUserInfoRequest;
 import com.example.api.board.entitiy.update.UpdateAccountConditionManager;
 import com.example.api.domain.Account;
@@ -16,10 +15,13 @@ import com.example.api.domain.PossibleBoard;
 import com.example.api.domain.repository.EmployeeRepository;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredRepository;
+import com.example.api.exception.BusinessException;
+import com.example.api.exception.ErrorCode;
 import com.example.api.possbileboard.PossibleBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.HashSet;
 import java.util.List;
@@ -38,33 +40,35 @@ public class EmployeeService {
     @Transactional
     public Boolean changeOpenStatus(final EmployeeIdRequest employeeIdRequest, boolean openStatus) {
         return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
-            updateAccountConditionManager.updateAccount(employee, new UpdateOpenStatusRequest(openStatus));
+            employee.setOpenStatus(openStatus);
             employeeRepository.save(employee);
             return true;
         }).orElse(false);
     }
 
     @Transactional
-    public boolean updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
-        return employeeRepository.findByAccountId(employeeIdRequest.employeeId()).map(employee -> {
-            updateAccountConditionManager.updateAccount(employee, new UpdateUserInfoRequest(
-                            myInfo.getName(),
-                            myInfo.getSex(),
-                            myInfo.getAge(),
-                            myInfo.getPhone(),
-                            myInfo.getEmail(),
-                            myInfo.getNickname()
-                    )
-            );
+    public void updateUserInfo(final EmployeeIdRequest employeeIdRequest, MyInfoDTO myInfo) {
+        try {
+            Account employee = employeeRepository.findByAccountId(employeeIdRequest.employeeId()).orElseThrow();
+            updateAccountConditionManager.updateAccount(employee, getUpdateUserInfoRequest(myInfo));
             employeeRepository.save(employee);
-
             updateExternalCareer(employee, myInfo.getExternalCareerList());
             updateFlavored(employee, myInfo.getFlavoredCategoryList());
             updatePossibleBoard(employee, myInfo.getPossibleBoardList());
-            return true;
-        }).orElse(false);
+        }catch (Exception e) {
+            throw new BusinessException(ErrorCode.NULL_USER);
+        }
     }
-
+    private UpdateUserInfoRequest getUpdateUserInfoRequest(MyInfoDTO myInfo) {
+        return new UpdateUserInfoRequest(
+                myInfo.getName(),
+                myInfo.getSex(),
+                myInfo.getAge(),
+                myInfo.getPhone(),
+                myInfo.getEmail(),
+                myInfo.getNickname()
+        );
+    }
     public void updateExternalCareer(Account employee, List<ExternalCareerDTO> newExternalCareerList) {
         List<ExternalCareer> existList = externalCareerRepository.findAllByEmployeeAccountId(employee.getAccountId());
         Set<ExternalCareerDTO> newSet = new HashSet<>(newExternalCareerList);

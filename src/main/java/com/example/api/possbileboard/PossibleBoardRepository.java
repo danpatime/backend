@@ -21,7 +21,7 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     Long deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
                                           @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 
-    @Query("SELECT new com.example.api.possbileboard.dto.PossibleDetails(p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime, CAST(COUNT(p) as Long), CAST(COALESCE(AVG(r.reviewStarPoint), 0.0f) as Float)) FROM PossibleBoard p INNER JOIN Account a INNER JOIN Contract c INNER JOIN Review r WHERE p.possibleId = :possibleId GROUP BY p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime")
+    @Query("SELECT new com.example.api.possbileboard.dto.PossibleDetails(p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime, COUNT (p), CAST(COALESCE(AVG(r.reviewStarPoint),0) as float)) FROM PossibleBoard p INNER JOIN Account a INNER JOIN Contract c INNER JOIN Review r WHERE p.possibleId = :possibleId GROUP BY p.employee.name, p.employee.age, p.employee.email, p.employee.phoneNumber, p.updatedDate, p.startTime, p.endTime")
     PossibleDetails queryPossibleDetails(@Param("possibleId") final Long possibleId);
 
     @Query("SELECT f.category FROM Flavored f JOIN Account a JOIN PossibleBoard p WHERE p.possibleId = :possibleId")

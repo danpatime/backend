@@ -54,7 +54,7 @@ public class QFlavored extends EntityPathBase<Flavored> {
 
     public QFlavored(Class<? extends Flavored> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
+        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category"), inits.get("category")) : null;
         this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
     }
 

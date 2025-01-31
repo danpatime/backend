@@ -29,6 +29,8 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
+    public final QAccount employee;
+
     public final QOfferEmployment offerEmployment;
 
     public final StringPath reviewContent = createString("reviewContent");
@@ -39,6 +41,8 @@ public class QReview extends EntityPathBase<Review> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
+
+    public final QBusiness writer;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -59,7 +63,9 @@ public class QReview extends EntityPathBase<Review> {
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.contract = inits.isInitialized("contract") ? new QContract(forProperty("contract"), inits.get("contract")) : null;
+        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
         this.offerEmployment = inits.isInitialized("offerEmployment") ? new QOfferEmployment(forProperty("offerEmployment"), inits.get("offerEmployment")) : null;
+        this.writer = inits.isInitialized("writer") ? new QBusiness(forProperty("writer"), inits.get("writer")) : null;
     }
 
 }

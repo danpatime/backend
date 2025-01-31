@@ -6,12 +6,9 @@ import com.example.api.auth.dto.LoginUserRequest;
 import com.example.api.board.dto.update.UpdateOpenStatusRequest;
 import com.example.api.board.dto.update.UpdateUserInfoRequest;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Collection;
-
 
 @Entity
 @Getter
@@ -22,7 +19,6 @@ public class Account extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ACCOUNT_UNIQUE_ID")
     private Long accountId;
-
     @Column(name = "ACCOUNT_ID")
     private String loginId;
     @Column(name = "ACCOUNT_PASSWORD")
@@ -83,6 +79,33 @@ public class Account extends BaseEntity {
         this.emailReceivable = emailReceivable;
     }
 
+    public Account(String loginId, String password, String email, String phoneNumber, Nationality nationality, Collection<UserRole> roles) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.nationality = nationality;
+        this.roles = roles;
+    }
+
+    public Account(int age, boolean deleted, String email, String loginId, String name, Nationality nationality, String nickname, boolean openStatus, String password, String phoneNumber, String profileImage, Collection<UserRole> roles, String sex, float starPoint, int workCount) {
+        this.age = age;
+        this.deleted = deleted;
+        this.email = email;
+        this.loginId = loginId;
+        this.name = name;
+        this.nationality = nationality;
+        this.nickname = nickname;
+        this.openStatus = openStatus;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.profileImage = profileImage;
+        this.roles = roles;
+        this.sex = sex;
+        this.starPoint = starPoint;
+        this.workCount = workCount;
+    }
+
     public LoginUserRequest getLoginUser(){
         return new LoginUserRequest(accountId);
     }
@@ -102,5 +125,13 @@ public class Account extends BaseEntity {
 
     public void setDeleted(boolean deleted){
         this.deleted = deleted;
+    }
+
+    public void setOpenStatus(boolean openStatus) {
+        this.openStatus = openStatus;
+    }
+
+    public void setAccountId(long l) {
+        this.accountId = l;
     }
 }

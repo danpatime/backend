@@ -30,9 +30,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     @Override
     @Transactional
     public OAuth2User loadUser(@Validated final OAuth2UserRequest request) throws OAuth2AuthenticationException {
-        log.info("OAuth2UserRequest: {}", request.getAdditionalParameters());
         OAuth2User oAuth2User = super.loadUser(request);
-        log.info("OAuth2User : {} ", oAuth2User);
 
         String registrationId = request.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = createOAuth2Response(registrationId, oAuth2User);

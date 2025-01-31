@@ -1,13 +1,9 @@
 package com.example.api.contracts.controller;
 
-import com.example.api.contracts.dto.ContractDTO;
 import com.example.api.contracts.ContractService;
-import com.example.api.contracts.dto.AcceptContractCommand;
-import com.example.api.contracts.dto.AcceptSuggestCommand;
-import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
-import com.example.api.contracts.dto.SuggestedBusinessResponse;
-import com.example.api.contracts.dto.UpdateContractConditionCommand;
-import com.example.api.contracts.dto.UpdateContractConditionRequest;
+import com.example.api.contracts.dto.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,17 +26,10 @@ class ContractController {
 
     @PostMapping("/api/v1/contracts/suggests/{suggestId}/accept")
     public ResponseEntity<?> acceptContractContact(
-            @RequestBody final AcceptSuggestCommand acceptSuggestCommand
+            @PathVariable(required = true) final Long suggestId
     ) {
+        final AcceptSuggestCommand acceptSuggestCommand = new AcceptSuggestCommand(suggestId);
         contractService.acceptSuggest(acceptSuggestCommand);
-        return ResponseEntity.ok(null);
-    }
-
-    @PostMapping("/api/v1/contracts/suggests/{suggestId}/chatroom")
-    public ResponseEntity<?> createChatRoom(
-            @RequestBody final AcceptSuggestCommand acceptSuggestCommand
-    ) {
-        contractService.createChatRoom(acceptSuggestCommand);
         return ResponseEntity.ok(null);
     }
 
@@ -51,6 +40,24 @@ class ContractController {
     ) {
         final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
         contractService.updateContract(updateCommand);
+        return ResponseEntity.ok(null);
+    }
+
+    record UpdateContractConditionRequest(
+            LocalDateTime suggestStartDateTime,
+            LocalDateTime suggestEndDateTime,
+            Integer suggestHourlyPayment
+    ) {
+        UpdateContractConditionCommand toCommand(final Long contractId) {
+            return new UpdateContractConditionCommand(contractId, this.suggestStartDateTime, this.suggestEndDateTime, this.suggestHourlyPayment);
+        }
+    }
+
+    @PostMapping("/api/v1/contracts/suggests/{suggestId}/chatroom")
+    public ResponseEntity<?> createChatRoom(
+            @RequestBody final AcceptSuggestCommand acceptSuggestCommand
+    ) {
+        contractService.createChatRoom(acceptSuggestCommand);
         return ResponseEntity.ok(null);
     }
 
