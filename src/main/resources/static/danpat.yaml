@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Spring API
-  description: 단팥 백엔드 API 명세서입123니다.
+  description: 단팥 백엔드 API 명세서입니다.
   version: 1.0.0
 servers:
   - url: http://43.201.78.102:8080/api/v1

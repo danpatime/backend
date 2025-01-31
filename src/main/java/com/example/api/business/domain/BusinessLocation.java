@@ -11,6 +11,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @ToString
+@Table(name = "BUSINESS_LOCATION")
 public class BusinessLocation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -21,9 +21,9 @@ public class Contract extends BaseEntity {
     @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OfferEmployment offerEmployment;
 
-    @Column(name = "CONTRACT_START_TIME")
+    @Column(name = "CONTRACT_START_TIME", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime contractStartTime;
-    @Column(name = "CONTRACT_END_TIME")
+    @Column(name = "CONTRACT_END_TIME", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime contractEndTime;
     @Column(name = "CONTRACT_HOURLY_PAY")
     private int contractHourlyPay;

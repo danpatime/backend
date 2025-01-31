@@ -31,8 +31,6 @@ public class QReview extends EntityPathBase<Review> {
 
     public final QAccount employee;
 
-    public final QOfferEmployment offerEmployment;
-
     public final StringPath reviewContent = createString("reviewContent");
 
     public final NumberPath<Long> reviewId = createNumber("reviewId", Long.class);
@@ -64,7 +62,6 @@ public class QReview extends EntityPathBase<Review> {
         super(type, metadata, inits);
         this.contract = inits.isInitialized("contract") ? new QContract(forProperty("contract"), inits.get("contract")) : null;
         this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
-        this.offerEmployment = inits.isInitialized("offerEmployment") ? new QOfferEmployment(forProperty("offerEmployment"), inits.get("offerEmployment")) : null;
         this.writer = inits.isInitialized("writer") ? new QBusiness(forProperty("writer"), inits.get("writer")) : null;
     }
 

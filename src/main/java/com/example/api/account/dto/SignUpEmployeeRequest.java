@@ -18,7 +18,7 @@ public record SignUpEmployeeRequest(
     @ValidEmail
     String email,
     @NotNull
-    Nationality nationality,
+    Nationality nationality ,
     @NotNull
     UserRole role,
     @NotBlank

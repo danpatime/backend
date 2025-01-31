@@ -15,6 +15,7 @@ import static jakarta.persistence.FetchType.*;
 public class OfferEmployment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SUGGEST_ID")
     private Long suggestId;
 
     @OneToOne(fetch = LAZY)
@@ -25,9 +26,9 @@ public class OfferEmployment {
     private Account employee;
     @OneToOne(mappedBy = "offerEmployment", cascade = CascadeType.ALL)
     private Contract contract;
-    @Column(name = "SUGGEST_START_TIME")
+    @Column(name = "SUGGEST_START_TIME", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime suggestStartTime;
-    @Column(name = "SUGGEST_END_TIME")
+    @Column(name = "SUGGEST_END_TIME", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime suggestEndTime;
     @Column(name = "SUGGEST_HOURLY_PAY")
     private int suggestHourlyPay;

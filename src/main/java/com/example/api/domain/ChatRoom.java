@@ -17,6 +17,7 @@ import static jakarta.persistence.FetchType.*;
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CHAT_ROOM_ID")
     private Long chatRoomId;
 
     @OneToOne(fetch = LAZY)

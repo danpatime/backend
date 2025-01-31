@@ -16,10 +16,6 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "REVIEW_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private OfferEmployment offerEmployment;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REVIEW_WRITER_ID")
     private Business writer;

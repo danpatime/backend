@@ -19,6 +19,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class ReviewReport extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "REPORT_ID")
     private Long reportId;
 
     @OneToOne(fetch = FetchType.LAZY)

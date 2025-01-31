@@ -12,20 +12,22 @@ import static jakarta.persistence.FetchType.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
+@Table(name = "POSSIBLE_BOARD")
 public class PossibleBoard extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "POSSIBLE_ID")
     private Long possibleId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
 
-    @Column(name = "POSSIBLE_START_TIME")
+    @Column(name = "POSSIBLE_START_TIME", columnDefinition = "TIMESTAMP(0)")
     @EqualsAndHashCode.Include
     private LocalDateTime startTime;
 
-    @Column(name = "POSSIBLE_END_TIME")
+    @Column(name = "POSSIBLE_END_TIME", columnDefinition = "TIMESTAMP(0)")
     @EqualsAndHashCode.Include
     private LocalDateTime endTime;
 

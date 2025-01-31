@@ -9,10 +9,7 @@ import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.auth.service.JwtTokenProvider;
 import com.example.api.domain.Account;
-import com.example.api.global.exception.BusinessException;
-import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
-import com.example.api.oauth2.entity.CookieUtils;
 import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -30,8 +27,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
-
-import static com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 @Component
 @Slf4j
