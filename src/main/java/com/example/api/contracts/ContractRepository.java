@@ -46,7 +46,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
 
     @Query("select new com.example.api.contracts.dto.ContractScheduleResponse(c.contractId, b.businessName, c.contractStartTime, c.contractEndTime) " +
-            "from Contract c join fetch c.offerEmployment o join fetch o.business b " +
+            "from Contract c inner join c.offerEmployment o inner join o.business b " +
             "where o.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
     List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId")Long employeeId,
                                                                     @Param("currentMonth")LocalDate currentMonth);

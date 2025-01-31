@@ -1,0 +1,1846 @@
+openapi: 3.0.1
+info:
+  title: Spring API
+  description: 단팥 백엔드 API 명세서입123니다.
+  version: 1.0.0
+servers:
+  - url: http://43.201.78.102:8080/api/v1
+security:
+  - JWT_TOKEN: []
+paths:
+  /api/v1/support/announcements/{announcementId}:
+    get:
+      tags:
+        - announcement-controller
+      operationId: getAnnouncement
+      parameters:
+        - name: announcementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+              example:
+                announcementId: 1
+                announcementTitle: "긴급 서버 점검 공지"
+                announcementType: "공지"
+                announcementContent: "서버 점검이 오늘 밤 11시에 진행됩니다."
+                viewCount: 123
+                            
+
+    put:
+      tags:
+      - announcement-controller
+      operationId: updateAnnouncement
+      parameters:
+      - name: announcementId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnnouncementRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+    delete:
+      tags:
+      - announcement-controller
+      operationId: deleteAnnouncement
+      parameters:
+      - name: announcementId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/contracts/{contractId}:
+    put:
+      tags:
+      - contract-controller
+      operationId: updateContractCondition
+      parameters:
+      - name: contractId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateContractConditionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/business:
+    get:
+      tags:
+      - business-controller
+      operationId: getMyBusiness
+      parameters:
+      - name: businessId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+      - business-controller
+      operationId: modifyMyBusiness
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifyBusinessRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+      - business-controller
+      operationId: addBusiness
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddBusinessRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/upload/profile:
+    post:
+      tags:
+      - s-3-controller
+      operationId: upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/support/inquiry:
+    post:
+      tags:
+      - inquiry-controller
+      operationId: createInquiry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/InquiryResponse"
+  /api/v1/support/announcements:
+    get:
+      tags:
+      - announcement-controller
+      operationId: getAnnouncements
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnnouncementResponse"
+    post:
+      tags:
+      - announcement-controller
+      operationId: createAnnouncement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnnouncementRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+  /api/v1/possible-board:
+    post:
+      tags:
+      - board-controller
+      operationId: changeOpenStatus
+      parameters:
+      - name: open-status
+        in: query
+        required: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/possible-board/work-preferences/districts:
+    get:
+      tags:
+      - board-controller
+      operationId: getPreferredDistricts
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FlavoredDistrictResponse"
+    post:
+      tags:
+      - board-controller
+      operationId: updatePreferredDistricts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePreferredDistrictsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FlavoredDistrictResponse"
+  /api/v1/possible-board/work-preferences/category:
+    get:
+      tags:
+      - board-controller
+      operationId: getPreferredCategories
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FlavoredCategoryResponse"
+    post:
+      tags:
+      - board-controller
+      operationId: updatePreferredCategories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePreferredCategoriesRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FlavoredCategoryResponse"
+  /api/v1/possible-board/work-hours:
+    get:
+      tags:
+      - board-controller
+      operationId: getWorkHours
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WorkHourResponse"
+    post:
+      tags:
+      - board-controller
+      operationId: updatePossibleTimes
+      parameters:
+      - name: requestMemberId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddPossibleTimeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/possible-board/personal-info:
+    get:
+      tags:
+      - board-controller
+      operationId: getPersonalInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PersonalInfoResponse"
+    post:
+      tags:
+      - board-controller
+      operationId: updatePersonalInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePersonalInfoRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PersonalInfoResponse"
+  /api/v1/possible-board/external-career:
+    get:
+      tags:
+      - board-controller
+      operationId: getExternalCareers
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExternalCareerResponse"
+    post:
+      tags:
+      - board-controller
+      operationId: updateExternalCareers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateExternalCareerRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExternalCareerResponse"
+  /api/v1/offeremployment:
+    post:
+      tags:
+      - offer-employment-controller
+      operationId: sendOfferEmployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferEmploymentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/OfferEmploymentResponse"
+  /api/v1/offeremployment/complete:
+    post:
+      tags:
+      - offer-employment-controller
+      operationId: completeOfferEmployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferEmploymentCompleteRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/info/my/reviews/{reviewId}/report:
+    post:
+      tags:
+      - review-report-controller
+      operationId: reportReview
+      parameters:
+      - name: reviewId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/Review"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewReportRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReviewReportResponse"
+  /api/v1/contracts/{contractId}/accepts:
+    post:
+      tags:
+      - contract-controller
+      operationId: acceptContract
+      parameters:
+      - name: contractId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/contracts/suggests/{suggestId}/chatroom:
+    post:
+      parameters:
+        - name: suggestId
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - suggest-controller
+      operationId: createChatRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcceptSuggestCommand"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/v1/contracts/suggests/{suggestId}/accept:
+    post:
+      tags:
+      - suggest-controller
+      operationId: acceptContractContact
+      parameters:
+      - name: suggestId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/contracts/review:
+    post:
+      tags:
+      - contract-review-controller
+      operationId: addReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddReviewRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/auth/refresh:
+    post:
+      tags:
+      - auth-controller
+      operationId: refresh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /api/v1/auth/logout:
+    post:
+      tags:
+      - auth-controller
+      operationId: logout
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /api/v1/auth/login:
+    post:
+      tags:
+      - auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /api/v1/account/validation/business-number:
+    post:
+      tags:
+      - account-controller
+      operationId: verifyBusinessNumber
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BusinessNumberRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/account/sign-up/employer:
+    post:
+      tags:
+      - account-controller
+      operationId: signUpEmployer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpEmployerRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/account/sign-up/employee:
+    post:
+      tags:
+      - account-controller
+      operationId: signUpEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpEmployeeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/account/email/verification:
+    post:
+      tags:
+      - account-controller
+      operationId: verifyEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailCodeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/account/email/code:
+    post:
+      tags:
+      - account-controller
+      operationId: sendEmailCode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/search/search:
+    post:
+      tags:
+      - search-controller
+      operationId: searchAccounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchResponse"
+  /favorites/employees:
+    get:
+      tags:
+      - employer-controller
+      operationId: getLikeEmployee
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /chat/summaries:
+    get:
+      tags:
+      - chat-controller
+      operationId: getChatSummaries
+      parameters:
+      - name: userIdRequest
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/UserIdRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ChatSummaryResponse"
+  /chat/room/{roomId}/chats:
+    get:
+      tags:
+      - chat-controller
+      operationId: getMessages
+      parameters:
+      - name: roomId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: lastChatId
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Chat"
+  /businesses:
+    get:
+      tags:
+      - employer-controller
+      operationId: getBusinessList
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/support/my-inquiries:
+    get:
+      tags:
+      - inquiry-controller
+      operationId: getMyInquiries
+      parameters:
+      - name: accountId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InquiryResponse"
+  /api/v1/support/announcements/search:
+    get:
+      tags:
+      - announcement-controller
+      operationId: searchAnnouncements
+      parameters:
+      - name: keyword
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnnouncementResponse"
+  /api/v1/review:
+    get:
+      tags:
+      - review-controller
+      operationId: getAllReviews
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+  /api/v1/review/{reviewId}:
+    get:
+      tags:
+      - review-controller
+      operationId: getReviewsByEmployee
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+  /api/v1/review/my/reviews:
+    get:
+      tags:
+      - review-controller
+      operationId: getMyReviews
+      parameters:
+      - name: accountId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+  /api/v1/review/available:
+    get:
+      tags:
+      - review-controller
+      operationId: getAvailableReviewTargets
+      parameters:
+      - name: businessId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewAvailableResponse"
+  /api/v1/possible-board/internal-career:
+    get:
+      tags:
+      - board-controller
+      operationId: getInternalCareers
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InternalCareerResponse"
+  /api/v1/employment-suggests/status/{businessId}:
+    get:
+      tags:
+      - suggest-controller
+      operationId: getSuggestStatus
+      parameters:
+      - name: businessId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/contracts/review/my:
+    get:
+      tags:
+      - contract-review-controller
+      operationId: getMyReview
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+  /api/v1/contracts/employment-suggests:
+    get:
+      tags:
+      - suggest-controller
+      operationId: getAllSuggest
+      parameters:
+      - name: employeeId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SuggestedBusinessResponse"
+  /api/v1/contract/{contractId}/status:
+    get:
+      tags:
+      - contract-controller
+      operationId: getContractInfo
+      parameters:
+      - name: contractId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ContractDTO"
+  /api/v1/account/my:
+    delete:
+      tags:
+      - account-controller
+      operationId: deleteAccount
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    AnnouncementRequest:
+      type: object
+      properties:
+        announcementTitle:
+          type: string
+        announcementType:
+          type: string
+        announcementContent:
+          type: string
+    AnnouncementResponse:
+      type: object
+      properties:
+        announcementId:
+          type: integer
+          format: int64
+        announcementTitle:
+          type: string
+        announcementType:
+          type: string
+        announcementContent:
+          type: string
+        viewCount:
+          type: integer
+          format: int32
+
+    UpdateContractConditionRequest:
+      type: object
+      properties:
+        suggestStartDateTime:
+          type: string
+          format: date-time
+        suggestEndDateTime:
+          type: string
+          format: date-time
+        suggestHourlyPayment:
+          type: integer
+          format: int32
+    BusinessLocation:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        zipcode:
+          type: string
+        address:
+          type: string
+        detailAddress:
+          type: string
+    ModifyBusinessRequest:
+      required:
+      - businessId
+      type: object
+      properties:
+        businessId:
+          type: integer
+          format: int64
+        businessName:
+          type: string
+        location:
+          $ref: "#/components/schemas/BusinessLocation"
+        representationName:
+          type: string
+        categoryId:
+          type: array
+          items:
+            type: integer
+            format: int64
+    Account:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        accountId:
+          type: integer
+          format: int64
+        loginId:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        nickname:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        nationality:
+          type: string
+          enum:
+          - KOREAN
+          - FOREIGN
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+            - EMPLOYEE
+            - EMPLOYER
+        sex:
+          type: string
+        age:
+          type: integer
+          format: int32
+        profileImage:
+          type: string
+        starPoint:
+          type: number
+          format: float
+        workCount:
+          type: integer
+          format: int32
+        openStatus:
+          type: boolean
+        deleted:
+          type: boolean
+        emailReceivable:
+          type: boolean
+        loginUser:
+          $ref: "#/components/schemas/LoginUserRequest"
+    InquiryRequest:
+      required:
+      - createdBy
+      - inquiryType
+      type: object
+      properties:
+        inquiryType:
+          type: string
+        subInquiryType:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        createdBy:
+          $ref: "#/components/schemas/Account"
+    LoginUserRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+    InquiryResponse:
+      required:
+      - createdBy
+      - inquiryId
+      type: object
+      properties:
+        inquiryId:
+          type: integer
+          format: int64
+        inquiryType:
+          type: string
+        subInquiryType:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        inquiryStatus:
+          type: string
+        answerDate:
+          type: string
+          format: date-time
+        createdBy:
+          $ref: "#/components/schemas/Account"
+    UpdatePreferredDistrictsRequest:
+      type: object
+      properties:
+        districtIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    FlavoredDistrictResponse:
+      type: object
+      properties:
+        districtId:
+          type: integer
+          format: int64
+        districtName:
+          type: string
+    UpdatePreferredCategoriesRequest:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    FlavoredCategoryResponse:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+    AddPossibleTimeRequest:
+      type: object
+      properties:
+        possibleTimes:
+          type: array
+          items:
+            $ref: "#/components/schemas/PossibleTimeForm"
+    PossibleTimeForm:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    UpdatePersonalInfoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        sex:
+          type: string
+        age:
+          type: integer
+          format: int32
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        nickname:
+          type: string
+    PersonalInfoResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        nickname:
+          type: string
+        age:
+          type: integer
+          format: int32
+        sex:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        starPoint:
+          type: number
+          format: float
+        workCount:
+          type: integer
+          format: int32
+    ExternalCareerRequest:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+        workCount:
+          type: integer
+          format: int32
+    UpdateExternalCareerRequest:
+      type: object
+      properties:
+        newExternalCareers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExternalCareerRequest"
+    Category:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        categoryId:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+    ExternalCareerResponse:
+      type: object
+      properties:
+        externalCareerId:
+          type: integer
+          format: int64
+        category:
+          $ref: "#/components/schemas/Category"
+        workCount:
+          type: integer
+          format: int32
+    OfferEmploymentRequest:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          format: int64
+        businessId:
+          type: integer
+          format: int64
+        suggestHourlyPay:
+          type: integer
+          format: int32
+        suggestStartTime:
+          type: string
+          format: date-time
+        suggestEndTime:
+          type: string
+          format: date-time
+    OfferEmploymentResponse:
+      type: object
+      properties:
+        suggestId:
+          type: integer
+          format: int64
+        success:
+          type: boolean
+        message:
+          type: string
+    OfferEmploymentCompleteRequest:
+      required:
+      - employeeId
+      - suggestId
+      type: object
+      properties:
+        suggestId:
+          type: integer
+          format: int64
+        employeeId:
+          type: integer
+          format: int64
+    Business:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        businessId:
+          type: integer
+          format: int64
+        employer:
+          $ref: "#/components/schemas/Account"
+        businessCategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/BusinessCategory"
+        businessName:
+          type: string
+        location:
+          $ref: "#/components/schemas/BusinessLocation"
+        representationName:
+          type: string
+        openDate:
+          type: string
+          format: date
+        registrationNumber:
+          type: string
+    BusinessCategory:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        id:
+          type: integer
+          format: int64
+        business:
+          $ref: "#/components/schemas/Business"
+        category:
+          $ref: "#/components/schemas/Category"
+    Contract:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        contractId:
+          type: integer
+          format: int64
+        offerEmployment:
+          $ref: "#/components/schemas/OfferEmployment"
+        contractStartTime:
+          type: string
+          format: date-time
+        contractEndTime:
+          type: string
+          format: date-time
+        contractHourlyPay:
+          type: integer
+          format: int32
+        contractSucceeded:
+          type: boolean
+        validContractRangeTime:
+          type: boolean
+    OfferEmployment:
+      type: object
+      properties:
+        suggestId:
+          type: integer
+          format: int64
+        business:
+          $ref: "#/components/schemas/Business"
+        employee:
+          $ref: "#/components/schemas/Account"
+        contract:
+          $ref: "#/components/schemas/Contract"
+        suggestStartTime:
+          type: string
+          format: date-time
+        suggestEndTime:
+          type: string
+          format: date-time
+        suggestHourlyPay:
+          type: integer
+          format: int32
+        suggestReaded:
+          type: boolean
+        suggestSucceeded:
+          type: boolean
+        suggestRegisterTime:
+          type: string
+          format: date-time
+        suggestFinished:
+          type: boolean
+    Review:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        reviewId:
+          type: integer
+          format: int64
+        offerEmployment:
+          $ref: "#/components/schemas/OfferEmployment"
+        writer:
+          $ref: "#/components/schemas/Business"
+        employee:
+          $ref: "#/components/schemas/Account"
+        contract:
+          $ref: "#/components/schemas/Contract"
+        reviewStarPoint:
+          type: integer
+          format: int32
+        reviewContent:
+          type: string
+    ReviewReportRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+    ReviewReportResponse:
+      type: object
+      properties:
+        reportId:
+          type: integer
+          format: int64
+        message:
+          type: string
+    AcceptSuggestCommand:
+      required:
+      - suggestId
+      type: object
+      properties:
+        suggestId:
+          type: integer
+          format: int64
+    AddReviewRequest:
+      required:
+      - contractId
+      type: object
+      properties:
+        contractId:
+          type: integer
+          format: int64
+        reviewScore:
+          type: integer
+          format: int32
+        reviewContent:
+          type: string
+    AddBusinessRequest:
+      type: object
+      properties:
+        requestMemberId:
+          type: integer
+          format: int64
+        businessName:
+          type: string
+        location:
+          $ref: "#/components/schemas/BusinessLocation"
+        categoryIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        representationName:
+          type: string
+    RefreshTokenRequest:
+      required:
+      - refreshToken
+      type: object
+      properties:
+        refreshToken:
+          type: string
+    LoginRequest:
+      required:
+      - loginId
+      - password
+      type: object
+      properties:
+        loginId:
+          type: string
+        password:
+          type: string
+    BusinessNumberRequest:
+      required:
+      - businessName
+      - businessOpenDate
+      - businessRegistrationNumber
+      - representationName
+      type: object
+      properties:
+        businessRegistrationNumber:
+          type: string
+        businessName:
+          type: string
+        representationName:
+          type: string
+        businessOpenDate:
+          type: string
+    SignUpEmployerRequest:
+      required:
+      - businessName
+      - businessOpenDate
+      - businessRegistrationNumber
+      - location
+      - loginId
+      - nationality
+      - password
+      - phoneNumber
+      - representationName
+      - role
+      type: object
+      properties:
+        loginId:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        businessRegistrationNumber:
+          type: string
+        businessName:
+          type: string
+        representationName:
+          type: string
+        businessOpenDate:
+          type: string
+        location:
+          $ref: "#/components/schemas/BusinessLocation"
+        nationality:
+          type: string
+          enum:
+          - KOREAN
+          - FOREIGN
+        role:
+          type: string
+          enum:
+          - EMPLOYEE
+          - EMPLOYER
+        phoneNumber:
+          type: string
+    SignUpEmployeeRequest:
+      required:
+      - emailReceivable
+      - loginId
+      - name
+      - nationality
+      - nickname
+      - password
+      - phoneNumber
+      - role
+      type: object
+      properties:
+        loginId:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        nickname:
+          type: string
+        email:
+          type: string
+        nationality:
+          type: string
+          enum:
+          - KOREAN
+          - FOREIGN
+        role:
+          type: string
+          enum:
+          - EMPLOYEE
+          - EMPLOYER
+        phoneNumber:
+          type: string
+        emailReceivable:
+          type: boolean
+    EmailCodeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        code:
+          type: string
+    EmailRequest:
+      type: object
+      properties:
+        email:
+          type: string
+    SearchRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    SearchResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        sex:
+          type: string
+        age:
+          type: integer
+          format: int32
+        starPoint:
+          type: number
+          format: float
+        workCount:
+          type: integer
+          format: int32
+    UserIdRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+    ChatRoom:
+      type: object
+      properties:
+        chatRoomId:
+          type: integer
+          format: int64
+        offerEmployment:
+          $ref: "#/components/schemas/OfferEmployment"
+        suggestGeneratedDate:
+          type: string
+          format: date-time
+    ChatSummary:
+      type: object
+      properties:
+        roomId:
+          type: integer
+          format: int64
+        lastMessageContent:
+          type: string
+        lastMessageTime:
+          type: string
+          format: date-time
+        numberOfUnreadMessages:
+          type: integer
+          format: int64
+    ChatSummaryResponse:
+      type: object
+      properties:
+        chatRooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatRoom"
+        chatSummaries:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatSummary"
+    Chat:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        roomId:
+          type: integer
+          format: int64
+        senderId:
+          type: integer
+          format: int64
+        receiverId:
+          type: integer
+          format: int64
+        sendTime:
+          type: string
+          format: date-time
+        isRead:
+          type: boolean
+    ReviewResponse:
+      type: object
+      properties:
+        reviewId:
+          type: integer
+          format: int64
+        businessName:
+          type: string
+        businessId:
+          type: integer
+          format: int64
+        contractStartTime:
+          type: string
+          format: date-time
+        contractEndTime:
+          type: string
+          format: date-time
+        reviewStarPoint:
+          type: integer
+          format: int32
+        reviewContent:
+          type: string
+    ReviewAvailableResponse:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          format: int64
+        employeeName:
+          type: string
+    WorkHourResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    InternalCareerResponse:
+      type: object
+      properties:
+        contractId:
+          type: integer
+          format: int64
+        businessName:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    SuggestedBusinessResponse:
+      type: object
+      properties:
+        businessId:
+          type: integer
+          format: int64
+        suggestStartDateTime:
+          type: string
+          format: date-time
+        suggestEndDateTime:
+          type: string
+          format: date-time
+        suggestPartTimePayment:
+          type: integer
+          format: int32
+        suggestChecked:
+          type: boolean
+        suggestAccepted:
+          type: boolean
+    BusinessInfoDTO:
+      type: object
+      properties:
+        businessName:
+          type: string
+        representationName:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        location:
+          $ref: "#/components/schemas/BusinessLocation"
+        businessPhone:
+          type: string
+        signedDate:
+          type: string
+          format: date-time
+    ContractDTO:
+      type: object
+      properties:
+        businessInfo:
+          $ref: "#/components/schemas/BusinessInfoDTO"
+        employeeInfo:
+          $ref: "#/components/schemas/EmployeeInfoDTO"
+    EmployeeInfoDTO:
+      type: object
+      properties:
+        employeeName:
+          type: string
+        employeePhone:
+          type: string
+        starPoint:
+          type: number
+          format: float
+        workCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    JWT_TOKEN:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
