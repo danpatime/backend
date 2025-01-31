@@ -5,6 +5,8 @@ import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,24 +35,6 @@ class ContractController {
         UpdateContractConditionCommand toCommand(final Long contractId) {
             return new UpdateContractConditionCommand(contractId, this.suggestStartDateTime, this.suggestEndDateTime, this.suggestHourlyPayment);
         }
-    }
-
-    @PostMapping("/api/v1/contracts/suggests/{suggestId}/chatroom")
-    public ResponseEntity<?> createChatRoom(
-            @RequestBody final AcceptSuggestCommand acceptSuggestCommand
-    ) {
-        contractService.createChatRoom(acceptSuggestCommand);
-        return ResponseEntity.ok(null);
-    }
-
-    @PutMapping("/api/v1/contracts/{contractId}")
-    public ResponseEntity<?> updateContractCondition(
-            @PathVariable(required = true) final Long contractId,
-            @RequestBody final UpdateContractConditionRequest updateContractConditionRequest
-    ) {
-        final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
-        contractService.updateContract(updateCommand);
-        return ResponseEntity.ok(null);
     }
 
     @PostMapping("/api/v1/contracts/{contractId}/accepts")
