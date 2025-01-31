@@ -23,10 +23,6 @@ import org.springframework.validation.annotation.Validated;
 public class ContractService {
     private final ContractRepository contractRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
-    private final ContractRepository contractRepository;
-    private final ContractMapper contractMapper;
-
-
 
     @Transactional
     public void updateContract(@Validated final UpdateContractConditionCommand updateContractConditionCommand) {
