@@ -23,6 +23,8 @@ public class ContractService {
     private final ContractMapper contractMapper;
     private final ChatRoomRepository chatRoomRepository;
     private final UpdateContractConditionManager updateContractConditionManager;
+    private final ContractRepository contractRepository;
+    private final ContractMapper contractMapper;
 
     @Transactional(readOnly = true)
     public List<SuggestedBusinessResponse> getAllRelatedSuggests(final QueryAllSuggestsForMeCommand allSuggestsForMeCommand) {
