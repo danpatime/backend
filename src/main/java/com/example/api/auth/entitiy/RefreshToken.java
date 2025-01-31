@@ -6,19 +6,20 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "REFRESH_TOKEN")
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tokenId")
+    @Column(name = "TOKEN_ID")
     private Long id;
 
-    @Column
+    @Column(name = "REFRESH_TOKEN")
     private String refreshToken;
 
-    @Column
+    @Column(name = "IS_EXPIRED")
     private boolean isExpired = false;
 
-    @Column
+    @Column(name = "RECENT_LOGIN")
     private LocalDateTime recentLogin = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

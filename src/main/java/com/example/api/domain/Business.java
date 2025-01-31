@@ -20,6 +20,7 @@ import static jakarta.persistence.FetchType.*;
 public class Business extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BUSINESS_ID")
     private Long businessId;
 
     @ManyToOne(fetch = LAZY)
@@ -36,6 +37,7 @@ public class Business extends BaseEntity {
     @JoinColumn(name = "BUSINESS_LOCATION", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private BusinessLocation location;
 
+    @Column(name = "REPRESENTATION_NAME")
     private String representationName;
 
     @Column(name = "BUSINESS_OPEN_DATE")

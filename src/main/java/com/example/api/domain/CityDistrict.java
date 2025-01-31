@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "CITY_DISTRICT")
 public class CityDistrict extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

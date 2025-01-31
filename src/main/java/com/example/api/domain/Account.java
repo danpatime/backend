@@ -36,6 +36,7 @@ public class Account extends BaseEntity {
     private Nationality nationality;
     @ElementCollection(targetClass = UserRole.class)
     @CollectionTable(name = "AUTHORITY", joinColumns = @JoinColumn(name = "ACCOUNT_UNIQUE_ID"), foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Column(name = "ROLE_NAME")
     @Enumerated(EnumType.STRING)
     private Collection<UserRole> roles;
     @Column(name = "ACCOUNT_SEX")
