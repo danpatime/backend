@@ -68,4 +68,8 @@ public class OfferEmployment {
     public void succeeded() {
         this.suggestSucceeded = true;
     }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 }

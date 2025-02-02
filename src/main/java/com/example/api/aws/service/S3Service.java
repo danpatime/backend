@@ -33,7 +33,7 @@ public class S3Service {
     public UploadProfileResponse upload(@Validated final UploadProfileRequest request) {
         // 업로드 파일이 null 이라면 기본 프로필로 초기화
         if (initDefaultIfFileIsNull(request)) return new UploadProfileResponse(null);
-
+        log.info("Upload profile request: {}", request.userId());
         Optional<String> userProfile = accountRepository.findProfileImageByAccountId(request.userId());
         userProfile.ifPresent(oldKey -> remove(new OldKeyRequest(oldKey)));
 

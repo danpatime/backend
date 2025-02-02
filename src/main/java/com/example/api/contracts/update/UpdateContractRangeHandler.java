@@ -16,7 +16,7 @@ class UpdateContractRangeHandler implements UpdateContractConditionHandler {
             contract.updateEndDateTime(updateCommand.suggestEndDateTime());
         }
 
-        if (contract.isValidContractRangeTime()) {
+        if (!contract.isValidContractRangeTime()) {
             throw new IllegalArgumentException();
         }
     }

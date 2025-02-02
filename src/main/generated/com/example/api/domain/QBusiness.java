@@ -37,7 +37,7 @@ public class QBusiness extends EntityPathBase<Business> {
 
     public final com.example.api.business.domain.QBusinessLocation location;
 
-    public final DatePath<java.time.LocalDate> openDate = createDate("openDate", java.time.LocalDate.class);
+    public final StringPath openDate = createString("openDate");
 
     public final StringPath registrationNumber = createString("registrationNumber");
 

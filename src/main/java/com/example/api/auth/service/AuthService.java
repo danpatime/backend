@@ -102,7 +102,12 @@ public class AuthService {
     public LoginSuccessResponse logout(@Validated final LoginUserRequest loginUserRequest) {
         Account user = getUserById(loginUserRequest.userId());
         tokenRepository.deleteAllByUser(user);
-        return new LoginSuccessResponse(null, null);
+
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("accessToken", null);
+        responseBody.put("userId", null);
+        responseBody.put("userRole", null);
+        return new LoginSuccessResponse(null, responseBody);
     }
 
     private Account getUserById(final Long userId) {

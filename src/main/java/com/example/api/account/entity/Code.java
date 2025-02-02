@@ -16,11 +16,11 @@ public class Code {
     private String code;
 
     @Indexed(expireAfterSeconds = 600)
-    private final Date createdAt;
+    private Date createdAt;
 
     public Code(String email, String code) {
         this.email = email;
         this.code = code;
         this.createdAt = new Date();
     }
-}
+    }

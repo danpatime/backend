@@ -12,19 +12,17 @@ import com.example.api.board.service.EmployeeService;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("api/v1/possible-board")
+@RestController
+@RequestMapping("/api/v1/possible-board")
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
     private final BoardService boardService;
-    private final CategoryService categoryService;
     private final EmployeeService employeeService;
 
     /**
@@ -42,6 +40,7 @@ public class BoardController {
 
     @GetMapping("/work-preferences/districts")
     public ResponseEntity<List<FlavoredDistrictResponse>> getPreferredDistricts(@AuthenticationPrincipal final Long employeeId){
+        log.info("employee id: {}", employeeId);
         return ResponseEntity.ok(boardService.getPreferredDistricts(new EmployeeIdRequest(employeeId)));
     }
 
@@ -99,7 +98,7 @@ public class BoardController {
     @PostMapping("/work-hours")
     public ResponseEntity<?> updatePossibleTimes(
             @RequestBody final AddPossibleTimeRequest addPossibleTimeRequest,
-            final Long requestMemberId
+            @AuthenticationPrincipal final Long requestMemberId
     ) {
         final AddPossibleTimeCommand addPossibleTimeCommand = addPossibleTimeRequest.toCommand(requestMemberId);
         boardService.addPossibleBoard(addPossibleTimeCommand);

@@ -33,7 +33,7 @@ public class Business extends BaseEntity {
     @Column(name = "BUSINESS_NAME")
     private String businessName;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "BUSINESS_LOCATION", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private BusinessLocation location;
 
@@ -41,7 +41,7 @@ public class Business extends BaseEntity {
     private String representationName;
 
     @Column(name = "BUSINESS_OPEN_DATE")
-    private LocalDate openDate;
+    private String openDate;
 
     @Column(name = "BUSINESS_REGISTRATION_NUMBER")
     private String registrationNumber;
@@ -64,16 +64,7 @@ public class Business extends BaseEntity {
         this.representationName = representationName;
     }
 
-    public Business(Account user, String businessRegistrationNumber, String businessName, String representationName, String businessOpenDate, BusinessLocation location) {
-        this.employer = user;
-        this.registrationNumber = businessRegistrationNumber;
-        this.businessName = businessName;
-        this.representationName = representationName;
-        this.openDate = LocalDate.parse(businessOpenDate);
-        this.location = location;
-    }
-
-    public Business(String businessName, BusinessLocation location, String representationName, Account employer, LocalDate openDate, String registrationNumber) {
+    public Business(String businessName, BusinessLocation location, String representationName, Account employer, String openDate, String registrationNumber) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;

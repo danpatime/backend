@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface FlavoredDistrictRepository extends JpaRepository<FlavoredDistrict, Long> {
-    @Query("select new com.example.api.board.dto.response.FlavoredCategoryResponse(fd.district.id, fd.district.district) " +
+    @Query("select new com.example.api.board.dto.response.FlavoredDistrictResponse(fd.district.id, fd.district.district) " +
     "from FlavoredDistrict fd where fd.employee.accountId = :employeeId")
     List<FlavoredDistrictResponse> findAllByEmployeeId(Long employeeId);
 

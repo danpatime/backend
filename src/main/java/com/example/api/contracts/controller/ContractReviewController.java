@@ -39,13 +39,13 @@ public class ContractReviewController {
     }
 
     @PostMapping("/review")
-    public ResponseEntity<?> addReview(
+    public ResponseEntity<String> addReview(
             @RequestBody @Valid final AddReviewRequest request,
             @AuthenticationPrincipal final Long memberId
     ) {
         final AddReviewCommand command = request.toCommand(memberId);
         contractReviewService.saveReview(command);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("리뷰가 성공적으로 작성되었습니다.");
     }
 
     record AddReviewRequest(

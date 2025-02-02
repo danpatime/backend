@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContractMapper {
     public Contract notYetSucceeded(final OfferEmployment offerEmployment) {
         return new Contract(
+                offerEmployment.getSuggestId(),
                 offerEmployment,
                 offerEmployment.getSuggestStartTime(),
                 offerEmployment.getSuggestEndTime(),
