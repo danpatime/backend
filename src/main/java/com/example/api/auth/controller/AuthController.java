@@ -40,8 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Map<String, String>> logout(@AuthenticationPrincipal final Object principal) {
-        Long userId = Long.parseLong(principal.toString());
+    public ResponseEntity<Map<String, String>> logout(@AuthenticationPrincipal final Long userId) {
         LoginSuccessResponse loginSuccessResponse = authService.logout(new LoginUserRequest(userId));
         return ResponseEntity.ok(loginSuccessResponse.responseBody());
     }

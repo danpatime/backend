@@ -48,6 +48,6 @@ public class ContractService {
 
     @Transactional(readOnly = true)
     public List<ContractScheduleResponse> getContractSchedule(final EmployeeIdRequest employeeIdRequest) {
-        return contractRepository.findContractScheduleByEmployeeId(employeeIdRequest.employeeId(), LocalDate.now().withDayOfMonth(1));
+        return contractRepository.findContractScheduleByEmployeeId(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
     }
 }

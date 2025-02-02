@@ -8,6 +8,8 @@ public record AddBusinessCommand(
         @NotNull
         Long requestMemberId,
         String businessName,
+        String businessRegistrationNumber,
+        String businessOpenDate,
         BusinessLocation location,
         List<Long> categoryIds,
         String representationName

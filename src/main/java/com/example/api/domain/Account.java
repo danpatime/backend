@@ -45,11 +45,11 @@ public class Account extends BaseEntity {
     private int age;
     @Column(name = "ACCOUNT_PROFILE_IMAGE")
     private String profileImage;
-    @Column(name = "ACCOUNT_STAR_RATING")
-    private float starPoint;
-    @Column(name = "ACCOUNT_WORK_COUNT")
+    @Column(name = "ACCOUNT_STAR_RATING", columnDefinition = "FLOAT DEFAULT 0.0f")
+    private Float starPoint;
+    @Column(name = "ACCOUNT_WORK_COUNT", columnDefinition = "INTEGER DEFAULT 0")
     private int workCount;
-    @Column(name = "ACCOUNT_OPEN_STATUS")
+    @Column(name = "ACCOUNT_OPEN_STATUS", columnDefinition = "BOOLEAN DEFAULT true")
     private boolean openStatus;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;

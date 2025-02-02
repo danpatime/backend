@@ -1,5 +1,6 @@
 package com.example.api.business;
 
+import com.example.api.business.domain.BusinessLocation;
 import com.example.api.business.dto.BusinessDetailsResponse;
 import com.example.api.business.dto.BusinessOwner;
 import com.example.api.business.dto.CategoryInfo;
@@ -24,12 +25,13 @@ public class BusinessQueryService {
     public BusinessDetailsResponse loadDetails(@Validated final QueryBusinessDetailCommand queryBusinessDetailCommand) {
         final Business business = businessRepository.getDetails(queryBusinessDetailCommand.businessId())
                 .orElseThrow(() -> new BusinessException("해당 비즈니스를 찾을 수 없습니다.", ErrorCode.BUSINESS_DOMAIN_EXCEPTION));
+        final BusinessLocation location = business.getLocation();
         final Account account = business.getEmployer();
         final List<CategoryInfo> categoryInfos = business.getBusinessCategories().stream()
                 .map(BusinessCategory::getCategory)
                 .map(category -> new CategoryInfo(category.getCategoryId(), category.getCategoryName()))
                 .toList();
         final BusinessOwner owner = new BusinessOwner(account.getAccountId(), account.getName());
-        return new BusinessDetailsResponse(business.getBusinessName(), business.getBusinessId(), owner, business.getLocation(), categoryInfos);
+        return new BusinessDetailsResponse(business.getBusinessName(), business.getBusinessId(), owner, location, categoryInfos);
     }
 }

@@ -17,6 +17,7 @@ import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardService {
     private final AccountRepository accountRepository;
     private final OfferEmploymentRepository offerEmploymentRepository;
@@ -50,7 +52,10 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<FlavoredDistrictResponse> getPreferredDistricts(final EmployeeIdRequest employeeIdRequest) {
-        return flavoredDistrictRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
+        log.info("employeeIdRequest={}", employeeIdRequest.employeeId());
+        List<FlavoredDistrictResponse> allByEmployeeId = flavoredDistrictRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
+        log.info("allByEmployeeId: {}", allByEmployeeId);
+        return allByEmployeeId;
     }
 
     @Transactional(readOnly = true)
@@ -60,7 +65,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<WorkHourResponse> getWorkHours(final EmployeeIdRequest employeeIdRequest)  {
-        return possibleBoardRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().withDayOfMonth(1));
+        return possibleBoardRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
     }
 
     @Transactional(readOnly = true)

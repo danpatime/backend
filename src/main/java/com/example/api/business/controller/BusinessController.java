@@ -4,6 +4,7 @@ import com.example.api.business.domain.BusinessLocation;
 import com.example.api.business.BusinessQueryService;
 import com.example.api.business.BusinessService;
 import com.example.api.business.dto.AddBusinessCommand;
+import com.example.api.business.dto.BusinessDetailsResponse;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.business.dto.QueryBusinessDetailCommand;
 import jakarta.validation.constraints.NotNull;
@@ -26,39 +27,41 @@ public class BusinessController {
     private final BusinessQueryService businessQueryService;
 
     @GetMapping
-    public ResponseEntity<?> getMyBusiness(
+    public ResponseEntity<BusinessDetailsResponse> getMyBusiness(
             @RequestParam final Long businessId
     ) {
         return ResponseEntity.ok(businessQueryService.loadDetails(new QueryBusinessDetailCommand(businessId)));
     }
 
     @PutMapping
-    public ResponseEntity<?> modifyMyBusiness(
+    public ResponseEntity<String> modifyMyBusiness(
             @RequestBody final ModifyBusinessRequest request
     ) {
         final ModifyBusinessCommand command = request.toCommand();
         businessService.updateBusiness(command);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("요청이 성공적으로 처리되었습니다.");
     }
 
     @PostMapping
-    public ResponseEntity<?> addBusiness(
+    public ResponseEntity<String> addBusiness(
             @RequestBody final AddBusinessRequest request
     ) {
         final AddBusinessCommand command = request.toCommand();
         businessService.addBusiness(command);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("요청이 성공적으로 처리되었습니다.");
     }
 
     record AddBusinessRequest(
             Long requestMemberId,
             String businessName,
+            String businessRegistrationNumber,
+            String businessOpenDate,
             BusinessLocation location,
             List<Long> categoryIds,
             String representationName
     ) {
         AddBusinessCommand toCommand() {
-            return new AddBusinessCommand(requestMemberId, businessName, location, categoryIds, representationName);
+            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, categoryIds, representationName);
         }
     }
 

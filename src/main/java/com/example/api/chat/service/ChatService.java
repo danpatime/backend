@@ -47,7 +47,7 @@ public class ChatService {
         List<ChatRoom> chatRooms = chatRoomRepository.findByUserId(requestUserId.userId());
         List<Long> chatRoomIds = chatRooms.stream().map(ChatRoom::getChatRoomId).toList();
         List<ChatSummary> chatSummaries = chatRepository.aggregateChatSummaries(chatRoomIds, requestUserId.userId());
-        return new ChatSummaryResponse(chatRooms, chatSummaries);
+        return new ChatSummaryResponse(chatSummaries);
     }
 
     @Transactional(readOnly = true)

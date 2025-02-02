@@ -23,6 +23,7 @@ public class SuggestController {
         List<SuggestStatusDTO> suggestStatus = suggestService.getSuggestStatus(businessIdRequest);
         return ResponseEntity.ok(suggestStatus);
     }
+
     @GetMapping("/api/v1/contracts/employment-suggests")
     public ResponseEntity<List<SuggestedBusinessResponse>> getAllSuggest(
             @RequestParam(required = true) final Long employeeId
@@ -42,11 +43,11 @@ public class SuggestController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/api/v1/contracts/suggests/{suggestId}/chatroom")
-    public ResponseEntity<?> createChatRoom(
+    @PostMapping("/api/v1/contracts/suggests/chatroom")
+    public ResponseEntity<String> createChatRoom(
             @RequestBody final AcceptSuggestCommand acceptSuggestCommand
     ) {
         suggestService.createChatRoom(acceptSuggestCommand);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("성공적으로 채팅방을 생성하였습니다.");
     }
 }

@@ -18,7 +18,7 @@ public class Contract extends BaseEntity {
     private Long contractId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "CONTRACT_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "SUGGEST_ID", referencedColumnName = "SUGGEST_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OfferEmployment offerEmployment;
 
     @Column(name = "CONTRACT_START_TIME", columnDefinition = "TIMESTAMP(0)")
@@ -31,12 +31,14 @@ public class Contract extends BaseEntity {
     private boolean contractSucceeded;
 
     public Contract(
+            final Long contractId,
             final OfferEmployment offerEmployment,
             final LocalDateTime contractStartTime,
             final LocalDateTime contractEndTime,
             final int contractHourlyPay,
             final boolean contractSucceeded
     ) {
+        this.contractId = contractId;
         this.offerEmployment = offerEmployment;
         this.contractStartTime = contractStartTime;
         this.contractEndTime = contractEndTime;

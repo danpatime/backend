@@ -18,13 +18,13 @@ class ContractController {
     private final ContractService contractService;
 
     @PutMapping("/api/v1/contracts/{contractId}")
-    public ResponseEntity<?> updateContractCondition(
+    public ResponseEntity<String> updateContractCondition(
             @PathVariable(required = true) final Long contractId,
             @RequestBody final UpdateContractConditionRequest updateContractConditionRequest
     ) {
         final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
         contractService.updateContract(updateCommand);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("근무 조건이 변경되었습니다.");
     }
 
     record UpdateContractConditionRequest(
@@ -38,12 +38,12 @@ class ContractController {
     }
 
     @PostMapping("/api/v1/contracts/{contractId}/accepts")
-    public ResponseEntity<?> acceptContract(
+    public ResponseEntity<String> acceptContract(
             @PathVariable(required = true) final Long contractId
     ) {
         final AcceptContractCommand acceptContractCommand = new AcceptContractCommand(contractId);
         contractService.acceptContract(acceptContractCommand);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("성공적으로 수락되었습니다.");
     }
 
     @GetMapping("/api/v1/contracts/{contractId}/status")

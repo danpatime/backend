@@ -5,24 +5,27 @@ import com.example.api.contracts.dto.ContractScheduleResponse;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
 import com.example.api.domain.Contract;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import com.example.api.review.dto.ReviewAvailableResponse;
+import com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("select new com.example.api.contracts.dto." +
             "BusinessInfoDTO(b.businessName, b.representationName, c.contractStartTime, c.contractEndTime, b.location, e.phoneNumber, c.updatedDate) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
             "join oe.business b " +
-            "join oe.employee e on e.accountId = b.employer.accountId " +
+            "join oe.employee e " +
             "where c.contractId = :contractId")
-    BusinessInfoDTO findBusinessDTOByContractId(@Param("contractId") long contractId);
+    BusinessInfoDTO findBusinessDTOByContractId(@Param("contractId") Long contractId);
 
     @Query("select new com.example.api.contracts.dto." +
             "EmployeeInfoDTO(e.name, e.phoneNumber, e.starPoint, e.workCount) " +
@@ -31,7 +34,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join oe.employee e " +
             "where c.contractId = :contractId")
     EmployeeInfoDTO findEmployeeDTOByContractId(@Param("contractId") long contractId);
-
 
     @Query("SELECT c FROM Contract c JOIN FETCH c.offerEmployment JOIN FETCH c.offerEmployment.business.employer WHERE c.contractId = :contractId")
     Optional<Contract> loadContractWithOfferEmployment(@Param("contractId") final Long contractId);
@@ -48,6 +50,14 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("select new com.example.api.contracts.dto.ContractScheduleResponse(c.contractId, b.businessName, c.contractStartTime, c.contractEndTime) " +
             "from Contract c inner join c.offerEmployment o inner join o.business b " +
             "where o.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
-    List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId")Long employeeId,
-                                                                    @Param("currentMonth")LocalDate currentMonth);
+    List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId") Long employeeId,
+                                                                    @Param("currentMonth") LocalDateTime currentMonth);
+
+    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, c.contractStartTime, c.contractEndTime) " +
+            "from Contract c " +
+            "join c.offerEmployment oe " +
+            "join oe.employee e " +
+            "join oe.business b " +
+            "where c.contractId = :contractId")
+    OfferEmploymentDetailRequest findContractByContractId(@Param("contractId") Long contractId);
 }

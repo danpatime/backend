@@ -19,10 +19,10 @@ import org.springframework.stereotype.Repository;
 public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Long> {
     @Modifying
     @Query("DELETE FROM PossibleBoard possible WHERE (possible.startTime <= :endDateTime AND possible.endTime >= :startDateTime)")
-    Long deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
+    Integer deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
                                           @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 
     @Query("select new com.example.api.board.dto.response.WorkHourResponse(p.possibleId, p.startTime, p.endTime) " +
             "from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime >= :currentMonth")
-    List<WorkHourResponse> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDate currentMonth);
+    List<WorkHourResponse> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
 }

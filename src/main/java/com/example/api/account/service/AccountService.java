@@ -63,15 +63,13 @@ public class AccountService {
 
     @Transactional
     public String verifyEmail(@Validated final EmailCodeRequest request) {
-        Optional<Code> findCode = codeRepository.findFirstByEmailOrderByCreatedAtDesc(request.email());
-
-        return findCode.map(code -> {
-            if (code.getCode().equals(request.code())) {
-                return "유효한 이메일입니다.";
-            } else {
-                throw new BusinessException(ErrorCode.INCORRECT_CODE);
-            }
-        }).orElseThrow(() -> new BusinessException(ErrorCode.EXPIRATION_DATE_END));
+        Code findCode = codeRepository.findFirstByEmailOrderByCreatedAtDesc(request.email()).orElseThrow(() -> new BusinessException(ErrorCode.EXPIRATION_DATE_END));
+        log.info("find code = {}", findCode.getCode());
+        if(findCode.getCode().equals(request.code())){
+            return "유효한 이메일입니다.";
+        } else {
+            throw new BusinessException(ErrorCode.INCORRECT_CODE);
+        }
     }
 
     @Transactional
@@ -134,15 +132,14 @@ public class AccountService {
 
         BusinessLocation savedLocation = locationRepository.save(request.location());
         Business business = new Business(
-                savedUser,
-                request.businessRegistrationNumber(),
                 request.businessName(),
+                savedLocation,
                 request.representationName(),
+                savedUser,
                 request.businessOpenDate(),
-                savedLocation
+                request.businessRegistrationNumber()
         );
         businessRepository.save(business);
-        accountRepository.save(account);
     }
 
     private void validateDuplicateLoginId(final LoginIdRequest loginIdRequest) {
