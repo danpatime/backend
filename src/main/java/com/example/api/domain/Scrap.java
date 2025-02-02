@@ -21,7 +21,16 @@ public class Scrap extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYER_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employer;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
+
+    public Scrap() {
+    }
+
+    public Scrap(Account employee, Account employer) {
+        this.employee = employee;
+        this.employer = employer;
+    }
 }

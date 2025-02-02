@@ -703,81 +703,81 @@ paths:
                     suggestPartTimePayment: 10000
                     suggestChecked: 1
                     suggestAccepted: 1
-#  /api/v1/support/announcements/{announcementId}:
-#    get:
-#      tags:
-#        - announcement-controller
-#      operationId: getAnnouncement
-#      parameters:
-#        - name: announcementId
-#          in: path
-#          required: true
-#          schema:
-#            type: integer
-#            format: int64
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/AnnouncementResponse"
-#              example:
-#                announcementId: 1
-#                announcementTitle: "긴급 서버 점검 공지"
-#                announcementType: "공지"
-#                announcementContent: "서버 점검이 오늘 밤 11시에 진행됩니다."
-#                viewCount: 123
-#
-#
-#    put:
-#      tags:
-#      - announcement-controller
-#      operationId: updateAnnouncement
-#      parameters:
-#      - name: announcementId
-#        in: path
-#        required: true
-#        schema:
-#          type: integer
-#          format: int64
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/AnnouncementRequest"
-#            example:
-#              announcementTitle: "수정된 공지사항 제목"
-#              announcementType: "업데이트"
-#              announcementContent: "공지 내용이 업데이트되었습니다."
-#        required: true
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                $ref: "#/components/schemas/AnnouncementResponse"
-#              example:
-#                announcementId: 1
-#                announcementTitle: "수정된 공지사항 제목"
-#                announcementType: "업데이트"
-#                announcementContent: "공지 내용이 업데이트되었습니다."
-#                viewCount: 200
-#    delete:
-#      tags:
-#      - announcement-controller
-#      operationId: deleteAnnouncement
-#      parameters:
-#      - name: announcementId
-#        in: path
-#        required: true
-#        schema:
-#          type: integer
-#          format: int64
-#      responses:
-#        "200":
-#          description: OK
+  /api/v1/support/announcements/{announcementId}:
+    get:
+      tags:
+        - announcement-controller
+      operationId: getAnnouncement
+      parameters:
+        - name: announcementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+              example:
+                announcementId: 1
+                announcementTitle: "긴급 서버 점검 공지"
+                announcementType: "공지"
+                announcementContent: "서버 점검이 오늘 밤 11시에 진행됩니다."
+                viewCount: 123
+
+
+    put:
+      tags:
+      - announcement-controller
+      operationId: updateAnnouncement
+      parameters:
+      - name: announcementId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnnouncementRequest"
+            example:
+              announcementTitle: "수정된 공지사항 제목"
+              announcementType: "업데이트"
+              announcementContent: "공지 내용이 업데이트되었습니다."
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+              example:
+                announcementId: 1
+                announcementTitle: "수정된 공지사항 제목"
+                announcementType: "업데이트"
+                announcementContent: "공지 내용이 업데이트되었습니다."
+                viewCount: 200
+    delete:
+      tags:
+      - announcement-controller
+      operationId: deleteAnnouncement
+      parameters:
+      - name: announcementId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
   /api/v1/contracts/{contractId}:
     put:
       tags:
@@ -977,85 +977,85 @@ paths:
               schema:
                 type: string
               example: "요청이 성공적으로 처리되었습니다."
-#  /api/v1/support/inquiry:
-#    post:
-#      tags:
-#      - inquiry-controller
-#      operationId: createInquiry
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/InquiryRequest"
-#            example:
-#              inquiryType: "일반"
-#              subInquiryType: "서비스 문제"
-#              title: "서비스 관련 문제"
-#              content: "서비스 기능에 문제가 있습니다."
-#        required: true
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                $ref: "#/components/schemas/InquiryResponse"
-#              example:
-#                inquiry_id: "123"
-#                message: "문의가 성공적으로 접수되었습니다."
-#
-#  /api/v1/support/announcements:
-#    get:
-#      tags:
-#      - announcement-controller
-#      operationId: getAnnouncements
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/AnnouncementResponse"
-#                example:
-#                  - announcementId: 1
-#                    announcementTitle: "긴급 서버 점검 공지"
-#                    announcementType: "공지"
-#                    announcementContent: "서버 점검이 오늘 밤 11시에 진행됩니다."
-#                    viewCount: 123
-#                  - announcementId: 2
-#                    announcementTitle: "새로운 기능 업데이트"
-#                    announcementType: "업데이트"
-#                    announcementContent: "신규 기능이 추가되었습니다. 확인해보세요!"
-#                    viewCount: 89
-#    post:
-#      tags:
-#      - announcement-controller
-#      operationId: createAnnouncement
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/AnnouncementRequest"
-#            example:
-#              announcementTitle: "시스템 점검 안내"
-#              announcementType: "공지"
-#              announcementContent: "시스템 점검이 오전 12시부터 오전 4시까지 진행됩니다."
-#        required: true
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                $ref: "#/components/schemas/AnnouncementResponse"
-#              example:
-#                announcementId: 1
-#                announcementTitle: "시스템 점검 안내"
-#                announcementType: "공지"
-#                announcementContent: "시스템 점검이 오전 12시부터 오전 4시까지 진행됩니다."
-#                viewCount: 0
+  /api/v1/support/inquiry:
+    post:
+      tags:
+      - inquiry-controller
+      operationId: createInquiry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryRequest"
+            example:
+              inquiryType: "일반"
+              subInquiryType: "서비스 문제"
+              title: "서비스 관련 문제"
+              content: "서비스 기능에 문제가 있습니다."
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/InquiryResponse"
+              example:
+                inquiry_id: "123"
+                message: "문의가 성공적으로 접수되었습니다."
+
+  /api/v1/support/announcements:
+    get:
+      tags:
+      - announcement-controller
+      operationId: getAnnouncements
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnnouncementResponse"
+                example:
+                  - announcementId: 1
+                    announcementTitle: "긴급 서버 점검 공지"
+                    announcementType: "공지"
+                    announcementContent: "서버 점검이 오늘 밤 11시에 진행됩니다."
+                    viewCount: 123
+                  - announcementId: 2
+                    announcementTitle: "새로운 기능 업데이트"
+                    announcementType: "업데이트"
+                    announcementContent: "신규 기능이 추가되었습니다. 확인해보세요!"
+                    viewCount: 89
+    post:
+      tags:
+      - announcement-controller
+      operationId: createAnnouncement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnnouncementRequest"
+            example:
+              announcementTitle: "시스템 점검 안내"
+              announcementType: "공지"
+              announcementContent: "시스템 점검이 오전 12시부터 오전 4시까지 진행됩니다."
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnouncementResponse"
+              example:
+                announcementId: 1
+                announcementTitle: "시스템 점검 안내"
+                announcementType: "공지"
+                announcementContent: "시스템 점검이 오전 12시부터 오전 4시까지 진행됩니다."
+                viewCount: 0
   /api/v1/info/my/reviews/{reviewId}/report:
     post:
       tags:
@@ -1127,77 +1127,122 @@ paths:
                   contractId: 9
                   reviewContent: "일 잘하네요"
                   reviewScore: 5
-  #  /api/search/search:
-#    post:
-#      tags:
-#      - search-controller
-#      operationId: searchAccounts
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/SearchRequest"
-#            example:
-#              category: "IT"
-#              startTime: "2025-01-01T09:00:00"
-#              endTime: "2025-01-01T18:00:00"
-#        required: true
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/SearchResponse"
-#                example:
-#                  - name: "John Doe"
-#                    sex: "Male"
-#                    age: 30
-#                    starPoint: 4.5
-#                    workCount: 50
-#                  - name: "Jane Smith"
-#                    sex: "Female"
-#                    age: 28
-#                    starPoint: 4.8
-#                    workCount: 60
-#  /favorites/employees:
-#    get:
-#      tags:
-#      - EmployerController
-#      operationId: getLikeEmployee
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: string
-#              example:
-#                - employeeId: 101
-#                  name: "김태영"
-#                  nickname: "김태영1"
-#                  sex: "남"
-#                  age: 30
-#                  starPoint: 4.7
-#                  workCount: 120
-#                  externalCareerList:
-#                    - externalCareerId: 1
-#                      category:
-#                        - categoryId: 1
-#                          categoryName: "외식•음료"
-#                      workCount: 1
-#                    - externalCareerId: 2
-#                      category:
-#                        - categoryId: 2
-#                          categoryName: "유통•판매"
-#                      workCount: 1
-#                  flavoredCategoryList:
-#                    - categoryId: 1
-#                      categoryName: "외식•음료"
-#                    - categoryId: 2
-#                      categoryName: "유통•판매"
+  /api/search/search:
+    post:
+      tags:
+      - search-controller
+      operationId: searchAccounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+            example:
+              category: "IT"
+              startTime: "2025-01-01T09:00:00"
+              endTime: "2025-01-01T18:00:00"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchResponse"
+                example:
+                  - name: "John Doe"
+                    sex: "Male"
+                    age: 30
+                    starPoint: 4.5
+                    workCount: 50
+                  - name: "Jane Smith"
+                    sex: "Female"
+                    age: 28
+                    starPoint: 4.8
+                    workCount: 60
+  /api/v1/employer/favorites/employees:
+    get:
+      tags:
+      - EmployerController
+      operationId: getLikeEmployee
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example:
+                - employeeId: 101
+                  name: "김태영"
+                  nickname: "김태영1"
+                  sex: "남"
+                  age: 30
+                  starPoint: 4.7
+                  workCount: 120
+                  externalCareerList:
+                    - externalCareerId: 1
+                      category:
+                        - categoryId: 1
+                          categoryName: "외식•음료"
+                      workCount: 1
+                    - externalCareerId: 2
+                      category:
+                        - categoryId: 2
+                          categoryName: "유통•판매"
+                      workCount: 1
+                  flavoredCategoryList:
+                    - categoryId: 1
+                      categoryName: "외식•음료"
+                    - categoryId: 2
+                      categoryName: "유통•판매"
+  /api/v1/employer/favorites/employee/{employeeId}:
+    put:
+      tags:
+        - EmployerController
+      summary: "알바생 즐겨찾기 하기"
+      description: "고용주가 즐겨찾기에 알바생을 등록합니다."
+      operationId: putFavoriteEmployee
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: "즐겨찾기할 알바생 ID"
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example: "성공적으로 즐겨찾기를 완료하였습니다."
+    delete:
+      tags:
+        - EmployerController
+      summary: "즐겨찾기한 알바생 삭제"
+      description: "고용주가 즐겨찾기에 등록한 알바생을 삭제합니다."
+      operationId: deleteFavoriteEmployee
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: "삭제할 알바생 ID"
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example: "성공적으로 즐겨찾기를 삭제하였습니다."
   /chat/summaries:
     get:
       tags:
@@ -1269,208 +1314,208 @@ paths:
                   receiverId: 1
                   sendTime: "2025-02-01T15:57:00.123Z"
                   isRead: false
-#  /businesses:
-#    get:
-#      tags:
-#      - EmployerController
-#      operationId: getBusinessList
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: object
-#              example:
-#                - businessName: "김태영닷컴"
-#                  businessLocation:
-#                    zipcode: "12093"
-#                    address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
-#                    detailAddress: "101호"
-#                - businessName: "김태영법조타운"
-#                  businessLocation:
-#                    zipcode: "404320"
-#                    address: "인천광역시 서구 원당동 인천검단택지개발지구 C5-1-1BL"
-#                    detailAddress: "101호"
-#  /api/v1/support/my-inquiries:
-#    get:
-#      tags:
-#      - inquiry-controller
-#      operationId: getMyInquiries
-#      parameters:
-#      - name: accountId
-#        in: query
-#        required: true
-#        schema:
-#          type: integer
-#          format: int64
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/InquiryResponse"
-#                example:
-#                  - inquiryId: 1
-#                    inquiryType: "일반"
-#                    subInquiryType: "서비스 문제"
-#                    title: "서비스 관련 문제"
-#                    content: "서비스 기능에 문제가 발생했습니다."
-#                    inquiryStatus: "대기 중"
-#                    answerDate: null
-#                    createdBy: 123
-#                  - inquiryId: 2
-#                    inquiryType: "기술"
-#                    subInquiryType: "버그 신고"
-#                    title: "애플리케이션 버그 신고"
-#                    content: "애플리케이션에서 치명적인 버그를 발견했습니다."
-#                    inquiryStatus: "답변 완료"
-#                    answerDate: "2025-01-20T10:00:00"
-#                    createdBy: 123
-#  /api/v1/support/announcements/search:
-#    get:
-#      tags:
-#      - announcement-controller
-#      operationId: searchAnnouncements
-#      parameters:
-#      - name: keyword
-#        in: query
-#        required: true
-#        schema:
-#          type: string
-#          example: "점검"
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/AnnouncementResponse"
-#                example:
-#                  - announcementId: 1
-#                    announcementTitle: "시스템 점검 안내"
-#                    announcementType: "공지"
-#                    announcementContent: "시스템이 오전 12시부터 오전 4시까지 점검을 진행합니다."
-#                    viewCount: 150
-#  /api/v1/review:
-#    get:
-#      tags:
-#      - review-controller
-#      operationId: getAllReviews
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/ReviewResponse"
-#                example:
-#                  - reviewId: 1
-#                    businessName: "테스트 사업장"
-#                    businessId: 10
-#                    contractStartTime: "2025-01-01T09:00:00"
-#                    contractEndTime: "2025-01-01T18:00:00"
-#                    reviewStarPoint: 5
-#                    reviewContent: "훌륭한 작업이었습니다!"
-#                  - reviewId: 2
-#                    businessName: "또 다른 사업장"
-#                    businessId: 20
-#                    contractStartTime: "2025-01-02T09:00:00"
-#                    contractEndTime: "2025-01-02T18:00:00"
-#                    reviewStarPoint: 4
-#                    reviewContent: "좋은 성과를 보여주었습니다."
-#  /api/v1/review/{reviewId}:
-#    get:
-#      tags:
-#      - review-controller
-#      operationId: getReviewsByEmployee
-#      parameters: []
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/ReviewResponse"
-#                example:
-#                  - reviewId: 1
-#                    businessName: "테스트 사업장"
-#                    businessId: 10
-#                    contractStartTime: "2025-01-01T09:00:00"
-#                    contractEndTime: "2025-01-01T18:00:00"
-#                    reviewStarPoint: 5
-#                    reviewContent: "훌륭한 작업이었습니다!"
-#  /api/v1/review/my/reviews:
-#    get:
-#      tags:
-#      - review-controller
-#      operationId: getMyReviews
-#      parameters:
-#      - name: accountId
-#        in: query
-#        required: true
-#        schema:
-#          type: integer
-#          format: int64
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/ReviewResponse"
-#                example:
-#                  - reviewId: 1
-#                    businessName: "테스트 사업장"
-#                    businessId: 10
-#                    contractStartTime: "2025-01-01T09:00:00"
-#                    contractEndTime: "2025-01-01T18:00:00"
-#                    reviewStarPoint: 5
-#                    reviewContent: "훌륭한 작업이었습니다!"
-#                  - reviewId: 2
-#                    businessName: "스타트업 컴퍼니"
-#                    businessId: 20
-#                    contractStartTime: "2025-01-05T10:00:00"
-#                    contractEndTime: "2025-01-05T19:00:00"
-#                    reviewStarPoint: 4
-#                    reviewContent: "업무 진행이 원활했습니다."
-#  /api/v1/review/available:
-#    get:
-#      tags:
-#      - review-controller
-#      operationId: getAvailableReviewTargets
-#      parameters:
-#      - name: businessId
-#        in: query
-#        required: true
-#        schema:
-#          type: integer
-#          format: int64
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/ReviewAvailableResponse"
-#                example:
-#                  - employeeId: 1001
-#                    employeeName: "김철수"
-#                  - employeeId: 1002
-#                    employeeName: "이영희"
+  /businesses:
+    get:
+      tags:
+      - EmployerController
+      operationId: getBusinessList
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+              example:
+                - businessName: "김태영닷컴"
+                  businessLocation:
+                    zipcode: "12093"
+                    address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
+                    detailAddress: "101호"
+                - businessName: "김태영법조타운"
+                  businessLocation:
+                    zipcode: "404320"
+                    address: "인천광역시 서구 원당동 인천검단택지개발지구 C5-1-1BL"
+                    detailAddress: "101호"
+  /api/v1/support/my-inquiries:
+    get:
+      tags:
+        - inquiry-controller
+      operationId: getMyInquiries
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InquiryResponse"
+                example:
+                  - inquiryId: 1
+                    inquiryType: "일반"
+                    subInquiryType: "서비스 문제"
+                    title: "서비스 관련 문제"
+                    content: "서비스 기능에 문제가 발생했습니다."
+                    inquiryStatus: "대기 중"
+                    answerDate: null
+                    createdBy: 123
+                  - inquiryId: 2
+                    inquiryType: "기술"
+                    subInquiryType: "버그 신고"
+                    title: "애플리케이션 버그 신고"
+                    content: "애플리케이션에서 치명적인 버그를 발견했습니다."
+                    inquiryStatus: "답변 완료"
+                    answerDate: "2025-01-20T10:00:00"
+                    createdBy: 123
+  /api/v1/support/announcements/search:
+    get:
+      tags:
+        - announcement-controller
+      operationId: searchAnnouncements
+      parameters:
+        - name: keyword
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "점검"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnnouncementResponse"
+                example:
+                  - announcementId: 1
+                    announcementTitle: "시스템 점검 안내"
+                    announcementType: "공지"
+                    announcementContent: "시스템이 오전 12시부터 오전 4시까지 점검을 진행합니다."
+                    viewCount: 150
+  /api/v1/review:
+    get:
+      tags:
+        - review-controller
+      operationId: getAllReviews
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+                example:
+                  - reviewId: 1
+                    businessName: "테스트 사업장"
+                    businessId: 10
+                    contractStartTime: "2025-01-01T09:00:00"
+                    contractEndTime: "2025-01-01T18:00:00"
+                    reviewStarPoint: 5
+                    reviewContent: "훌륭한 작업이었습니다!"
+                  - reviewId: 2
+                    businessName: "또 다른 사업장"
+                    businessId: 20
+                    contractStartTime: "2025-01-02T09:00:00"
+                    contractEndTime: "2025-01-02T18:00:00"
+                    reviewStarPoint: 4
+                    reviewContent: "좋은 성과를 보여주었습니다."
+  /api/v1/review/{reviewId}:
+    get:
+      tags:
+        - review-controller
+      operationId: getReviewsByEmployee
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+                example:
+                  - reviewId: 1
+                    businessName: "테스트 사업장"
+                    businessId: 10
+                    contractStartTime: "2025-01-01T09:00:00"
+                    contractEndTime: "2025-01-01T18:00:00"
+                    reviewStarPoint: 5
+                    reviewContent: "훌륭한 작업이었습니다!"
+  /api/v1/review/my/reviews:
+    get:
+      tags:
+        - review-controller
+      operationId: getMyReviews
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewResponse"
+                example:
+                  - reviewId: 1
+                    businessName: "테스트 사업장"
+                    businessId: 10
+                    contractStartTime: "2025-01-01T09:00:00"
+                    contractEndTime: "2025-01-01T18:00:00"
+                    reviewStarPoint: 5
+                    reviewContent: "훌륭한 작업이었습니다!"
+                  - reviewId: 2
+                    businessName: "스타트업 컴퍼니"
+                    businessId: 20
+                    contractStartTime: "2025-01-05T10:00:00"
+                    contractEndTime: "2025-01-05T19:00:00"
+                    reviewStarPoint: 4
+                    reviewContent: "업무 진행이 원활했습니다."
+  /api/v1/review/available:
+    get:
+      tags:
+        - review-controller
+      operationId: getAvailableReviewTargets
+      parameters:
+        - name: businessId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewAvailableResponse"
+                example:
+                  - employeeId: 1001
+                    employeeName: "김철수"
+                  - employeeId: 1002
+                    employeeName: "이영희"
 components:
   schemas:
     AnnouncementRequest:
