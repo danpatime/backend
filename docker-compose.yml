@@ -15,7 +15,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - logs:/app/logs
       - ./src:/app/src
     environment:
       - SPRING_DATA_MONGODB_URI=${MONGO_URI}
