@@ -10,7 +10,10 @@ public record PersonalInfoResponse(
         String email,
         String phoneNumber,
         Float starPoint,
-        Integer workCount
+        Integer workCount,
+        String profile,
+        String birthdate,
+        String callTime
 ) {
     public static PersonalInfoResponse of(Account user){
         return new PersonalInfoResponse(
@@ -21,7 +24,10 @@ public record PersonalInfoResponse(
                 user.getEmail(),
                 user.getPhoneNumber(),
                 user.getStarPoint(),
-                user.getWorkCount()
+                user.getWorkCount(),
+                user.getProfileImage(),
+                user.getBirthdate(),
+                user.getCallTime()
         );
     }
 }

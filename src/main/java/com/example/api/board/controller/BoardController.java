@@ -63,6 +63,18 @@ public class BoardController {
         return ResponseEntity.ok(boardService.getInternalCareers(new EmployeeIdRequest(employeeId)));
     }
 
+    @GetMapping("/introduction")
+    public ResponseEntity<IntroductionResponse> getIntroduction(@AuthenticationPrincipal final Long employeeId){
+        return ResponseEntity.ok(boardService.getIntroduction(new EmployeeIdRequest(employeeId)));
+    }
+
+    @PostMapping("/introduction")
+    public ResponseEntity<IntroductionResponse> postIntroduction(
+            @AuthenticationPrincipal final Long employeeId,
+            @RequestBody final AddIntroductionRequest request){
+        return ResponseEntity.ok(boardService.postIntroduction(new EmployeeIdRequest(employeeId), request));
+    }
+
     @PostMapping("/personal-info")
     public ResponseEntity<PersonalInfoResponse> updatePersonalInfo(
             @AuthenticationPrincipal final Long employeeId,

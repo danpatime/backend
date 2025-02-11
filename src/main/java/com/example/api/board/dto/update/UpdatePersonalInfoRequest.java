@@ -6,6 +6,8 @@ public record UpdatePersonalInfoRequest(
         Integer age,
         String phoneNumber,
         String email,
-        String nickname
+        String nickname,
+        String birthdate,
+        String callTime
 ) implements UpdateAccountConditionCommand{
 }
