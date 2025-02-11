@@ -8,7 +8,11 @@ import com.example.api.auth.entitiy.CustomUserDetails;
 import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.auth.service.JwtTokenProvider;
+import com.example.api.aws.dto.OldKeyRequest;
+import com.example.api.aws.service.S3Service;
 import com.example.api.domain.Account;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
 import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +42,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final TokenRepository tokenRepository;
     private final JwtProperties jwtProperties;
     private final ObjectMapper objectMapper;
+    private final S3Service s3Service;
 
     @Value("app.oauth2. authorized-redirect-uris")
     List<String> authorizedRedirectUris;
@@ -69,10 +74,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     }
 
     private void generateResponseBody(HttpServletResponse response, UserDetailRequest userDetailRequest, AuthTokenRequest authTokenRequest) throws IOException {
+        Account loginUser = accountRepository.findById(userDetailRequest.userId()).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        String profile = s3Service.getImage(new OldKeyRequest(loginUser.getProfileImage()));
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("accessToken", authTokenRequest.accessToken());
         responseBody.put("userId", userDetailRequest.userId().toString());
         responseBody.put("userRole", userDetailRequest.authorities().stream().findFirst().toString());
+        responseBody.put("name", loginUser.getName());
+        responseBody.put("profile", profile);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
