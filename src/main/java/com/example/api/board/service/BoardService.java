@@ -16,6 +16,7 @@ import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jknack.handlebars.internal.lang3.tuple.Pair;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -118,8 +119,14 @@ public class BoardService {
             final EmployeeIdRequest employeeIdRequest,
             final UpdatePreferredCategoriesRequest request
     ) {
-        flavoredCategoryRepository.deleteByNotInIds(employeeIdRequest.employeeId(), request.categoryIds());
-        flavoredCategoryRepository.saveDistrictIds(employeeIdRequest.employeeId(), request.categoryIds().toString());
+        List<Pair<Long, Long>> categoryPairs = request.categoryIds().stream()
+                .map(cat -> Pair.of(cat.categoryId(), cat.subCategoryId()))
+                .toList();
+        List<Long> categoryIds = categoryPairs.stream().map(Pair::getLeft).collect(Collectors.toList());
+        List<Long> subCategoryIds = categoryPairs.stream().map(Pair::getRight).collect(Collectors.toList());
+
+        flavoredCategoryRepository.deleteByNotInIds(employeeIdRequest.employeeId(), subCategoryIds);
+        flavoredCategoryRepository.saveAllCategoryIds(employeeIdRequest.employeeId(), categoryIds, subCategoryIds);
         return flavoredCategoryRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
     }
 
