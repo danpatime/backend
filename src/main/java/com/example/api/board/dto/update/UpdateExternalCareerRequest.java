@@ -6,7 +6,7 @@ public record UpdateExternalCareerRequest(
         List<ExternalCareerRequest> newExternalCareers
 ) {
     public record ExternalCareerRequest(
-            Long categoryId,
+            Long subCategoryId,
             Integer workCount
     ){}
 }

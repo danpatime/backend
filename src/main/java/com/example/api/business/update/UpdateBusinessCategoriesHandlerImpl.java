@@ -4,8 +4,10 @@ import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
 import com.example.api.domain.BusinessCategory;
 import com.example.api.domain.Category;
+import com.example.api.domain.SubCategory;
 import com.example.api.domain.repository.BusinessCategoryRepository;
 import com.example.api.domain.repository.CategoryRepository;
+import com.example.api.domain.repository.SubCategoryRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import java.util.List;
@@ -20,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.MANDATORY)
 @RequiredArgsConstructor
 public class UpdateBusinessCategoriesHandlerImpl implements BusinessUpdateHandler {
-    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
     private final BusinessCategoryRepository businessCategoryRepository;
 
     @Override
@@ -29,15 +31,16 @@ public class UpdateBusinessCategoriesHandlerImpl implements BusinessUpdateHandle
             return;
         }
         final List<BusinessCategory> businessCategories = findRelatedCategories(command.categoryIds()).stream()
-                .map(category -> new BusinessCategory(business, category))
+                .map(subCategory -> new BusinessCategory(business, subCategory))
                 .collect(Collectors.toList());
+        businessCategoryRepository.deleteAllByBusinessId(business.getBusinessId());
         businessCategoryRepository.saveAll(businessCategories);
     }
 
-    private List<Category> findRelatedCategories(final List<Long> categoryIds) {
-        final List<Category> categories = categoryRepository.findAllById(categoryIds);
-        validate(categories.size(), categoryIds.size());
-        return categories;
+    private List<SubCategory> findRelatedCategories(final List<Long> subCategoryIds) {
+        final List<SubCategory> subCategories = subCategoryRepository.findAllById(subCategoryIds);
+        validate(subCategories.size(), subCategoryIds.size());
+        return subCategories;
     }
 
     private void validate(final int requestCategorySize, final int foundedSize) {

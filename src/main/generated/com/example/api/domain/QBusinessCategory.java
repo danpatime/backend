@@ -26,12 +26,12 @@ public class QBusinessCategory extends EntityPathBase<BusinessCategory> {
 
     public final QBusiness business;
 
-    public final QCategory category;
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final QSubCategory subCategory;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
@@ -55,7 +55,7 @@ public class QBusinessCategory extends EntityPathBase<BusinessCategory> {
     public QBusinessCategory(Class<? extends BusinessCategory> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.business = inits.isInitialized("business") ? new QBusiness(forProperty("business"), inits.get("business")) : null;
-        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
+        this.subCategory = inits.isInitialized("subCategory") ? new QSubCategory(forProperty("subCategory"), inits.get("subCategory")) : null;
     }
 
 }

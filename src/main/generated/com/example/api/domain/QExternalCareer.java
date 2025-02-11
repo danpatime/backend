@@ -24,14 +24,14 @@ public class QExternalCareer extends EntityPathBase<ExternalCareer> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final QCategory category;
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final QAccount employee;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final QSubCategory subCategory;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
@@ -56,8 +56,8 @@ public class QExternalCareer extends EntityPathBase<ExternalCareer> {
 
     public QExternalCareer(Class<? extends ExternalCareer> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
         this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
+        this.subCategory = inits.isInitialized("subCategory") ? new QSubCategory(forProperty("subCategory"), inits.get("subCategory")) : null;
     }
 
 }

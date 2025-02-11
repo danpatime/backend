@@ -41,8 +41,7 @@ public class BoardService {
     private final FlavoredDistrictRepository flavoredDistrictRepository;
     private final AccountService accountService;
     private final PossibleMapper possibleMapper;
-    private final ObjectMapper objectMapper;
-    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     @Transactional(readOnly = true)
     public PersonalInfoResponse getPersonalInfoResponse(final EmployeeIdRequest employeeIdRequest){
@@ -140,14 +139,14 @@ public class BoardService {
 
         List<ExternalCareerResponse> allExternalCareer = externalCareerRepository.findAllByEmployeeId(user.getAccountId());
 
-        Set<Long> categoryIds = request.newExternalCareers().stream()
-                .map(UpdateExternalCareerRequest.ExternalCareerRequest::categoryId)
+        Set<Long> subCategoryIds = request.newExternalCareers().stream()
+                .map(UpdateExternalCareerRequest.ExternalCareerRequest::subCategoryId)
                 .collect(Collectors.toSet());
 
-        Map<Long, Category> categoryMap = categoryRepository.findAllById(categoryIds).stream()
-                .collect(Collectors.toMap(Category::getCategoryId, category -> category));
+        Map<Long, SubCategory> subCategoryMap = subCategoryRepository.findAllById(subCategoryIds).stream()
+                .collect(Collectors.toMap(SubCategory::getSubCategoryId,  subCategory -> subCategory));
 
-        List<ExternalCareer> newList = filterNewExternalCareers(request, allExternalCareer, categoryMap, user);
+        List<ExternalCareer> newList = filterNewExternalCareers(request, allExternalCareer, subCategoryMap, user);
         List<Long> oldList = filterRemovableExternalCareers(request, allExternalCareer);
 
         if (!oldList.isEmpty()) {
@@ -162,31 +161,29 @@ public class BoardService {
 
     @NotNull
     private static List<Long> filterRemovableExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer) {
-        List<Long> oldList = allExternalCareer.stream()
+        return allExternalCareer.stream()
                 .filter(savedAll -> request.newExternalCareers().stream()
                         .noneMatch(externalCareerRequest ->
-                                savedAll.category().getCategoryId().equals(externalCareerRequest.categoryId()) &&
+                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
                                         savedAll.workCount().equals(externalCareerRequest.workCount())))
                 .map(ExternalCareerResponse::externalCareerId)
                 .collect(Collectors.toList());
-        return oldList;
     }
 
     @NotNull
-    private static List<ExternalCareer> filterNewExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer, Map<Long, Category> categoryMap, Account user) {
-        List<ExternalCareer> newList = request.newExternalCareers().stream()
+    private static List<ExternalCareer> filterNewExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer, Map<Long, SubCategory> subCategoryMap, Account user) {
+        return request.newExternalCareers().stream()
                 .filter(externalCareerRequest -> allExternalCareer.stream()
                         .noneMatch(savedAll ->
-                                savedAll.category().getCategoryId().equals(externalCareerRequest.categoryId()) &&
+                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
                                         savedAll.workCount().equals(externalCareerRequest.workCount())))
                 .map(updateRequest -> {
-                    Category category = categoryMap.get(updateRequest.categoryId());
-                    if (category == null) {
+                    SubCategory subCategory = subCategoryMap.get(updateRequest.subCategoryId());
+                    if (subCategory == null) {
                         throw new BusinessException(ErrorCode.CATEGORY_EXCEPTION);
                     }
-                    return new ExternalCareer(user, category, updateRequest.workCount());
+                    return new ExternalCareer(user, subCategory, updateRequest.workCount());
                 })
                 .collect(Collectors.toList());
-        return newList;
     }
 }

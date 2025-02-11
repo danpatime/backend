@@ -28,8 +28,8 @@ public class BusinessQueryService {
         final BusinessLocation location = business.getLocation();
         final Account account = business.getEmployer();
         final List<CategoryInfo> categoryInfos = business.getBusinessCategories().stream()
-                .map(BusinessCategory::getCategory)
-                .map(category -> new CategoryInfo(category.getCategoryId(), category.getCategoryName()))
+                .map(BusinessCategory::getSubCategory)
+                .map(category -> new CategoryInfo(category.getSubCategoryId(), category.getSubCategoryName()))
                 .toList();
         final BusinessOwner owner = new BusinessOwner(account.getAccountId(), account.getName());
         return new BusinessDetailsResponse(business.getBusinessName(), business.getBusinessId(), owner, location, categoryInfos);

@@ -4,15 +4,13 @@ import com.example.api.account.repository.AccountRepository;
 import com.example.api.business.dto.AddBusinessCommand;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.business.update.BusinessUpdateManager;
-import com.example.api.domain.Account;
-import com.example.api.domain.Business;
-import com.example.api.domain.BusinessCategory;
-import com.example.api.domain.Category;
+import com.example.api.domain.*;
 import com.example.api.domain.repository.BusinessCategoryRepository;
 import com.example.api.domain.repository.CategoryRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.api.domain.repository.SubCategoryRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +26,7 @@ public class BusinessService {
     private final BusinessRepository businessRepository;
     private final BusinessCategoryRepository businessCategoryRepository;
     private final BusinessUpdateManager businessUpdateManager;
-    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
     private final AccountRepository accountRepository;
 
     @Transactional
@@ -49,15 +47,15 @@ public class BusinessService {
                 command.businessOpenDate(),
                 command.businessRegistrationNumber()
         );
-        final List<BusinessCategory> businessCategories = loadCategories(command.categoryIds(), business);
+        final List<BusinessCategory> businessCategories = loadCategories(command.subCategoryIds(), business);
         businessRepository.save(business);
         businessCategoryRepository.saveAll(businessCategories);
     }
 
     private List<BusinessCategory> loadCategories(final List<Long> categoryIds, final Business business) {
-        final List<Category> categories = categoryRepository.findAllById(categoryIds);
-        return categories.stream()
-                .map(category -> new BusinessCategory(business, category))
+        final List<SubCategory> subCategories = subCategoryRepository.findAllById(categoryIds);
+        return subCategories.stream()
+                .map(subCategory -> new BusinessCategory(business, subCategory))
                 .toList();
     }
 }

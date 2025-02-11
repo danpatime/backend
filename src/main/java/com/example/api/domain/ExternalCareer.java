@@ -24,16 +24,16 @@ public class ExternalCareer extends BaseEntity{
     private Account employee;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "SUB_CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @EqualsAndHashCode.Include
-    private Category category;
+    private SubCategory subCategory;
 
     @Column(name = "WORK_COUNT")
     private int workCount;
 
-    public ExternalCareer(Account employee, Category category, int workCount) {
+    public ExternalCareer(Account employee, SubCategory subCategory, int workCount) {
         this.employee = employee;
-        this.category = category;
+        this.subCategory = subCategory;
         this.workCount = workCount;
     }
 }

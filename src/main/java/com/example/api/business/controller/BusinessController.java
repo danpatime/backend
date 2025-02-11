@@ -57,11 +57,11 @@ public class BusinessController {
             String businessRegistrationNumber,
             String businessOpenDate,
             BusinessLocation location,
-            List<Long> categoryIds,
+            List<Long> subCategoryIds,
             String representationName
     ) {
         AddBusinessCommand toCommand() {
-            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, categoryIds, representationName);
+            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, subCategoryIds, representationName);
         }
     }
 
@@ -71,10 +71,10 @@ public class BusinessController {
             String businessName,
             BusinessLocation location,
             String representationName,
-            List<Long> categoryId
+            List<Long> subCategoryIds
     ) {
         ModifyBusinessCommand toCommand() {
-            return new ModifyBusinessCommand(businessId, businessName, location, representationName, categoryId);
+            return new ModifyBusinessCommand(businessId, businessName, location, representationName, subCategoryIds);
         }
     }
 }
