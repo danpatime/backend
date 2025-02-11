@@ -26,6 +26,10 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
+    public final StringPath birthdate = createString("birthdate");
+
+    public final StringPath callTime = createString("callTime");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
@@ -34,6 +38,8 @@ public class QAccount extends EntityPathBase<Account> {
     public final StringPath email = createString("email");
 
     public final BooleanPath emailReceivable = createBoolean("emailReceivable");
+
+    public final StringPath introduction = createString("introduction");
 
     public final StringPath loginId = createString("loginId");
 
