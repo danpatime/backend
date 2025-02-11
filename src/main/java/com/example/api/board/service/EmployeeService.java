@@ -6,9 +6,6 @@ import com.example.api.board.dto.response.PersonalInfoResponse;
 import com.example.api.board.dto.update.UpdatePersonalInfoRequest;
 import com.example.api.board.entitiy.update.UpdateAccountConditionManager;
 import com.example.api.domain.Account;
-import com.example.api.domain.repository.ExternalCareerRepository;
-import com.example.api.domain.repository.FlavoredCategoryRepository;
-import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final AccountRepository accountRepository;
-    private final ExternalCareerRepository externalCareerRepository;
-    private final FlavoredCategoryRepository flavoredRepository;
-    private final PossibleBoardRepository possibleBoardRepository;
     private final UpdateAccountConditionManager updateAccountConditionManager;
 
     @Transactional

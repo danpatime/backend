@@ -33,6 +33,8 @@ public class QFlavoredCategory extends EntityPathBase<FlavoredCategory> {
 
     public final NumberPath<Long> flavoredCategoryId = createNumber("flavoredCategoryId", Long.class);
 
+    public final QSubCategory subCategory;
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
 
@@ -56,6 +58,7 @@ public class QFlavoredCategory extends EntityPathBase<FlavoredCategory> {
         super(type, metadata, inits);
         this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
         this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
+        this.subCategory = inits.isInitialized("subCategory") ? new QSubCategory(forProperty("subCategory"), inits.get("subCategory")) : null;
     }
 
 }
