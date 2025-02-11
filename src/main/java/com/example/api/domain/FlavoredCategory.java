@@ -25,11 +25,16 @@ public class FlavoredCategory extends BaseEntity{
     private Category category;
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "SUB_CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private SubCategory subCategory;
+
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
 
-    public FlavoredCategory(Category category, Account employee) {
+    public FlavoredCategory(Category category, SubCategory subCategory, Account employee) {
         this.category = category;
+        this.subCategory = subCategory;
         this.employee = employee;
     }
 }

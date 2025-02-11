@@ -12,8 +12,10 @@ import java.util.List;
 
 @Repository
 public interface FlavoredCategoryRepository extends JpaRepository<FlavoredCategory, Long> {
-    @Query("select distinct new com.example.api.board.dto.response.FlavoredCategoryResponse(c.categoryId, c.categoryName) " +
-            "from FlavoredCategory f join Category c on f.category.categoryId = c.categoryId where f.employee.accountId = :employeeId")
+    @Query("select distinct new com.example.api.board.dto.response.FlavoredCategoryResponse(c.categoryId, c.categoryName, sc.subCategoryId, sc.subCategoryName) " +
+            "from FlavoredCategory fc join fc.category c " +
+            "join fc.subCategory sc " +
+            "where fc.employee.accountId = :employeeId")
     List<FlavoredCategoryResponse> findAllByEmployeeId(@Param("employeeId") long employeeId);
 
     @Modifying

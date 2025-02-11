@@ -7,7 +7,6 @@ import com.example.api.board.dto.update.UpdatePersonalInfoRequest;
 import com.example.api.board.dto.update.UpdatePreferredCategoriesRequest;
 import com.example.api.board.dto.update.UpdatePreferredDistrictsRequest;
 import com.example.api.board.service.BoardService;
-import com.example.api.board.service.CategoryService;
 import com.example.api.board.service.EmployeeService;
 import java.util.List;
 
