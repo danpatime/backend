@@ -2,6 +2,7 @@ package com.example.api.board.service;
 
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.service.AccountService;
+import com.example.api.board.dto.request.AddIntroductionRequest;
 import com.example.api.board.dto.request.AddPossibleTimeCommand;
 import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.board.dto.update.UpdateExternalCareerRequest;
@@ -185,5 +186,20 @@ public class BoardService {
                     return new ExternalCareer(user, subCategory, updateRequest.workCount());
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public IntroductionResponse getIntroduction(final EmployeeIdRequest employeeIdRequest) {
+        return new IntroductionResponse(accountRepository.findIntroductionByAccountId(employeeIdRequest.employeeId()));
+    }
+
+    @Transactional
+    public IntroductionResponse postIntroduction(
+            final EmployeeIdRequest employeeIdRequest,
+            final AddIntroductionRequest request) {
+        Account user = accountRepository.findById(employeeIdRequest.employeeId()).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        user.setIntroduction(request.introduction());
+        accountRepository.save(user);
+        return new IntroductionResponse(request.introduction());
     }
 }

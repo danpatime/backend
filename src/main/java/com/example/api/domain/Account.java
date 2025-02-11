@@ -45,6 +45,12 @@ public class Account extends BaseEntity {
     private int age;
     @Column(name = "ACCOUNT_PROFILE_IMAGE")
     private String profileImage;
+    @Column(name = "ACCOUNT_BIRTHDATE")
+    private String birthdate;
+    @Column(name = "ACCOUNT_CALLTIME")
+    private String callTime;
+    @Column(name = "ACCOUNT_INTRODUCTION")
+    private String introduction;
     @Column(name = "ACCOUNT_STAR_RATING", columnDefinition = "FLOAT DEFAULT 0.0f")
     private Float starPoint;
     @Column(name = "ACCOUNT_WORK_COUNT", columnDefinition = "INTEGER DEFAULT 0")
@@ -122,6 +128,8 @@ public class Account extends BaseEntity {
         this.phoneNumber = request.phoneNumber();
         this.email = request.email();
         this.nickname = request.nickname();
+        this.birthdate = request.birthdate();
+        this.callTime = request.callTime();
     }
 
     public void setDeleted(boolean deleted){
@@ -134,5 +142,9 @@ public class Account extends BaseEntity {
 
     public void setAccountId(long l) {
         this.accountId = l;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

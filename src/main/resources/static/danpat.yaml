@@ -411,6 +411,9 @@ paths:
                   sex: "남"
                   email: "chulsoo@example.com"
                   phoneNumber: "010-1234-5678"
+                  profile: "https://danpat.s3.ap-northeast-2.amazonaws.com/user-uploads/1/profile.png"
+                  birthdate: "yyyy.mm.dd"
+                  callTime: "hh:mm~hh:mm"
                   starPoint: 4.5
                   workCount: 100
     post:
@@ -526,6 +529,41 @@ paths:
                   businessName: "김태영닷컴"
                   startTime: "2024-02-15 12:00:00"
                   endTime: "2024-02-15 14:00:00"
+  /api/v1/possible-board/introduction:
+    get:
+      tags:
+        - BoardController
+      operationId: getIntroduction
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+              example:
+                introduction : "자기소개"
+    post:
+      tags:
+        - BoardController
+      operationId: postIntroduction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              introduction: "자기소개"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+              example:
+                introduction: "자기소개"
   /api/v1/upload/profile:
     post:
       tags:
@@ -2373,6 +2411,17 @@ components:
         workCount:
           type: integer
           format: int32
+    IntroductionRequest:
+      type: object
+      properties:
+        introduction:
+          type: string
+    AddIntroductionResponse:
+      type: object
+      properties:
+        introduction:
+          type: string
+
   securitySchemes:
     JWT_TOKEN:
       type: http

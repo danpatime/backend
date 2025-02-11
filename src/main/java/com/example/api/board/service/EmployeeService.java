@@ -43,7 +43,9 @@ public class EmployeeService {
                 personalInfo.age(),
                 personalInfo.phoneNumber(),
                 personalInfo.email(),
-                personalInfo.nickname()
+                personalInfo.nickname(),
+                personalInfo.birthdate(),
+                personalInfo.callTime()
         );
     }
 }
