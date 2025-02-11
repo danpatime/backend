@@ -4,6 +4,8 @@ import com.example.api.account.repository.AccountRepository;
 import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.dto.*;
 import com.example.api.auth.repository.TokenRepository;
+import com.example.api.aws.dto.OldKeyRequest;
+import com.example.api.aws.service.S3Service;
 import com.example.api.domain.Account;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
@@ -27,6 +29,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
     private final JwtProperties jwtProperties;
+    private final S3Service s3Service;
 
     @Transactional
     public LoginSuccessResponse login(@Validated final LoginRequest request) {
@@ -57,10 +60,13 @@ public class AuthService {
         Cookie refreshTokenCookie = genreateRefreshTokenCookie(refreshToken);
 
         String role = user.getRoles().stream().findFirst().get().getAuthority();    // 회원가입 시에 무조건 역할이 들어가기에 바로 get으로 꺼냄
+        String profile = s3Service.getImage(new OldKeyRequest(user.getProfileImage()));
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("accessToken", accessToken);
         responseBody.put("userId", String.valueOf(user.getAccountId()));
         responseBody.put("userRole", role);
+        responseBody.put("name", user.getName());
+        responseBody.put("profile", profile);
         return new LoginSuccessResponse(refreshTokenCookie, responseBody);
     }
 
