@@ -918,8 +918,8 @@ paths:
                   address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                   detailAddress: "101호"
                 categoryInfos:
-                  - categoryId: 8
-                    categoryName: "IT•인터넷"
+                  - subCategoryId: 1002
+                    subCategoryName: "일반음식점"
     put:
       tags:
       - BusinessController
@@ -936,7 +936,7 @@ paths:
                 zipcode: "12093"
                 address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                 detailAddress: "101호"
-              categoryInfos:
+              subCategoryIds:
               - 8
         required: true
       responses:
@@ -965,7 +965,7 @@ paths:
                 zipcode: "12093"
                 address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                 detailAddress: "101호"
-              categoryIds:
+              subCategoryIds:
                 - 8
               representationName: "김태영"
         required: true
@@ -1065,8 +1065,6 @@ paths:
       - name: reviewId
         in: path
         required: true
-        schema:
-          $ref: "#/components/schemas/Review"
       requestBody:
         content:
           application/json:

@@ -23,11 +23,11 @@ public class BusinessCategory extends BaseEntity{
     private Business business;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Category category;
+    @JoinColumn(name = "SUB_CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private SubCategory subCategory;
 
-    public BusinessCategory(Business business, Category category) {
+    public BusinessCategory(Business business, SubCategory subCategory) {
         this.business = business;
-        this.category = category;
+        this.subCategory = subCategory;
     }
 }

@@ -11,7 +11,7 @@ public record AddBusinessCommand(
         String businessRegistrationNumber,
         String businessOpenDate,
         BusinessLocation location,
-        List<Long> categoryIds,
+        List<Long> subCategoryIds,
         String representationName
 
 ) {
