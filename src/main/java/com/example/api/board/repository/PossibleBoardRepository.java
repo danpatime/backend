@@ -22,7 +22,10 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     Integer deleteDuplicatedWorkTimeIncluded(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
                                           @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 
-    @Query("select new com.example.api.board.dto.response.WorkHourResponse(p.possibleId, p.startTime, p.endTime) " +
-            "from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime >= :currentMonth")
-    List<WorkHourResponse> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
+    @Query("select p from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime >= :currentMonth")
+    List<PossibleBoard> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
+
+    @Query("select p from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime <= :endDateTime and p.endTime >= :startDateTime")
+    PossibleBoard findMatchingWorkHours(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
+                                        @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 }

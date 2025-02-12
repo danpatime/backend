@@ -4,6 +4,7 @@ import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.service.AccountService;
 import com.example.api.board.dto.request.AddIntroductionRequest;
 import com.example.api.board.dto.request.AddPossibleTimeCommand;
+import com.example.api.board.dto.request.ContractDetailRequest;
 import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.board.dto.update.UpdateExternalCareerRequest;
 import com.example.api.board.dto.update.UpdatePreferredCategoriesRequest;
@@ -11,6 +12,7 @@ import com.example.api.board.dto.response.*;
 import com.example.api.board.dto.update.UpdatePreferredDistrictsRequest;
 import com.example.api.board.entitiy.PossibleMapper;
 import com.example.api.board.entitiy.PossibleTime;
+import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.*;
 import com.example.api.board.repository.PossibleBoardRepository;
@@ -29,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +46,7 @@ public class BoardService {
     private final AccountService accountService;
     private final PossibleMapper possibleMapper;
     private final SubCategoryRepository subCategoryRepository;
+    private final ContractRepository contractRepository;
 
     @Transactional(readOnly = true)
     public PersonalInfoResponse getPersonalInfoResponse(final EmployeeIdRequest employeeIdRequest){
@@ -66,7 +70,12 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<WorkHourResponse> getWorkHours(final EmployeeIdRequest employeeIdRequest)  {
-        return possibleBoardRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
+        List<PossibleBoard> boardScheduleFromCurrentMonth = possibleBoardRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
+        List<ContractDetailRequest> contractScheduleFromCurrentMonth = contractRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
+        List<WorkHourResponse> possibleBoardResponses = possibleMapper.toWorkResponseFromPossibleBoard(boardScheduleFromCurrentMonth);
+        List<WorkHourResponse> contractResponses = possibleMapper.toWorkResponseFromContract(contractScheduleFromCurrentMonth);
+        return Stream.concat(possibleBoardResponses.stream(), contractResponses.stream())
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
