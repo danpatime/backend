@@ -9,6 +9,8 @@ import com.example.api.domain.PossibleBoard;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +28,6 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     List<PossibleBoard> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
 
     @Query("select p from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime <= :endDateTime and p.endTime >= :startDateTime")
-    PossibleBoard findMatchingWorkHours(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
-                                        @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
+    Optional<PossibleBoard> findMatchingWorkHours(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
+                                                  @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 }
