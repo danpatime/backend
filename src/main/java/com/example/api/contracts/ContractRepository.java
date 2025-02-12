@@ -1,5 +1,6 @@
 package com.example.api.contracts;
 
+import com.example.api.board.dto.request.ContractDetailRequest;
 import com.example.api.contracts.dto.BusinessInfoDTO;
 import com.example.api.contracts.dto.ContractScheduleResponse;
 import com.example.api.contracts.dto.EmployeeInfoDTO;
@@ -7,6 +8,8 @@ import com.example.api.domain.Contract;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import com.example.api.domain.PossibleBoard;
 import com.example.api.review.dto.ReviewAvailableResponse;
 import com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -60,4 +63,11 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join oe.business b " +
             "where c.contractId = :contractId")
     OfferEmploymentDetailRequest findContractByContractId(@Param("contractId") Long contractId);
+
+    @Query("select new com.example.api.board.dto.request.ContractDetailRequest(c.contractId, b.businessName, c.contractStartTime, c.contractEndTime) " +
+            "from Contract c " +
+            "Join OfferEmployment oe on c.contractId = oe.suggestId " +
+            "Join oe.business b on oe.business.businessId = b.businessId " +
+            "where oe.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
+    List<ContractDetailRequest> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
 }

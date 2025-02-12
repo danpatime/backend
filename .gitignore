@@ -38,3 +38,6 @@ out/
 
 ### .env ###
 .env
+
+### local swagger file ###
+src/main/resources/static/danpat-local.yaml

@@ -6,9 +6,15 @@ import java.time.LocalDateTime;
 
 public record WorkHourResponse(
         Long id,
+        String title,
         @EqualsAndHashCode.Include
         LocalDateTime startTime,
         @EqualsAndHashCode.Include
-        LocalDateTime endTime
+        LocalDateTime endTime,
+        Status status
 ) {
+        public enum Status {
+                COMPLETED,
+                AVAILABLE
+        }
 }
