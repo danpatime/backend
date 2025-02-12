@@ -52,7 +52,7 @@ public class ContractService {
         PossibleBoard firstSplitWorkHour = new PossibleBoard(user, matchingWorkHours.getStartTime(), contract.getContractEndTime());
         PossibleBoard secondSplitWorkHour = new PossibleBoard(user, contract.getContractStartTime(), matchingWorkHours.getEndTime());
 
-        possibleBoardRepository.delete(matchingWorkHours);.log
+        possibleBoardRepository.delete(matchingWorkHours);
         possibleBoardRepository.saveAll(List.of(firstSplitWorkHour, secondSplitWorkHour));
     }
 
