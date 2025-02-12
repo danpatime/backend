@@ -305,8 +305,12 @@ paths:
               example:
                 - categoryId: 8
                   categoryName: "IT•인터넷"
+                  subCategoryId: 8002
+                  subCategoryName: "웹/모바일기획"
                 - categoryId: 9
                   categoryName: "교육•강사"
+                  subCategoryId: 8002
+                  subCategoryName: "입시/보습학원"
     post:
       tags:
         - BoardController
@@ -318,8 +322,10 @@ paths:
               $ref: "#/components/schemas/UpdatePreferredCategoriesRequest"
             example:
               categoryIds:
-                - 8
-                - 9
+                - categoryId: 8
+                  subCategoryId: 8002
+                - categoryId: 9
+                  subCategoryId: 9002
         required: true
       responses:
         "200":
@@ -351,11 +357,15 @@ paths:
                   $ref: "#/components/schemas/WorkHourResponse"
               example:
                 - id: 101
+                  title: null
                   startTime: "2024-02-01T09:00:00"
                   endTime: "2024-02-01T18:00:00"
+                  status: "AVAILABLE"
                 - id: 102
+                  title: "김태영닷컴"
                   startTime: "2024-02-02T10:00:00"
                   endTime: "2024-02-02T19:00:00"
+                  status: "COMPLETED"
     post:
       tags:
         - BoardController

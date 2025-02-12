@@ -11,6 +11,7 @@ import com.example.api.domain.Contract;
 
 import java.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.api.domain.PossibleBoard;
@@ -46,15 +47,39 @@ public class ContractService {
         updateAvailableWorkHours(acceptContractCommand, contract);
     }
 
-    private void updateAvailableWorkHours(AcceptContractCommand acceptContractCommand, Contract contract) {
-        Account user = accountRepository.findById(acceptContractCommand.contractId()).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
-        PossibleBoard matchingWorkHours = possibleBoardRepository.findMatchingWorkHours(contract.getContractStartTime(), contract.getContractEndTime());
-        PossibleBoard firstSplitWorkHour = new PossibleBoard(user, matchingWorkHours.getStartTime(), contract.getContractEndTime());
-        PossibleBoard secondSplitWorkHour = new PossibleBoard(user, contract.getContractStartTime(), matchingWorkHours.getEndTime());
+    public void updateAvailableWorkHours(AcceptContractCommand acceptContractCommand, Contract contract) {
+        Account user = accountRepository.findById(acceptContractCommand.contractId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
 
+        PossibleBoard matchingWorkHours = possibleBoardRepository.findMatchingWorkHours(contract.getContractStartTime(), contract.getContractEndTime())
+                .orElseThrow(() -> new BusinessException(ErrorCode.POSSIBLE_TIME_NULL_EXCEPTION));
+
+        // 예약 시간이 기존 근무 가능 시간과 완전히 일치하면 삭제 후 종료
+        if (matchingWorkHours.getStartTime().equals(contract.getContractStartTime()) &&
+                matchingWorkHours.getEndTime().equals(contract.getContractEndTime())) {
+            possibleBoardRepository.delete(matchingWorkHours);
+            return;
+        }
+
+        List<PossibleBoard> updatedWorkHours = new ArrayList<>();
+
+        // 앞쪽 시간이 남아 있다면 추가
+        if (!matchingWorkHours.getStartTime().equals(contract.getContractStartTime())) {
+            updatedWorkHours.add(new PossibleBoard(user, matchingWorkHours.getStartTime(), contract.getContractStartTime()));
+        }
+
+        // 뒷쪽 시간이 남아 있다면 추가
+        if (!matchingWorkHours.getEndTime().equals(contract.getContractEndTime())) {
+            updatedWorkHours.add(new PossibleBoard(user, contract.getContractEndTime(), matchingWorkHours.getEndTime()));
+        }
+
+        // 기존 근무 가능 시간 삭제 후, 새로운 시간 저장
         possibleBoardRepository.delete(matchingWorkHours);
-        possibleBoardRepository.saveAll(List.of(firstSplitWorkHour, secondSplitWorkHour));
+        if (!updatedWorkHours.isEmpty()) {
+            possibleBoardRepository.saveAll(updatedWorkHours);
+        }
     }
+
 
     private Contract loadContract(final Long contractId) {
         return contractRepository.findById(contractId)
