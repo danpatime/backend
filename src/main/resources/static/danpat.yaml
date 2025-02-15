@@ -292,10 +292,12 @@ paths:
                 items:
                   $ref: "#/components/schemas/FlavoredDistrictResponse"
                 example:
-                  - districtId: 1
-                    districtName: "서울 강남구"
-                  - districtId: 5
-                    districtName: "대구 남구"
+                  - sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내동"
+                  - sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내면"
     post:
       tags:
         - BoardController
@@ -307,6 +309,14 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdatePreferredDistrictsRequest"
+            example:
+              locations:
+                - sido: "경기"
+                  sigugun: "남양주시"
+                  dong: "별내동"
+                - sido: "경기"
+                  sigugun: "남양주시"
+                  dong: "별내면"
         required: true
       responses:
         "200":
@@ -319,10 +329,12 @@ paths:
                   $ref: "#/components/schemas/FlavoredDistrictResponse"
               example:
                 example:
-                  - districtId: 1
-                    districtName: "서울 강남구"
-                  - districtId: 5
-                    districtName: "대구 남구"
+                  - sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내동"
+                  - sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내면"
   /api/v1/possible-board/work-preferences/category:
     get:
       tags:
@@ -460,7 +472,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/PersonalInfoResponse"
               example:
-                - name: "김태영"
+                  name: "김태영"
                   nickname: "김태일"
                   age: 25
                   sex: "남"
@@ -471,6 +483,13 @@ paths:
                   callTime: "hh:mm~hh:mm"
                   starPoint: 4.5
                   workCount: 100
+                  location:
+                    zipcode: "12345"
+                    address: "주소"
+                    detailAddress: "상세 주소"
+                    sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내면"
     post:
       tags:
         - BoardController
@@ -489,6 +508,15 @@ paths:
               sex: "남"
               email: "chulsoo@example.com"
               phoneNumber: "010-1234-5678"
+              birthdate: "yyyy:mm:dd"
+              callTime: "09:00 ~18:00"
+              location:
+                  zipcode: "12345"
+                  address: "주소"
+                  detailAddress: "상세 주소"
+                  sido: "경기"
+                  sigugun: "남양주시"
+                  dong: "별내면"
         required: true
       responses:
         "200":
@@ -498,14 +526,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/PersonalInfoResponse"
               example:
-                - name: "김태영"
-                  nickname: "김태일"
-                  age: 25
-                  sex: "남"
-                  email: "chulsoo@example.com"
-                  phoneNumber: "010-1234-5678"
-                  starPoint: 4.5
-                  workCount: 100
+                name: "김태영"
+                nickname: "김태일"
+                age: 25
+                sex: "남"
+                email: "chulsoo@example.com"
+                phoneNumber: "010-1234-5678"
+                profile: "https://danpat.s3.ap-northeast-2.amazonaws.com/user-uploads/1/profile.png"
+                birthdate: "yyyy.mm.dd"
+                callTime: "hh:mm~hh:mm"
+                starPoint: 4.5
+                workCount: 100
+                location:
+                  zipcode: "12345"
+                  address: "주소"
+                  detailAddress: "상세 주소"
+                  sido: "경기"
+                  sigugun: "남양주시"
+                  dong: "별내면"
   /api/v1/possible-board/external-career:
     get:
       tags:
