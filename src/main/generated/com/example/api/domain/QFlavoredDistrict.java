@@ -27,11 +27,11 @@ public class QFlavoredDistrict extends EntityPathBase<FlavoredDistrict> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final QCityDistrict district;
-
     public final QAccount employee;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final QLocation location;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
@@ -54,8 +54,8 @@ public class QFlavoredDistrict extends EntityPathBase<FlavoredDistrict> {
 
     public QFlavoredDistrict(Class<? extends FlavoredDistrict> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.district = inits.isInitialized("district") ? new QCityDistrict(forProperty("district")) : null;
-        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
+        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee"), inits.get("employee")) : null;
+        this.location = inits.isInitialized("location") ? new QLocation(forProperty("location")) : null;
     }
 
 }

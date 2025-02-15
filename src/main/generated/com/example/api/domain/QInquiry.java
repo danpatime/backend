@@ -64,7 +64,7 @@ public class QInquiry extends EntityPathBase<Inquiry> {
 
     public QInquiry(Class<? extends Inquiry> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.createdBy = inits.isInitialized("createdBy") ? new QAccount(forProperty("createdBy")) : null;
+        this.createdBy = inits.isInitialized("createdBy") ? new QAccount(forProperty("createdBy"), inits.get("createdBy")) : null;
     }
 
 }

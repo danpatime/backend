@@ -39,7 +39,6 @@ public class BoardController {
 
     @GetMapping("/work-preferences/districts")
     public ResponseEntity<List<FlavoredDistrictResponse>> getPreferredDistricts(@AuthenticationPrincipal final Long employeeId){
-        log.info("employee id: {}", employeeId);
         return ResponseEntity.ok(boardService.getPreferredDistricts(new EmployeeIdRequest(employeeId)));
     }
 

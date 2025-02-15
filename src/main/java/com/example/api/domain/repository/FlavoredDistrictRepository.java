@@ -10,23 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface FlavoredDistrictRepository extends JpaRepository<FlavoredDistrict, Long> {
-    @Query("select new com.example.api.board.dto.response.FlavoredDistrictResponse(fd.district.id, fd.district.district) " +
+    @Query("select new com.example.api.board.dto.response.FlavoredDistrictResponse(fd.location.sido, fd.location.sigugun, fd.location.dong) " +
     "from FlavoredDistrict fd where fd.employee.accountId = :employeeId")
     List<FlavoredDistrictResponse> findAllByEmployeeId(Long employeeId);
 
     @Modifying
-    @Query("DELETE FROM FlavoredDistrict p WHERE p.id NOT IN :ids AND p.employee.accountId = :employeeId")
-    void deleteByNotInIds(@Param("employeeId") Long employeeId, @Param("ids") List<Long> ids);
-
-    @Modifying
-    @Query(value = "INSERT INTO FLAVORED_DISTRICT (CITY_DISTRICT_ID, EMPLOYEE_ID) " +
-            "SELECT temp.district_id, :accountId " +
-            "FROM JSON_TABLE(:districtIds, '$[*]' COLUMNS (district_id BIGINT PATH '$')) AS temp " +
-            "WHERE NOT EXISTS (" +
-            "    SELECT 1 FROM FLAVORED_DISTRICT " +
-            "    WHERE FLAVORED_DISTRICT.CITY_DISTRICT_ID = temp.district_id " +
-            "    AND FLAVORED_DISTRICT.EMPLOYEE_ID = :accountId" +
-            ")",
-            nativeQuery = true)
-    void saveDistrictIds(@Param("accountId") Long accountId, @Param("districtIds") String districtIds);
+    @Query("DELETE FROM FlavoredDistrict p WHERE p.employee.accountId = :employeeId")
+    void deleteAllByEmployeeId(@Param("employeeId") Long employeeId);
 }

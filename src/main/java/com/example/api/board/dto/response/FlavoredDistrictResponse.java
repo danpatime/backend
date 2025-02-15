@@ -1,7 +1,8 @@
 package com.example.api.board.dto.response;
 
 public record FlavoredDistrictResponse(
-        Long districtId,
-        String districtName
+        String sido,
+        String sigugun,
+        String dong
 ) {
 }

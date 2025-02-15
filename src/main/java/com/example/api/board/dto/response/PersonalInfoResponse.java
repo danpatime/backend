@@ -1,6 +1,7 @@
 package com.example.api.board.dto.response;
 
 import com.example.api.domain.Account;
+import com.example.api.domain.Location;
 
 public record PersonalInfoResponse(
         String name,
@@ -13,7 +14,8 @@ public record PersonalInfoResponse(
         Integer workCount,
         String profile,
         String birthdate,
-        String callTime
+        String callTime,
+        Location location
 ) {
     public static PersonalInfoResponse of(Account user){
         return new PersonalInfoResponse(
@@ -27,7 +29,9 @@ public record PersonalInfoResponse(
                 user.getWorkCount(),
                 user.getProfileImage(),
                 user.getBirthdate(),
-                user.getCallTime()
+                user.getCallTime(),
+                user.getLocation()
         );
     }
+
 }

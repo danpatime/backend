@@ -1,6 +1,6 @@
 package com.example.api.offeremployment;
 
-import com.example.api.business.domain.BusinessLocation;
+import com.example.api.domain.Location;
 import com.example.api.account.entity.Nationality;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
@@ -59,7 +59,7 @@ class OfferEmploymentServiceTest {
 
         Business business = new Business(
                 "My Coffee Shop",
-                new BusinessLocation(),
+                new Location(),
                 "Bob",
                 employer,
                 LocalDate.of(2020, 1, 1),

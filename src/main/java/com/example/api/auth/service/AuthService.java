@@ -11,11 +11,11 @@ import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
 import jakarta.servlet.http.Cookie;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.HashMap;

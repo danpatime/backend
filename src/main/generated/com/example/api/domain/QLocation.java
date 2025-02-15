@@ -1,4 +1,4 @@
-package com.example.api.business.domain;
+package com.example.api.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,16 +10,16 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QBusinessLocation is a Querydsl query type for BusinessLocation
+ * QLocation is a Querydsl query type for Location
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QBusinessLocation extends EntityPathBase<BusinessLocation> {
+public class QLocation extends EntityPathBase<Location> {
 
-    private static final long serialVersionUID = 1235580438L;
+    private static final long serialVersionUID = 400775290L;
 
-    public static final QBusinessLocation businessLocation = new QBusinessLocation("businessLocation");
+    public static final QLocation location = new QLocation("location");
 
-    public final com.example.api.domain.QBaseEntity _super = new com.example.api.domain.QBaseEntity(this);
+    public final QBaseEntity _super = new QBaseEntity(this);
 
     public final StringPath address = createString("address");
 
@@ -28,23 +28,29 @@ public class QBusinessLocation extends EntityPathBase<BusinessLocation> {
 
     public final StringPath detailAddress = createString("detailAddress");
 
+    public final StringPath dong = createString("dong");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath sido = createString("sido");
+
+    public final StringPath sigugun = createString("sigugun");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
 
     public final StringPath zipcode = createString("zipcode");
 
-    public QBusinessLocation(String variable) {
-        super(BusinessLocation.class, forVariable(variable));
+    public QLocation(String variable) {
+        super(Location.class, forVariable(variable));
     }
 
-    public QBusinessLocation(Path<? extends BusinessLocation> path) {
+    public QLocation(Path<? extends Location> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QBusinessLocation(PathMetadata metadata) {
-        super(BusinessLocation.class, metadata);
+    public QLocation(PathMetadata metadata) {
+        super(Location.class, metadata);
     }
 
 }

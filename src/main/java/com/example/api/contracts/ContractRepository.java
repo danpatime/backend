@@ -56,7 +56,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId") Long employeeId,
                                                                     @Param("currentMonth") LocalDateTime currentMonth);
 
-    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, c.contractStartTime, c.contractEndTime) " +
+    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, c.contractHourlyPay, c.contractStartTime, c.contractEndTime) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
             "join oe.employee e " +

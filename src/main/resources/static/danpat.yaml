@@ -12,6 +12,8 @@ paths:
     post:
       tags:
         - AccountController
+      summary: "사업자 번호 유효 확인"
+      description: "사업자 번호 유효 확인"
       operationId: verifyBusinessNumber
       requestBody:
         content:
@@ -38,6 +40,8 @@ paths:
     post:
       tags:
         - AccountController
+      summary: "사장 회원가입 요청"
+      description: "사장 회원가입 요청"
       operationId: signUpEmployer
       requestBody:
         content:
@@ -56,6 +60,9 @@ paths:
                 zipcode: "12093"
                 address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                 detailAddress: "101호"
+                sido: "경기"
+                sigugun: "남양주시"
+                dong: "별내동"
               nationality: "KOREAN"
               role: "EMPLOYER"
               phoneNumber: "010-1234-1234"
@@ -72,6 +79,8 @@ paths:
     post:
       tags:
         - AccountController
+      summary: "이메일 확인용 코드 전송 요청"
+      description: "이메일 확인용 코드 전송 요청"
       operationId: sendEmailCode
       requestBody:
         content:
@@ -93,6 +102,8 @@ paths:
     post:
       tags:
         - AccountController
+      summary: "이메일 확인"
+      description: "이메일 확인"
       operationId: verifyEmail
       requestBody:
         content:
@@ -115,6 +126,8 @@ paths:
     post:
       tags:
         - AccountController
+      summary: "알바생 회원가입 요청"
+      description: "알바생 회원가입 요청"
       operationId: signUpEmployee
       requestBody:
         content:
@@ -131,6 +144,14 @@ paths:
               "role": "EMPLOYEE"
               "phoneNumber": "010-1234-1234"
               "emailReceivable": true
+              "location":
+                zipcode: 12345
+                address: "주소"
+                detailAddress: "상세주소"
+                sido: "경기"
+                sigugun: "남양주시"
+                dong: "별내동"
+
         required: true
       responses:
         "200":
@@ -144,6 +165,8 @@ paths:
     delete:
       tags:
         - AccountController
+      summary: "계정 삭제 요청"
+      description: "게정 삭제 요청"
       operationId: deleteAccount
       responses:
         "200":
@@ -158,6 +181,8 @@ paths:
       tags:
         - AuthController
       operationId: login
+      summary: "로그인 요청"
+      description: "로그인 요청"
       requestBody:
         content:
           application/json:
@@ -184,6 +209,8 @@ paths:
     post:
       tags:
         - AuthController
+      summary: "refreshToken으로 accessToken 재발급 요청"
+      description: "refreshToken으로 accessToken 재발급 요청"
       operationId: refresh
       requestBody:
         content:
@@ -210,6 +237,8 @@ paths:
     post:
       tags:
         - AuthController
+      summary: "로그아웃 요청"
+      description: "로그아웃 요청"
       operationId: logout
       responses:
         "200":
@@ -228,6 +257,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 이력서 공개 설정 변경 요청"
+      description: "알바생이 이력서 공개 설정 변경 요청"
       operationId: changeOpenStatus
       parameters:
         - name: open-status
@@ -248,6 +279,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 선호 근무지 받기 요청"
+      description: "알바생이 선호 근무지 받기 요청"
       operationId: getPreferredDistricts
       responses:
         "200":
@@ -266,6 +299,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 선호 근무지 추가 요청"
+      description: "알바생이 선호 근무지 추가 요청"
       operationId: updatePreferredDistricts
       requestBody:
         content:
@@ -292,6 +327,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 선호 카테고리 받기 요청"
+      description: "알바생이 선호 카테고리 빋기 요청"
       operationId: getPreferredCategories
       responses:
         "200":
@@ -314,6 +351,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 선호 카테고리 업데이트 요청"
+      description: "알바생이 선호 카테고리 업데이트 요청"
       operationId: updatePreferredCategories
       requestBody:
         content:
@@ -345,6 +384,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 근무 가능 시간 받기 요청"
+      description: "알바생이 근무 가능 시간 받기 요청"
       operationId: getWorkHours
       responses:
         "200":
@@ -369,6 +410,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 근무 가능 시간 추가 요청"
+      description: "알바생이 근무 가능 시간 추가 요청"
       operationId: updatePossibleTimes
       parameters:
         - name: requestMemberId
@@ -406,6 +449,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 개인정보 받기 요청"
+      description: "알바생이 개인정보 받기 요청"
       operationId: getPersonalInfo
       responses:
         "200":
@@ -429,6 +474,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 개인정보 적기 요청"
+      description: "알바생이 개인정보 적기 요청"
       operationId: updatePersonalInfo
       requestBody:
         content:
@@ -436,12 +483,12 @@ paths:
             schema:
               $ref: "#/components/schemas/UpdatePersonalInfoRequest"
             example:
-                name: "김태영"
-                nickname: "김태일"
-                age: 25
-                sex: "남"
-                email: "chulsoo@example.com"
-                phoneNumber: "010-1234-5678"
+              name: "김태영"
+              nickname: "김태일"
+              age: 25
+              sex: "남"
+              email: "chulsoo@example.com"
+              phoneNumber: "010-1234-5678"
         required: true
       responses:
         "200":
@@ -463,6 +510,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 외부경력 받기 요청"
+      description: "알바생이 외부경력 받기 요청"
       operationId: getExternalCareers
       responses:
         "200":
@@ -487,6 +536,8 @@ paths:
     post:
       tags:
         - BoardController
+      summary: "알바생이 외부경력 업데이트 요청"
+      description: "알바생이 외부경력 업데이트 요청"
       operationId: updateExternalCareers
       requestBody:
         content:
@@ -524,6 +575,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 내부 경력 받기 요청"
+      description: "알바생이 내부 경력 받기 요청"
       operationId: getInternalCareers
       responses:
         "200":
@@ -543,6 +596,8 @@ paths:
     get:
       tags:
         - BoardController
+      summary: "알바생이 자기소개글 받기 요청"
+      description: "알바생이 자기소개글 받기 요청"
       operationId: getIntroduction
       responses:
         "200":
@@ -552,10 +607,12 @@ paths:
               schema:
                 type: object
               example:
-                introduction : "자기소개"
+                introduction: "자기소개"
     post:
       tags:
         - BoardController
+      summary: "알바생이 자기소개글 적기 요청"
+      description: "알바생이 자기소개글 적기 요청"
       operationId: postIntroduction
       requestBody:
         content:
@@ -605,6 +662,8 @@ paths:
     post:
       tags:
         - OfferEmploymentController
+      summary: "사장님이 알바생에게 제안 요청하기"
+      description: "사장님이 알바생에게 제안 요청하기"
       operationId: sendOfferEmployment
       requestBody:
         content:
@@ -633,6 +692,8 @@ paths:
     post:
       tags:
         - OfferEmploymentController
+      summary: "알바 종료 요청하기"
+      description: "알바 종료 요청하기"
       operationId: completeOfferEmployment
       requestBody:
         content:
@@ -654,103 +715,110 @@ paths:
                 success: true
                 message: "성공적으로 종료되었습니다."
   /api/v1/contracts/suggests/chatroom:
-      post:
-        tags:
-          - SuggestController
-        operationId: createChatRoom
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AcceptSuggestCommand"
-              example:
-                suggestId: 1
-        responses:
-          "200":
-            description: OK
-            content:
-              '*/*':
-                schema:
-                  type: string
-                example: "성공적으로 채팅방을 생성하였습니다."
-  /api/v1/contracts/suggests/{suggestId}/accept:
-      post:
-        tags:
+    post:
+      tags:
         - SuggestController
-        operationId: acceptContractContact
-        parameters:
+      summary: "채팅방 생성 요청하기"
+      description: "채팅방 생성 요청하기"
+      operationId: createChatRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcceptSuggestCommand"
+            example:
+              suggestId: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example: "성공적으로 채팅방을 생성하였습니다."
+  /api/v1/contracts/suggests/{suggestId}/accept:
+    post:
+      tags:
+        - SuggestController
+      summary: "알바생이 제안 수락"
+      description: "알바생이 제안 수락"
+      operationId: acceptContractContact
+      parameters:
         - name: suggestId
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        responses:
-          "200":
-            description: OK
-            content:
-              '*/*':
-                schema:
-                  type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/v1/employment-suggests/status/{businessId}:
-      get:
-        tags:
+    get:
+      tags:
         - SuggestController
-        operationId: getSuggestStatus
-        parameters:
+      summary: "사장 마이페이지에서 특정 가게 체결 현황"
+      description: "사장 마이페이지에서 특정 가게 체결 현황"
+      operationId: getSuggestStatus
+      parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        responses:
-          "200":
-            description: OK
-            content:
-              '*/*':
-                schema:
-                  type: string
-                example:
-                  - status: "대기 중"
-                    name: "알바생"
-                    businessName: "김태영닷컴"
-                    workTime: "2024.02.20 12:00~14:00"
-  /api/v1/contracts/employment-suggests:
-      get:
-        tags:
-        - SuggestController
-        operationId: getAllSuggest
-        parameters:
-        - name: employeeId
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
-        responses:
-          "200":
-            description: OK
-            content:
-              '*/*':
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/SuggestedBusinessResponse"
-                example:
-                  - businessId: 1
-                    suggestStartDateTime: "2024-02-01T09:00:00"
-                    suggestEndDateTime: "2024-02-01T11:00:00"
-                    suggestPartTimePayment: 10000
-                    suggestChecked: 1
-                    suggestAccepted: 0
-                  - businessId: 2
-                    suggestStartDateTime: "2024-02-01T09:00:00"
-                    suggestEndDateTime: "2024-02-01T11:00:00"
-                    suggestPartTimePayment: 10000
-                    suggestChecked: 1
-                    suggestAccepted: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example:
+                - status: "대기 중"
+                  name: "알바생"
+                  hourlyPayment: 12000
+                  businessName: "김태영닷컴"
+                  workTime: "2024.02.20 12:00~14:00"
+#  /api/v1/contracts/employment-suggests:
+#    get:
+#      tags:
+#        - SuggestController
+#      operationId: getAllSuggest
+#      parameters:
+#        - name: employeeId
+#          in: query
+#          required: true
+#          schema:
+#            type: integer
+#            format: int64
+#      responses:
+#        "200":
+#          description: OK
+#          content:
+#            '*/*':
+#              schema:
+#                type: array
+#                items:
+#                  $ref: "#/components/schemas/SuggestedBusinessResponse"
+#              example:
+#                - businessId: 1
+#                  suggestStartDateTime: "2024-02-01T09:00:00"
+#                  suggestEndDateTime: "2024-02-01T11:00:00"
+#                  suggestPartTimePayment: 10000
+#                  suggestChecked: 1
+#                  suggestAccepted: 0
+#                - businessId: 2
+#                  suggestStartDateTime: "2024-02-01T09:00:00"
+#                  suggestEndDateTime: "2024-02-01T11:00:00"
+#                  suggestPartTimePayment: 10000
+#                  suggestChecked: 1
+#                  suggestAccepted: 1
   /api/v1/support/announcements/{announcementId}:
     get:
       tags:
@@ -780,15 +848,15 @@ paths:
 
     put:
       tags:
-      - announcement-controller
+        - announcement-controller
       operationId: updateAnnouncement
       parameters:
-      - name: announcementId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: announcementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -814,30 +882,32 @@ paths:
                 viewCount: 200
     delete:
       tags:
-      - announcement-controller
+        - announcement-controller
       operationId: deleteAnnouncement
       parameters:
-      - name: announcementId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: announcementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: OK
   /api/v1/contracts/{contractId}:
     put:
       tags:
-      - ContractController
+        - ContractController
+      summary: "특정 계약 조건 변경하기"
+      description: "특정 계약 조건 변경하기"
       operationId: updateContractCondition
       parameters:
-      - name: contractId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -860,6 +930,8 @@ paths:
     post:
       tags:
         - ContractController
+      summary: "알바생이 특정 계약 수락하기(체결)"
+      description: "알바생이 특정 계약 수락하기(체결)"
       operationId: acceptContract
       parameters:
         - name: contractId
@@ -879,6 +951,8 @@ paths:
     get:
       tags:
         - ContractController
+      summary: "특정 계약 조건 보기(채팅방 생성 후)"
+      description: "특정 계약 조건 보기(채팅방 생성 후)"
       operationId: getContractInfo
       parameters:
         - name: contractId
@@ -915,6 +989,8 @@ paths:
     get:
       tags:
         - ContractController
+      summary: "알바생 마이페이지, 체결 현황 보기"
+      description: "알바생 마이페이지, 체결 현황 보기"
       operationId: getContractSchedule
       responses:
         "200":
@@ -938,16 +1014,18 @@ paths:
   /api/v1/business:
     get:
       tags:
-      - BusinessController
+        - BusinessController
+      summary: "내 가게 정보 보기"
+      description: "내 가게 정보 보기"
       operationId: getMyBusiness
       parameters:
-      - name: businessId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 1
+        - name: businessId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 1
       responses:
         "200":
           description: OK
@@ -968,9 +1046,13 @@ paths:
                 categoryInfos:
                   - subCategoryId: 1002
                     subCategoryName: "일반음식점"
+                email: "이메일"
+                phoneNumber: "전화번호"
     put:
       tags:
-      - BusinessController
+        - BusinessController
+      summary: "내 가게 정보 변경사항 전송하기"
+      description: "내 가게 정보 변경사항 전송하기"
       operationId: modifyMyBusiness
       requestBody:
         content:
@@ -984,8 +1066,14 @@ paths:
                 zipcode: "12093"
                 address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                 detailAddress: "101호"
+                sido: "경기"
+                sigugun: "남양주시"
+                dong: "별내동"
               subCategoryIds:
-              - 8
+                - 8002
+              representationName: "대표자명"
+              phoneNumber: "전화번호"
+              email: "이메일"
         required: true
       responses:
         "200":
@@ -997,7 +1085,9 @@ paths:
               example: "요청이 성공적으로 처리되었습니다."
     post:
       tags:
-      - BusinessController
+        - BusinessController
+      summary: "내 가게 정보 전송하기"
+      description: "내 가게 정보 전송하기"
       operationId: addBusiness
       requestBody:
         content:
@@ -1014,8 +1104,10 @@ paths:
                 address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                 detailAddress: "101호"
               subCategoryIds:
-                - 8
+                - 8002
               representationName: "김태영"
+              email: "이메일"
+              phoneNumber: "전화번호"
         required: true
       responses:
         "200":
@@ -1028,7 +1120,7 @@ paths:
   /api/v1/support/inquiry:
     post:
       tags:
-      - inquiry-controller
+        - inquiry-controller
       operationId: createInquiry
       requestBody:
         content:
@@ -1055,7 +1147,7 @@ paths:
   /api/v1/support/announcements:
     get:
       tags:
-      - announcement-controller
+        - announcement-controller
       operationId: getAnnouncements
       responses:
         "200":
@@ -1079,7 +1171,7 @@ paths:
                     viewCount: 89
     post:
       tags:
-      - announcement-controller
+        - announcement-controller
       operationId: createAnnouncement
       requestBody:
         content:
@@ -1107,12 +1199,12 @@ paths:
   /api/v1/info/my/reviews/{reviewId}/report:
     post:
       tags:
-      - ReviewReportController
+        - ReviewReportController
       operationId: reportReview
       parameters:
-      - name: reviewId
-        in: path
-        required: true
+        - name: reviewId
+          in: path
+          required: true
       requestBody:
         content:
           application/json:
@@ -1134,7 +1226,9 @@ paths:
   /api/v1/contracts/review:
     post:
       tags:
-      - ContractReviewController
+        - ContractReviewController
+      summary: "리뷰 작성하기"
+      description: "리뷰 작성하기"
       operationId: addReview
       requestBody:
         content:
@@ -1158,6 +1252,8 @@ paths:
     get:
       tags:
         - ContractReviewController
+      summary: "내가 쓴 리뷰 보기"
+      description: "내가 쓴 리뷰 보기"
       operationId: getMyReview
       responses:
         "200":
@@ -1176,7 +1272,7 @@ paths:
   /api/search/search:
     post:
       tags:
-      - search-controller
+        - search-controller
       operationId: searchAccounts
       requestBody:
         content:
@@ -1211,7 +1307,9 @@ paths:
   /api/v1/employer/favorites/employees:
     get:
       tags:
-      - EmployerController
+        - EmployerController
+      summary: "즐겨찾기한 알바생들 보기"
+      description: "즐겨찾기한 알바생들 보기"
       operationId: getLikeEmployee
       responses:
         "200":
@@ -1242,8 +1340,19 @@ paths:
                   flavoredCategoryList:
                     - categoryId: 1
                       categoryName: "외식•음료"
+                      subCategoryId: 1001
+                      subCategoryName: "전체"
                     - categoryId: 2
                       categoryName: "유통•판매"
+                      subCategoryId: 1001
+                      subCategoryName: "전체"
+                  flavoredDistrictList:
+                    - sido: "경기"
+                      sigugun: "남양주시"
+                      dong: "별내동"
+                    - sido: "경기"
+                      sigugun: "남양주시"
+                      dong: "별내동"
   /api/v1/employer/favorites/employee/{employeeId}:
     put:
       tags:
@@ -1292,14 +1401,16 @@ paths:
   /chat/summaries:
     get:
       tags:
-      - chat-controller
+        - chat-controller
+      summary: "채팅 미리보기 요약들"
+      description: "채팅 미리보기 요약들"
       operationId: getChatSummaries
       parameters:
-      - name: userIdRequest
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/UserIdRequest"
+        - name: userIdRequest
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/UserIdRequest"
       responses:
         "200":
           description: OK
@@ -1320,22 +1431,24 @@ paths:
   /chat/room/{roomId}/chats:
     get:
       tags:
-      - chat-controller
+        - chat-controller
+      summary: "채팅방 채팅 내용 불러오기"
+      description: "채팅방 채팅 내용 불러오기"
       operationId: getMessages
       parameters:
-      - name: roomId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 1
-      - name: lastChatId
-        in: query
-        required: false
-        schema:
-          type: string
-        example: "1"
+        - name: roomId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 1
+        - name: lastChatId
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "1"
       responses:
         "200":
           description: OK
@@ -1363,7 +1476,9 @@ paths:
   /businesses:
     get:
       tags:
-      - EmployerController
+        - EmployerController
+      summary: "내 사업체들 보기"
+      description: "내 사업체들 보기"
       operationId: getBusinessList
       responses:
         "200":
@@ -1373,16 +1488,24 @@ paths:
               schema:
                 type: object
               example:
-                - businessName: "김태영닷컴"
+                - businessId : 10
+                  businessName: "김태영닷컴"
                   businessLocation:
                     zipcode: "12093"
                     address: "경기도 남양주시 송산로339번길 25, 3층(별내동)"
                     detailAddress: "101호"
-                - businessName: "김태영법조타운"
+                    sido: "경기"
+                    sigugun: "남양주시"
+                    dong: "별내동"
+                - businessId : 11
+                  businessName: "김태영법조타운"
                   businessLocation:
                     zipcode: "404320"
                     address: "인천광역시 서구 원당동 인천검단택지개발지구 C5-1-1BL"
                     detailAddress: "101호"
+                    sido: "인천"
+                    sigugun: "서구"
+                    dong: "원당동"
   /api/v1/support/my-inquiries:
     get:
       tags:
@@ -1482,7 +1605,7 @@ paths:
       tags:
         - review-controller
       operationId: getReviewsByEmployee
-      parameters: []
+      parameters: [ ]
       responses:
         "200":
           description: OK
@@ -1562,6 +1685,47 @@ paths:
                     employeeName: "김철수"
                   - employeeId: 1002
                     employeeName: "이영희"
+  /api/v1/setting/email-consent:
+    get:
+      tags:
+        - SettingController
+      operationId: getEmailReceivable
+      summary: "이메일 수신 여부 설정값 받기"
+      description: "이메일 수신 여부 설정값 받기"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/EmailConsentResponse"
+                example:
+                  emailReceivable: true
+    post:
+      tags:
+        - SettingController
+      summary: "이메일 수신 여부 변경 api"
+      description: "이메일 수신 여부 변경 api"
+      parameters:
+        - name: emailReceivable
+          in: query
+          description: "이메일 수신 동의 여부 (true 또는 false)"
+          required: true
+          schema:
+            type: boolean
+            example: true
+      responses:
+        "200":
+          description: "이메일 수신 여부 변경"
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/EmailConsentResponse"
+                example:
+                  emailReceivable: true
+
 components:
   schemas:
     AnnouncementRequest:
@@ -2431,6 +2595,23 @@ components:
       properties:
         introduction:
           type: string
+    EmailConsentRequest:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        memberId:
+          type: integer
+          format: int64
+          example: 123
+
+    EmailConsentResponse:
+      type: object
+      properties:
+        receivable:
+          type: boolean
+          example: true
 
   securitySchemes:
     JWT_TOKEN:

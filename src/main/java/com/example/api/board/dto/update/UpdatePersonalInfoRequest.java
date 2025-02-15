@@ -1,5 +1,7 @@
 package com.example.api.board.dto.update;
 
+import com.example.api.domain.Location;
+
 public record UpdatePersonalInfoRequest(
         String name,
         String sex,
@@ -8,6 +10,7 @@ public record UpdatePersonalInfoRequest(
         String email,
         String nickname,
         String birthdate,
-        String callTime
+        String callTime,
+        Location location
 ) implements UpdateAccountConditionCommand{
 }

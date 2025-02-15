@@ -1,12 +1,10 @@
 package com.example.api.domain;
 
-import com.example.api.business.domain.BusinessLocation;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class Business extends BaseEntity {
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "BUSINESS_LOCATION", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private BusinessLocation location;
+    private Location location;
 
     @Column(name = "REPRESENTATION_NAME")
     private String representationName;
@@ -50,7 +48,7 @@ public class Business extends BaseEntity {
         this.businessName = businessName;
     }
 
-    public void setLocation(BusinessLocation location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -58,13 +56,13 @@ public class Business extends BaseEntity {
         this.representationName = representationName;
     }
 
-    public Business(String businessName, BusinessLocation location, String representationName) {
+    public Business(String businessName, Location location, String representationName) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;
     }
 
-    public Business(String businessName, BusinessLocation location, String representationName, Account employer, String openDate, String registrationNumber) {
+    public Business(String businessName, Location location, String representationName, Account employer, String openDate, String registrationNumber) {
         this.businessName = businessName;
         this.location = location;
         this.representationName = representationName;
@@ -73,7 +71,7 @@ public class Business extends BaseEntity {
         this.registrationNumber = registrationNumber;
     }
 
-    public Business(Account employer, String businessName, BusinessLocation location) {
+    public Business(Account employer, String businessName, Location location) {
         this.employer = employer;
         this.businessName = businessName;
         this.location = location;

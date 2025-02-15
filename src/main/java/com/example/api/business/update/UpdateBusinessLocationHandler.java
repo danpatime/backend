@@ -1,6 +1,6 @@
 package com.example.api.business.update;
 
-import com.example.api.business.domain.BusinessLocation;
+import com.example.api.domain.Location;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
 import java.util.Objects;
@@ -14,10 +14,13 @@ class UpdateBusinessLocationHandler implements BusinessUpdateHandler{
     @Override
     public void update(Business business, ModifyBusinessCommand command) {
         if (Objects.nonNull(command.location())) {
-            final BusinessLocation location = new BusinessLocation(
+            final Location location = new Location(
                     command.location().getZipcode(),
                     command.location().getAddress(),
-                    command.location().getDetailAddress());
+                    command.location().getDetailAddress(),
+                    command.location().getSido(),
+                    command.location().getSigugun(),
+                    command.location().getDong());
             business.setLocation(location);
         }
     }

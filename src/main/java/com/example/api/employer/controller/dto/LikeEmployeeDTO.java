@@ -2,6 +2,7 @@ package com.example.api.employer.controller.dto;
 
 import com.example.api.board.dto.response.ExternalCareerResponse;
 import com.example.api.board.dto.response.FlavoredCategoryResponse;
+import com.example.api.board.dto.response.FlavoredDistrictResponse;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,4 +24,5 @@ public class LikeEmployeeDTO {
     private long workCount;
     private List<ExternalCareerResponse> externalCareerList;
     private List<FlavoredCategoryResponse> flavoredCategoryList;
+    private List<FlavoredDistrictResponse> flavoredDistrictList;
 }
