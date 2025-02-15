@@ -1,6 +1,7 @@
 package com.example.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"createdDate", "updatedDate"})
 @Table(name = "LOCATION")
 public class Location extends BaseEntity {
     @Id

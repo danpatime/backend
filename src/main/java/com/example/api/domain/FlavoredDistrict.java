@@ -18,7 +18,7 @@ public class FlavoredDistrict extends BaseEntity {
     @Column(name = "FLAVORED_DISTRICT_ID")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "LOCATION_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Location location;
 
