@@ -2,7 +2,6 @@ package com.example.api.account.service;
 
 import com.example.api.account.dto.*;
 import com.example.api.account.entity.Code;
-import com.example.api.business.domain.BusinessLocation;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.repository.CodeRepository;
@@ -43,7 +42,6 @@ public class AccountService {
     private final BusinessRepository businessRepository;
     private final RestTemplate restTemplate;
     private final VendorProperties vendorProperties;
-    private final LocationRepository locationRepository;
 
     public Code sendEmail(@Validated final EmailRequest request) throws BusinessException {
         // 이미 가입된 이메일인지 검증
@@ -113,7 +111,8 @@ public class AccountService {
                 request.phoneNumber(),
                 request.nationality(),
                 roles,
-                request.emailReceivable()
+                request.emailReceivable(),
+                request.location()
         );
         return accountRepository.save(account);
     }
@@ -123,17 +122,16 @@ public class AccountService {
         Account account = new Account(
                 request.loginId(),
                 passwordEncoder.encode(request.password()),
+                request.representationName(),
                 request.email(),
                 request.phoneNumber(),
                 request.nationality(),
                 roles
         );
         Account savedUser = accountRepository.save(account);
-
-        BusinessLocation savedLocation = locationRepository.save(request.location());
         Business business = new Business(
                 request.businessName(),
-                savedLocation,
+                request.location(),
                 request.representationName(),
                 savedUser,
                 request.businessOpenDate(),

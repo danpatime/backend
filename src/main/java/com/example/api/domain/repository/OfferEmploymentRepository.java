@@ -23,7 +23,7 @@ public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment
     @Query("select o from OfferEmployment o where o.business.businessId = :businessId")
     List<OfferEmployment> findAllByBusinessBusinessId(long businessId);
 
-    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.suggestStartTime, oe.suggestEndTime) " +
+    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.suggestHourlyPay, oe.suggestStartTime, oe.suggestEndTime) " +
             "from OfferEmployment oe " +
             "join oe.employee e " +
             "join oe.business b " +

@@ -1,6 +1,6 @@
 package com.example.api.employer.service;
 
-import com.example.api.business.domain.BusinessLocation;
+import com.example.api.domain.Location;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.repository.LocationRepository;
 import com.example.api.business.BusinessRepository;
@@ -33,9 +33,9 @@ class EmployerServiceTest {
     void setUp() {
         Account account = new Account();
         accountRepository.save(account);
-        BusinessLocation location1 = new BusinessLocation("zipcode1", "address1", "detailAddress1");
-        BusinessLocation location2 = new BusinessLocation("zipcode2", "address2", "detailAddress2");
-        BusinessLocation location3 = new BusinessLocation("zipcode3", "address3", "detailAddress3");
+        Location location1 = new Location("zipcode1", "address1", "detailAddress1");
+        Location location2 = new Location("zipcode2", "address2", "detailAddress2");
+        Location location3 = new Location("zipcode3", "address3", "detailAddress3");
         locationRepository.save(location1);
         locationRepository.save(location2);
         locationRepository.save(location3);

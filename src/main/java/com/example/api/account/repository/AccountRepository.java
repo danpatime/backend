@@ -1,6 +1,7 @@
 package com.example.api.account.repository;
 
 import com.example.api.domain.Account;
+import com.example.api.setting.dto.EmailConsentResponse;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -38,4 +39,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByEmployeeId(@Param("employeeId") Long employeeId);
 
     String findIntroductionByAccountId(Long accountId);
+
+    @Query("select new com.example.api.setting.dto.EmailConsentResponse(a.emailReceivable) from Account a where a.accountId = :userId")
+    Optional<EmailConsentResponse> findEmailReceivableById(@Param("userId") Long userId);
 }

@@ -10,7 +10,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @NoArgsConstructor
 @Table(name = "FLAVORED_DISTRICT", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"EMPLOYEE_ID", "CITY_DISTRICT_ID"})
+        @UniqueConstraint(columnNames = {"EMPLOYEE_ID", "LOCATION_ID"})
 })
 public class FlavoredDistrict extends BaseEntity {
     @Id
@@ -19,15 +19,15 @@ public class FlavoredDistrict extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "CITY_DISTRICT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private CityDistrict district;
+    @JoinColumn(name = "LOCATION_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Location location;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "EMPLOYEE_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Account employee;
 
-    public FlavoredDistrict(CityDistrict district, Account employee) {
-        this.district = district;
+    public FlavoredDistrict(Location location, Account employee) {
+        this.location = location;
         this.employee = employee;
     }
 }

@@ -18,7 +18,7 @@ public class SuggestController {
     private final SuggestService suggestService;
 
     @GetMapping("/api/v1/employment-suggests/status/{businessId}")
-    public ResponseEntity getSuggestStatus(@PathVariable() long businessId) {
+    public ResponseEntity<List<SuggestStatusDTO>> getSuggestStatus(@PathVariable() long businessId) {
         BusinessIdRequest businessIdRequest = new BusinessIdRequest(businessId);
         List<SuggestStatusDTO> suggestStatus = suggestService.getSuggestStatus(businessIdRequest);
         return ResponseEntity.ok(suggestStatus);

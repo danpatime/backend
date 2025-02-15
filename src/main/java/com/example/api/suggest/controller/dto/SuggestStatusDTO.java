@@ -11,6 +11,7 @@ import lombok.*;
 public class SuggestStatusDTO {
     private String status;
     private String name;
+    private Integer hourlyPayment;
     private String businessName;
     private String workTime;
     // 채팅 방 번호 추가

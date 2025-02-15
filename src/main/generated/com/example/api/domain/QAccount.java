@@ -18,6 +18,8 @@ public class QAccount extends EntityPathBase<Account> {
 
     private static final long serialVersionUID = -1087167288L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QAccount account = new QAccount("account");
 
     public final QBaseEntity _super = new QBaseEntity(this);
@@ -40,6 +42,8 @@ public class QAccount extends EntityPathBase<Account> {
     public final BooleanPath emailReceivable = createBoolean("emailReceivable");
 
     public final StringPath introduction = createString("introduction");
+
+    public final QLocation location;
 
     public final StringPath loginId = createString("loginId");
 
@@ -69,15 +73,24 @@ public class QAccount extends EntityPathBase<Account> {
     public final NumberPath<Integer> workCount = createNumber("workCount", Integer.class);
 
     public QAccount(String variable) {
-        super(Account.class, forVariable(variable));
+        this(Account.class, forVariable(variable), INITS);
     }
 
     public QAccount(Path<? extends Account> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QAccount(PathMetadata metadata) {
-        super(Account.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QAccount(PathMetadata metadata, PathInits inits) {
+        this(Account.class, metadata, inits);
+    }
+
+    public QAccount(Class<? extends Account> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.location = inits.isInitialized("location") ? new QLocation(forProperty("location")) : null;
     }
 
 }

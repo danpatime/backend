@@ -19,14 +19,14 @@ public class EmployerController {
     private final EmployerService employerService;
 
     @GetMapping("/favorites/employees")
-    public ResponseEntity getLikeEmployee(@AuthenticationPrincipal final Long employerId) {
+    public ResponseEntity<List<LikeEmployeeDTO>> getLikeEmployee(@AuthenticationPrincipal final Long employerId) {
         EmployerIdRequest employerIdRequest = new EmployerIdRequest(employerId);
         List<LikeEmployeeDTO> result = employerService.getLikeEmployee(employerIdRequest);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/businesses")
-    public ResponseEntity getBusinessList(@AuthenticationPrincipal final Long employerId) {
+    public ResponseEntity<List<EmployerBusinessesRequest>> getBusinessList(@AuthenticationPrincipal final Long employerId) {
         EmployerIdRequest employerIdRequest = new EmployerIdRequest(employerId);
         List<EmployerBusinessesRequest> businesses = employerService.getEmployerBusinessList(employerIdRequest);
         return ResponseEntity.ok(businesses);

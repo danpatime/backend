@@ -39,6 +39,8 @@ public class BusinessService {
     @Transactional
     public void addBusiness(@Validated final AddBusinessCommand command) {
         Account requestMember = accountRepository.findById(command.requestMemberId()).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        requestMember.setEmail(command.email());
+        requestMember.setPhone(command.phoneNumber());
         final Business business = new Business(
                 command.businessName(),
                 command.location(),

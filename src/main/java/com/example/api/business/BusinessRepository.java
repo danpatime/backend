@@ -17,6 +17,6 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     @EntityGraph(attributePaths = {"location", "employer", "businessCategories.subCategory"})
     Optional<Business> getDetails(@Param("businessId") final Long businessId);
 
-    @Query("select new com.example.api.employer.controller.dto.EmployerBusinessesRequest(b.businessName, b.location) from Business b where b.employer.accountId = :employerId order by b.location.id")
+    @Query("select new com.example.api.employer.controller.dto.EmployerBusinessesRequest(b.businessId, b.businessName, b.location) from Business b where b.employer.accountId = :employerId order by b.location.id")
     List<EmployerBusinessesRequest> findBusinessesByEmployerId(@Param("employerId")final Long employerId);
 }

@@ -57,10 +57,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<FlavoredDistrictResponse> getPreferredDistricts(final EmployeeIdRequest employeeIdRequest) {
-        log.info("employeeIdRequest={}", employeeIdRequest.employeeId());
-        List<FlavoredDistrictResponse> allByEmployeeId = flavoredDistrictRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
-        log.info("allByEmployeeId: {}", allByEmployeeId);
-        return allByEmployeeId;
+        return flavoredDistrictRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
     }
 
     @Transactional(readOnly = true)
@@ -118,8 +115,12 @@ public class BoardService {
             final EmployeeIdRequest employeeIdRequest,
             final UpdatePreferredDistrictsRequest request
     ) {
-        flavoredDistrictRepository.deleteByNotInIds(employeeIdRequest.employeeId(), request.districtIds());
-        flavoredDistrictRepository.saveDistrictIds(employeeIdRequest.employeeId(), request.districtIds().toString());
+        flavoredDistrictRepository.deleteAllByEmployeeId(employeeIdRequest.employeeId());
+        Account user = accountRepository.findById(employeeIdRequest.employeeId()).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        List<FlavoredDistrict> willSaveLocation = request.locations().stream()
+                .map(location -> new FlavoredDistrict(location, user))
+                .collect(Collectors.toList());
+        flavoredDistrictRepository.saveAll(willSaveLocation);
         return flavoredDistrictRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
     }
 

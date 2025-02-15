@@ -15,6 +15,7 @@ import static jakarta.persistence.FetchType.*;
 public class ExternalCareer extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EXTERNAL_CAREER_ID")
     private Long id;
 
     @ManyToOne(fetch = LAZY)

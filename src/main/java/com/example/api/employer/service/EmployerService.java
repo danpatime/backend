@@ -6,6 +6,7 @@ import com.example.api.domain.Scrap;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredCategoryRepository;
 import com.example.api.domain.Account;
+import com.example.api.domain.repository.FlavoredDistrictRepository;
 import com.example.api.employer.controller.dto.EmployerBusinessesRequest;
 import com.example.api.employer.controller.dto.EmployerIdRequest;
 import com.example.api.employer.controller.dto.FavoriteEmployeeRequest;
@@ -30,6 +31,7 @@ public class EmployerService {
     private final FlavoredCategoryRepository flavoredRepository;
     private final BusinessRepository businessRepository;
     private final AccountRepository accountRepository;
+    private final FlavoredDistrictRepository flavoredDistrictRepository;
 
     @Transactional(readOnly = true)
     public List<LikeEmployeeDTO> getLikeEmployee(final EmployerIdRequest employerIdRequest) {
@@ -47,7 +49,8 @@ public class EmployerService {
                         employee.getStarPoint(),
                         employee.getWorkCount(),
                         externalCareerRepository.findAllByEmployeeId(employee.getAccountId()),
-                        flavoredRepository.findAllByEmployeeId(employee.getAccountId())
+                        flavoredRepository.findAllByEmployeeId(employee.getAccountId()),
+                        flavoredDistrictRepository.findAllByEmployeeId(employee.getAccountId())
                 )
         ).collect(Collectors.toList());
     }

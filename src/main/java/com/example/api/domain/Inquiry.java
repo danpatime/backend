@@ -28,8 +28,10 @@ public class Inquiry extends BaseEntity {
     @Column(name = "SUB_INQUIRY_TYPE")
     private String subInquiryType;
 
+    @Column(name = "TITLE")
     private String title;
 
+    @Column(name = "CONTENT")
     private String content;
 
     @Enumerated(EnumType.STRING)

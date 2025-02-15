@@ -1,6 +1,6 @@
 package com.example.api.business.controller;
 
-import com.example.api.business.domain.BusinessLocation;
+import com.example.api.domain.Location;
 import com.example.api.business.BusinessQueryService;
 import com.example.api.business.BusinessService;
 import com.example.api.business.dto.AddBusinessCommand;
@@ -56,12 +56,14 @@ public class BusinessController {
             String businessName,
             String businessRegistrationNumber,
             String businessOpenDate,
-            BusinessLocation location,
+            Location location,
             List<Long> subCategoryIds,
-            String representationName
+            String representationName,
+            String phoneNumber,
+            String email
     ) {
         AddBusinessCommand toCommand() {
-            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, subCategoryIds, representationName);
+            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, subCategoryIds, representationName, phoneNumber, email);
         }
     }
 
@@ -69,12 +71,14 @@ public class BusinessController {
             @NotNull
             Long businessId,
             String businessName,
-            BusinessLocation location,
+            Location location,
             String representationName,
-            List<Long> subCategoryIds
+            List<Long> subCategoryIds,
+            String phoneNumber,
+            String email
     ) {
         ModifyBusinessCommand toCommand() {
-            return new ModifyBusinessCommand(businessId, businessName, location, representationName, subCategoryIds);
+            return new ModifyBusinessCommand(businessId, businessName, location, representationName, subCategoryIds, phoneNumber, email);
         }
     }
 }

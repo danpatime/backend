@@ -51,11 +51,14 @@ public class Account extends BaseEntity {
     private String callTime;
     @Column(name = "ACCOUNT_INTRODUCTION")
     private String introduction;
-    @Column(name = "ACCOUNT_STAR_RATING", columnDefinition = "FLOAT DEFAULT 0.0f")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ACCOUNT_LOCATION_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Location location;
+    @Column(name = "ACCOUNT_STAR_RATING", columnDefinition = "FLOAT DEFAULT 0.0")
     private Float starPoint;
     @Column(name = "ACCOUNT_WORK_COUNT", columnDefinition = "INTEGER DEFAULT 0")
     private int workCount;
-    @Column(name = "ACCOUNT_OPEN_STATUS", columnDefinition = "BOOLEAN DEFAULT true")
+    @Column(name = "ACCOUNT_OPEN_STATUS", columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean openStatus;
     @Column(name = "ACCOUNT_DELETED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted = false;
@@ -71,7 +74,7 @@ public class Account extends BaseEntity {
         this.roles = roles;
     }
 
-    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles, final Boolean emailReceivable) {
+    public Account(String loginId, String password, String name, String nickname, String phoneNumber, String email, Nationality nationality, Collection<UserRole> roles, Boolean emailReceivable, Location location) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
@@ -84,11 +87,13 @@ public class Account extends BaseEntity {
         this.workCount = 0;
         this.openStatus = true;
         this.emailReceivable = emailReceivable;
+        this.location = location;
     }
 
-    public Account(String loginId, String password, String email, String phoneNumber, Nationality nationality, Collection<UserRole> roles) {
+    public Account(String loginId, String password, String name, String email, String phoneNumber, Nationality nationality, Collection<UserRole> roles) {
         this.loginId = loginId;
         this.password = password;
+        this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.nationality = nationality;
@@ -130,6 +135,7 @@ public class Account extends BaseEntity {
         this.nickname = request.nickname();
         this.birthdate = request.birthdate();
         this.callTime = request.callTime();
+        this.location = request.location();
     }
 
     public void setDeleted(boolean deleted){
@@ -146,5 +152,17 @@ public class Account extends BaseEntity {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public void setEmailReceivable(Boolean emailReceivable) {
+        this.emailReceivable = emailReceivable;
+    }
+
+    public void setPhone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

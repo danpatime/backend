@@ -91,6 +91,7 @@ public class SuggestService {
         return new SuggestStatusDTO(
                 status,
                 suggest.name(),
+                suggest.hourlyPayment(),
                 suggest.businessName(),
                 workTimeStr
         );
