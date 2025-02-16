@@ -1,5 +1,7 @@
 package com.example.api.contracts.dto;
 
+import com.example.api.domain.ProposalStatus;
+
 import java.time.LocalDateTime;
 
 public record SuggestedBusinessResponse(
@@ -7,8 +9,6 @@ public record SuggestedBusinessResponse(
         LocalDateTime suggestStartDateTime,
         LocalDateTime suggestEndDateTime,
         Integer suggestPartTimePayment,
-        Boolean suggestChecked,
-        Boolean suggestAccepted
-
+        ProposalStatus status
 ) {
 }

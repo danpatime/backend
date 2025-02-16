@@ -15,8 +15,7 @@ public class ContractMapper {
                 offerEmployment,
                 offerEmployment.getSuggestStartTime(),
                 offerEmployment.getSuggestEndTime(),
-                offerEmployment.getSuggestHourlyPay(),
-                false
+                offerEmployment.getSuggestHourlyPay()
         );
     }
 }

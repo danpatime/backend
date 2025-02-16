@@ -34,4 +34,12 @@ public class OfferEmploymentController {
         offerEmploymentService.completeOfferEmployment(completeRequest);
         return ResponseEntity.ok("성공적으로 종료되었습니다.");
     }
+
+    @PostMapping("/refuse")
+    public ResponseEntity<String> refuseOfferEmployment(
+            @RequestBody final OfferEmploymentCompleteRequest completeRequest
+    ) {
+        offerEmploymentService.refuseOfferEmployment(completeRequest);
+        return ResponseEntity.ok("성공적으로 거절되었습니다.");
+    }
 }

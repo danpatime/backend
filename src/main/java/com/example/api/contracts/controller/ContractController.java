@@ -7,6 +7,7 @@ import com.example.api.contracts.dto.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,11 +52,5 @@ class ContractController {
         final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId);
         ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
         return ResponseEntity.ok(contractDTO);
-    }
-
-    @GetMapping("/api/v1/contracts/schedule")
-    public ResponseEntity<List<ContractScheduleResponse>> getContractSchedule(@AuthenticationPrincipal Long employeeId){
-        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
-        return ResponseEntity.ok(contractService.getContractSchedule(employeeIdRequest));
     }
 }

@@ -32,8 +32,6 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final DateTimePath<java.time.LocalDateTime> contractStartTime = createDateTime("contractStartTime", java.time.LocalDateTime.class);
 
-    public final BooleanPath contractSucceeded = createBoolean("contractSucceeded");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 

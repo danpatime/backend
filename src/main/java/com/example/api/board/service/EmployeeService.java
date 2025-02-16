@@ -9,10 +9,10 @@ import com.example.api.domain.Account;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class EmployeeService {
     private final AccountRepository accountRepository;
