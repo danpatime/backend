@@ -18,7 +18,6 @@ import com.example.api.domain.repository.*;
 import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jknack.handlebars.internal.lang3.tuple.Pair;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +81,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<InternalCareerResponse> getInternalCareers(final EmployeeIdRequest employeeIdRequest)  {
-        return offerEmploymentRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
+        return offerEmploymentRepository.findAllInternalCareerResponseByEmployeeId(employeeIdRequest.employeeId());
     }
 
     @Transactional

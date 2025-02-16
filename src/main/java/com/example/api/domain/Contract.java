@@ -27,23 +27,19 @@ public class Contract extends BaseEntity {
     private LocalDateTime contractEndTime;
     @Column(name = "CONTRACT_HOURLY_PAY")
     private int contractHourlyPay;
-    @Column(name = "CONTRACT_SUCCEDED", columnDefinition = "boolean DEFAULT false")
-    private boolean contractSucceeded;
 
     public Contract(
             final Long contractId,
             final OfferEmployment offerEmployment,
             final LocalDateTime contractStartTime,
             final LocalDateTime contractEndTime,
-            final int contractHourlyPay,
-            final boolean contractSucceeded
+            final int contractHourlyPay
     ) {
         this.contractId = contractId;
         this.offerEmployment = offerEmployment;
         this.contractStartTime = contractStartTime;
         this.contractEndTime = contractEndTime;
         this.contractHourlyPay = contractHourlyPay;
-        this.contractSucceeded = contractSucceeded;
     }
 
     public void updateHourlyPayment(final Integer hourlyPay) {
@@ -60,9 +56,5 @@ public class Contract extends BaseEntity {
 
     public boolean isValidContractRangeTime() {
         return this.contractStartTime.isBefore(this.contractEndTime);
-    }
-
-    public void succeed() {
-        this.contractSucceeded = true;
     }
 }

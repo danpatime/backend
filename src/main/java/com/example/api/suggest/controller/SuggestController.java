@@ -1,5 +1,6 @@
 package com.example.api.suggest.controller;
 
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
 import com.example.api.contracts.dto.SuggestedBusinessResponse;
@@ -8,6 +9,7 @@ import com.example.api.suggest.controller.dto.request.BusinessIdRequest;
 import com.example.api.suggest.service.SuggestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,29 +20,27 @@ public class SuggestController {
     private final SuggestService suggestService;
 
     @GetMapping("/api/v1/employment-suggests/status/{businessId}")
-    public ResponseEntity<List<SuggestStatusDTO>> getSuggestStatus(@PathVariable() long businessId) {
+    public ResponseEntity<List<SuggestStatusDTO>> getBusinessSuggestStatus(
+            @PathVariable Long businessId) {
         BusinessIdRequest businessIdRequest = new BusinessIdRequest(businessId);
-        List<SuggestStatusDTO> suggestStatus = suggestService.getSuggestStatus(businessIdRequest);
-        return ResponseEntity.ok(suggestStatus);
+        return ResponseEntity.ok(suggestService.getBusinessSuggestStatus(businessIdRequest));
     }
 
-    @GetMapping("/api/v1/contracts/employment-suggests")
-    public ResponseEntity<List<SuggestedBusinessResponse>> getAllSuggest(
-            @RequestParam(required = true) final Long employeeId
+    @GetMapping("/api/v1/employment-suggests/employee/status")
+    public ResponseEntity<List<SuggestStatusDTO>> getEmployeeSuggestStatus(
+            @AuthenticationPrincipal final Long employeeId
     ) {
-        final QueryAllSuggestsForMeCommand queryAllSuggestsForMeCommand = new QueryAllSuggestsForMeCommand(employeeId);
-        final List<SuggestedBusinessResponse> suggestedBusinesses = suggestService.getAllRelatedSuggests(
-                queryAllSuggestsForMeCommand);
-        return ResponseEntity.ok(suggestedBusinesses);
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(employeeId);
+        return ResponseEntity.ok(suggestService.getEmployeeSuggestStatus(employeeIdRequest));
     }
 
     @PostMapping("/api/v1/contracts/suggests/{suggestId}/accept")
-    public ResponseEntity<?> acceptContractContact(
+    public ResponseEntity<String> acceptContractContact(
             @PathVariable(required = true) final Long suggestId
     ) {
         final AcceptSuggestCommand acceptSuggestCommand = new AcceptSuggestCommand(suggestId);
         suggestService.acceptSuggest(acceptSuggestCommand);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("성공적으로 제안을 수락하였습니다.");
     }
 
     @PostMapping("/api/v1/contracts/suggests/chatroom")

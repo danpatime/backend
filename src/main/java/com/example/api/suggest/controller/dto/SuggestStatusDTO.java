@@ -1,18 +1,13 @@
 package com.example.api.suggest.controller.dto;
 
-import lombok.*;
+import com.example.api.domain.ProposalStatus;
 
-
-@Getter
-@Setter
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
-public class SuggestStatusDTO {
-    private String status;
-    private String name;
-    private Integer hourlyPayment;
-    private String businessName;
-    private String workTime;
-    // 채팅 방 번호 추가
+public record SuggestStatusDTO (
+    ProposalStatus status,
+    String name,
+    Integer hourlyPayment,
+    String businessName,
+    String workTime,
+    Long chatRoomId
+) {
 }

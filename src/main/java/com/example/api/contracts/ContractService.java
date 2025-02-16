@@ -6,17 +6,17 @@ import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
-import com.example.api.domain.Account;
-import com.example.api.domain.Contract;
+import com.example.api.domain.*;
 
 import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.api.domain.PossibleBoard;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
+import com.example.api.offeremployment.entity.OfferEmploymentMapper;
+import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,8 @@ public class ContractService {
     private final UpdateContractConditionManager updateContractConditionManager;
     private final PossibleBoardRepository possibleBoardRepository;
     private final AccountRepository accountRepository;
-
+    private final OfferRepository offerRepository;
+    private final OfferEmploymentMapper offerEmploymentMapper;
 
     @Transactional
     public void updateContract(@Validated final UpdateContractConditionCommand updateContractConditionCommand) {
@@ -42,7 +43,8 @@ public class ContractService {
     @Transactional
     public void acceptContract(@Validated final AcceptContractCommand acceptContractCommand) {
         final Contract contract = loadContract(acceptContractCommand.contractId());
-        contract.succeed();
+        OfferEmployment oe = offerRepository.findById(acceptContractCommand.contractId()).orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_EXCEPTION));
+        oe.setStatus(ProposalStatus.COMPLETED);
         // 계약 시간에 따른 근무 가능 시간 변경
         updateAvailableWorkHours(acceptContractCommand, contract);
     }
@@ -91,10 +93,5 @@ public class ContractService {
         BusinessInfoDTO businessDTO = contractRepository.findBusinessDTOByContractId(contractStatusCommand.contractId());
         EmployeeInfoDTO employeeDTO = contractRepository.findEmployeeDTOByContractId(contractStatusCommand.contractId());
         return new ContractDTO(businessDTO, employeeDTO);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ContractScheduleResponse> getContractSchedule(final EmployeeIdRequest employeeIdRequest) {
-        return contractRepository.findContractScheduleByEmployeeId(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
     }
 }

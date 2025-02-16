@@ -28,21 +28,17 @@ public class QOfferEmployment extends EntityPathBase<OfferEmployment> {
 
     public final QAccount employee;
 
-    public final DateTimePath<java.time.LocalDateTime> suggestEndTime = createDateTime("suggestEndTime", java.time.LocalDateTime.class);
+    public final EnumPath<ProposalStatus> status = createEnum("status", ProposalStatus.class);
 
-    public final BooleanPath suggestFinished = createBoolean("suggestFinished");
+    public final DateTimePath<java.time.LocalDateTime> suggestEndTime = createDateTime("suggestEndTime", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> suggestHourlyPay = createNumber("suggestHourlyPay", Integer.class);
 
     public final NumberPath<Long> suggestId = createNumber("suggestId", Long.class);
 
-    public final BooleanPath suggestReaded = createBoolean("suggestReaded");
-
     public final DateTimePath<java.time.LocalDateTime> suggestRegisterTime = createDateTime("suggestRegisterTime", java.time.LocalDateTime.class);
 
     public final DateTimePath<java.time.LocalDateTime> suggestStartTime = createDateTime("suggestStartTime", java.time.LocalDateTime.class);
-
-    public final BooleanPath suggestSucceeded = createBoolean("suggestSucceeded");
 
     public QOfferEmployment(String variable) {
         this(OfferEmployment.class, forVariable(variable), INITS);
@@ -64,7 +60,7 @@ public class QOfferEmployment extends EntityPathBase<OfferEmployment> {
         super(type, metadata, inits);
         this.business = inits.isInitialized("business") ? new QBusiness(forProperty("business"), inits.get("business")) : null;
         this.contract = inits.isInitialized("contract") ? new QContract(forProperty("contract"), inits.get("contract")) : null;
-        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee")) : null;
+        this.employee = inits.isInitialized("employee") ? new QAccount(forProperty("employee"), inits.get("employee")) : null;
     }
 
 }

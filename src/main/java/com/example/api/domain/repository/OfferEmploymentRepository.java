@@ -4,7 +4,6 @@ import com.example.api.board.dto.response.InternalCareerResponse;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,21 +17,18 @@ public interface OfferEmploymentRepository extends JpaRepository<OfferEmployment
             "join Contract c on o.suggestId = c.contractId " +
             "join Business b on o.business.businessId = b.businessId " +
             "where o.employee.accountId = :employeeId")
-    List<InternalCareerResponse> findAllByEmployeeId(@Param("employeeId") long employeeId);
+    List<InternalCareerResponse> findAllInternalCareerResponseByEmployeeId(@Param("employeeId") long employeeId);
 
     @Query("select o from OfferEmployment o where o.business.businessId = :businessId")
-    List<OfferEmployment> findAllByBusinessBusinessId(long businessId);
+    List<OfferEmployment> findAllByBusinessBusinessId(Long businessId);
 
-    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.suggestHourlyPay, oe.suggestStartTime, oe.suggestEndTime) " +
+    @Query("select o from OfferEmployment o where o.employee.accountId = :employeeId")
+    List<OfferEmployment> findAllByEmployeeId(Long employeeId);
+
+    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.status, oe.suggestHourlyPay, oe.suggestStartTime, oe.suggestEndTime, null) " +
             "from OfferEmployment oe " +
             "join oe.employee e " +
             "join oe.business b " +
             "where oe.suggestId = :offerEmploymentId")
     OfferEmploymentDetailRequest findSuggestByOfferEmploymentId(@Param("offerEmploymentId") Long offerEmploymentId);
-
-    @Modifying
-    @Query("update OfferEmployment oe " +
-            "set oe.suggestFinished = true, oe.suggestEndTime = CURRENT_TIMESTAMP " +
-            "where oe.suggestId = :suggestId")
-    void updateSuggestStatusToFinishedBySuggestId(@Param("suggestId") Long suggestId);
 }

@@ -4,7 +4,7 @@ info:
   description: 단팥 백엔드 API 명세서입니다.
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
+  - url: http://43.201.78.102:8080
 security:
   - JWT_TOKEN: []
 paths:
@@ -724,8 +724,7 @@ paths:
                 $ref: "#/components/schemas/OfferEmploymentResponse"
               example:
                 suggestId: 1
-                success: false
-                message: "Offer pending"
+                message: "PENDING"
   /api/v1/offeremployment/complete:
     post:
       tags:
@@ -750,8 +749,32 @@ paths:
               schema:
                 type: string
               example:
-                success: true
                 message: "성공적으로 종료되었습니다."
+  /api/v1/offeremployment/refuse:
+    post:
+      tags:
+        - OfferEmploymentController
+      summary: "알바생이 제안 거절 요청하기"
+      description: "알바생이 제안 거절 요청하기"
+      operationId: refuseOfferEmployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferEmploymentCompleteRequest"
+            example:
+              suggestId: 1
+              employeeId: 1001
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example:
+                message: "성공적으로 거절되었습니다."
   /api/v1/contracts/suggests/chatroom:
     post:
       tags:
@@ -795,7 +818,8 @@ paths:
           content:
             '*/*':
               schema:
-                type: object
+                type: string
+                example: "성공적으로 제안을 수락하였습니다."
   /api/v1/employment-suggests/status/{businessId}:
     get:
       tags:
@@ -818,45 +842,33 @@ paths:
               schema:
                 type: string
               example:
-                - status: "대기 중"
+                - status: "COMPLETED"
                   name: "알바생"
                   hourlyPayment: 12000
                   businessName: "김태영닷컴"
                   workTime: "2024.02.20 12:00~14:00"
-#  /api/v1/contracts/employment-suggests:
-#    get:
-#      tags:
-#        - SuggestController
-#      operationId: getAllSuggest
-#      parameters:
-#        - name: employeeId
-#          in: query
-#          required: true
-#          schema:
-#            type: integer
-#            format: int64
-#      responses:
-#        "200":
-#          description: OK
-#          content:
-#            '*/*':
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/SuggestedBusinessResponse"
-#              example:
-#                - businessId: 1
-#                  suggestStartDateTime: "2024-02-01T09:00:00"
-#                  suggestEndDateTime: "2024-02-01T11:00:00"
-#                  suggestPartTimePayment: 10000
-#                  suggestChecked: 1
-#                  suggestAccepted: 0
-#                - businessId: 2
-#                  suggestStartDateTime: "2024-02-01T09:00:00"
-#                  suggestEndDateTime: "2024-02-01T11:00:00"
-#                  suggestPartTimePayment: 10000
-#                  suggestChecked: 1
-#                  suggestAccepted: 1
+                  chatRoomId: 1
+  /api/v1/employment-suggests/employee/status:
+    get:
+      tags:
+        - SuggestController
+      summary: "알바 마이페이지에서 체결 현황"
+      description: "알바 마이페이지에서 체결 현황"
+      operationId: getEmployeeSuggestStatus
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+              example:
+                - status: "COMPLETED"
+                  name: "알바생"
+                  hourlyPayment: 12000
+                  businessName: "김태영닷컴"
+                  workTime: "2024.02.20 12:00~14:00"
+                  chatRoomId: 1
   /api/v1/support/announcements/{announcementId}:
     get:
       tags:
@@ -985,6 +997,7 @@ paths:
             '*/*':
               schema:
                 type: string
+                example: "성공적으로 수락되었습니다."
   /api/v1/contracts/{contractId}/status:
     get:
       tags:
@@ -1023,32 +1036,6 @@ paths:
                   employeePhone: "010-9876-5432"
                   starPoint: 4.7
                   workCount: 120
-  /api/v1/contracts/schedule:
-    get:
-      tags:
-        - ContractController
-      summary: "알바생 마이페이지, 체결 현황 보기"
-      description: "알바생 마이페이지, 체결 현황 보기"
-      operationId: getContractSchedule
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ContractScheduleResponse"
-              example:
-                - contractId:
-                  businessName:
-                  startTime:
-                  endTime:
-                - contractId:
-                  businessName:
-                  startTime:
-                  endTime:
-
   /api/v1/business:
     get:
       tags:

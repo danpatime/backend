@@ -47,18 +47,13 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join c.offerEmployment oe " +
             "join oe.employee e " +
             "join oe.business b " +
-            "where b.businessId = :businessId and c.contractSucceeded = true")
+            "where b.businessId = :businessId and oe.status = 'TERMINATED'")
     List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
 
-    @Query("select new com.example.api.contracts.dto.ContractScheduleResponse(c.contractId, b.businessName, c.contractStartTime, c.contractEndTime) " +
-            "from Contract c inner join c.offerEmployment o inner join o.business b " +
-            "where o.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
-    List<ContractScheduleResponse> findContractScheduleByEmployeeId(@Param("employeeId") Long employeeId,
-                                                                    @Param("currentMonth") LocalDateTime currentMonth);
-
-    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, c.contractHourlyPay, c.contractStartTime, c.contractEndTime) " +
+    @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.status, c.contractHourlyPay, c.contractStartTime, c.contractEndTime, cr.chatRoomId) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
+            "join ChatRoom cr on cr.offerEmployment.suggestId = oe.suggestId " +
             "join oe.employee e " +
             "join oe.business b " +
             "where c.contractId = :contractId")

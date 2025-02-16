@@ -1,5 +1,6 @@
 package com.example.api.domain;
 
+import com.example.api.account.entity.Nationality;
 import com.example.api.offeremployment.dto.OfferEmploymentCommand;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +18,6 @@ public class OfferEmployment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SUGGEST_ID")
     private Long suggestId;
-
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "BUSINESS_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Business business;
@@ -32,15 +32,11 @@ public class OfferEmployment {
     private LocalDateTime suggestEndTime;
     @Column(name = "SUGGEST_HOURLY_PAY")
     private int suggestHourlyPay;
-    @Column(name = "SUGGEST_READED", columnDefinition = "boolean DEFAULT false")
-    private boolean suggestReaded;
-    @Column(name = "SUGGEST_SUCCEDED", columnDefinition = "boolean DEFAULT false")
-    private boolean suggestSucceeded;
+    @Column(name = "SUGGEST_STATUS")
+    @Enumerated(EnumType.STRING)
+    private ProposalStatus status;
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
-
-    @Column(name = "SUGGEST_FINISHED", columnDefinition = "boolean DEFAULT false")
-    private boolean suggestFinished;
 
     public static OfferEmployment fromCommand(OfferEmploymentCommand offerEmploymentCommand, Account employee, Business business) {
         return new OfferEmployment(
@@ -58,6 +54,7 @@ public class OfferEmployment {
         this.suggestStartTime = suggestStartTime;
         this.suggestEndTime = suggestEndTime;
         this.suggestHourlyPay = suggestHourlyPay;
+        this.status = ProposalStatus.PENDING;
     }
 
     @PrePersist
@@ -65,11 +62,11 @@ public class OfferEmployment {
         this.suggestRegisterTime = LocalDateTime.now();
     }
 
-    public void succeeded() {
-        this.suggestSucceeded = true;
-    }
-
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public void setStatus(ProposalStatus status) {
+        this.status = status;
     }
 }
