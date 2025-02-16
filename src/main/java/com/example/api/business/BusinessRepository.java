@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, Long> {
-    @Query("SELECT b FROM Business b JOIN FETCH b.employer JOIN FETCH b.businessCategories WHERE b.businessId = :businessId")
+    @Query("SELECT b FROM Business b JOIN FETCH b.employer LEFT JOIN FETCH b.businessCategories WHERE b.businessId = :businessId")
     @EntityGraph(attributePaths = {"location", "employer", "businessCategories.subCategory"})
     Optional<Business> getDetails(@Param("businessId") final Long businessId);
 

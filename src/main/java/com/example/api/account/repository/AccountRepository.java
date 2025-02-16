@@ -38,6 +38,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("select a from Account a where a.accountId = :employeeId")
     Optional<Account> findByEmployeeId(@Param("employeeId") Long employeeId);
 
+    @Query("SELECT a.introduction FROM Account a WHERE a.accountId = :accountId")
     String findIntroductionByAccountId(Long accountId);
 
     @Query("select new com.example.api.setting.dto.EmailConsentResponse(a.emailReceivable) from Account a where a.accountId = :userId")

@@ -50,10 +50,10 @@ public class ContractService {
     }
 
     public void updateAvailableWorkHours(AcceptContractCommand acceptContractCommand, Contract contract) {
-        Account user = accountRepository.findById(acceptContractCommand.contractId())
+        Account user = accountRepository.findById(acceptContractCommand.employeeId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
 
-        PossibleBoard matchingWorkHours = possibleBoardRepository.findMatchingWorkHours(contract.getContractStartTime(), contract.getContractEndTime())
+        PossibleBoard matchingWorkHours = possibleBoardRepository.findMatchingWorkHours(user.getAccountId(), contract.getContractStartTime(), contract.getContractEndTime())
                 .orElseThrow(() -> new BusinessException(ErrorCode.POSSIBLE_TIME_NULL_EXCEPTION));
 
         // 예약 시간이 기존 근무 가능 시간과 완전히 일치하면 삭제 후 종료

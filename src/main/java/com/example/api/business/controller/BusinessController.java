@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,9 +45,10 @@ public class BusinessController {
 
     @PostMapping
     public ResponseEntity<String> addBusiness(
-            @RequestBody final AddBusinessRequest request
+            @RequestBody final AddBusinessRequest request,
+            @AuthenticationPrincipal final Long employerId
     ) {
-        final AddBusinessCommand command = request.toCommand();
+        final AddBusinessCommand command = request.toCommand(employerId);
         businessService.addBusiness(command);
         return ResponseEntity.ok().body("요청이 성공적으로 처리되었습니다.");
     }
@@ -62,8 +64,8 @@ public class BusinessController {
             String phoneNumber,
             String email
     ) {
-        AddBusinessCommand toCommand() {
-            return new AddBusinessCommand(requestMemberId, businessName, businessRegistrationNumber, businessOpenDate, location, subCategoryIds, representationName, phoneNumber, email);
+        AddBusinessCommand toCommand(Long employerId) {
+            return new AddBusinessCommand(employerId, businessName, businessRegistrationNumber, businessOpenDate, location, subCategoryIds, representationName, phoneNumber, email);
         }
     }
 

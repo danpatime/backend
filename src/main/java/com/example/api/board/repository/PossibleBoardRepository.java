@@ -28,6 +28,8 @@ public interface PossibleBoardRepository extends JpaRepository<PossibleBoard, Lo
     List<PossibleBoard> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
 
     @Query("select p from PossibleBoard p where p.employee.accountId = :employeeId and p.startTime <= :endDateTime and p.endTime >= :startDateTime")
-    Optional<PossibleBoard> findMatchingWorkHours(@Param("startDateTime") final LocalDateTime startDateTimeIncluded,
-                                                  @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
+    Optional<PossibleBoard> findMatchingWorkHours(
+            @Param("employeeId") final Long employeeId,
+            @Param("startDateTime") final LocalDateTime startDateTimeIncluded,
+            @Param("endDateTime") final LocalDateTime endDateTimeIncluded);
 }
