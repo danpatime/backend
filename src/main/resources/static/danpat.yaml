@@ -425,13 +425,6 @@ paths:
       summary: "알바생이 근무 가능 시간 추가 요청"
       description: "알바생이 근무 가능 시간 추가 요청"
       operationId: updatePossibleTimes
-      parameters:
-        - name: requestMemberId
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
       requestBody:
         content:
           application/json:
@@ -584,9 +577,9 @@ paths:
               $ref: "#/components/schemas/UpdateExternalCareerRequest"
             example:
               newExternalCareers:
-                - categoryId: 1
+                - subCategoryId: 1002
                   workCount: 1
-                - categoryId: 2
+                - subCategoryId: 2002
                   workCount: 1
         required: true
       responses:
@@ -1120,7 +1113,6 @@ paths:
             schema:
               $ref: "#/components/schemas/AddBusinessRequest"
             example:
-              requestMemberId: 1
               businessName: "김태영닷컴"
               businessRegistrationNumber: "12345"
               businessOpenDate: "250101"
@@ -1498,7 +1490,7 @@ paths:
                   receiverId: 1
                   sendTime: "2025-02-01T15:57:00.123Z"
                   isRead: false
-  /businesses:
+  /api/v1/employer/businesses:
     get:
       tags:
         - EmployerController

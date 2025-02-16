@@ -4,6 +4,7 @@ import org.springframework.lang.NonNull;
 
 public record AcceptContractCommand(
         @NonNull
-        Long contractId
+        Long contractId,
+        Long employeeId
 ) {
 }

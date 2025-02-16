@@ -1,13 +1,10 @@
 package com.example.api.contracts.controller;
 
-import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.contracts.ContractService;
 import com.example.api.contracts.dto.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,16 +37,18 @@ class ContractController {
 
     @PostMapping("/api/v1/contracts/{contractId}/accepts")
     public ResponseEntity<String> acceptContract(
-            @PathVariable(required = true) final Long contractId
+            @PathVariable(required = true) final Long contractId,
+            @AuthenticationPrincipal final Long employeeId
     ) {
-        final AcceptContractCommand acceptContractCommand = new AcceptContractCommand(contractId);
+        final AcceptContractCommand acceptContractCommand = new AcceptContractCommand(contractId, employeeId);
         contractService.acceptContract(acceptContractCommand);
         return ResponseEntity.ok("성공적으로 수락되었습니다.");
     }
 
     @GetMapping("/api/v1/contracts/{contractId}/status")
-    public ResponseEntity<ContractDTO> getContractInfo(@PathVariable(required = true) final Long contractId) {
-        final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId);
+    public ResponseEntity<ContractDTO> getContractInfo(
+            @PathVariable(required = true) final Long contractId) {
+        final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId, null);
         ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
         return ResponseEntity.ok(contractDTO);
     }
