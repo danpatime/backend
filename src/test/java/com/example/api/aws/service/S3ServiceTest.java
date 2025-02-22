@@ -42,7 +42,7 @@ class S3ServiceTest {
                 "pass01",              // password
                 "010-1234-5678",       // phoneNumber
                 "user-uploads/1/profile.png",        // profileImage
-                List.of(UserRole.EMPLOYEE), // roles
+                List.of(UserRole.ROLE_EMPLOYEE), // roles
                 "F",                   // sex
                 4.5f,                  // starPoint
                 10                     // workCount

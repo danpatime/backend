@@ -82,6 +82,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         responseBody.put("userRole", userDetailRequest.authorities().stream().findFirst().toString());
         responseBody.put("name", loginUser.getName());
         responseBody.put("profile", profile);
+        responseBody.put("nickname", loginUser.getNickname());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

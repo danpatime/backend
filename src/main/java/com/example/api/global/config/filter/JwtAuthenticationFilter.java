@@ -37,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
                 Authentication authentication = jwtAuthenticationProvider.authenticate(new JwtAuthenticationToken(accessToken));
+
+                log.info("authentication : {}", authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
@@ -53,16 +55,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
 
             response.getWriter().write(new ObjectMapper().writeValueAsString(errorResponse));
-        } finally {
-            SecurityContextHolder.clearContext();
         }
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-
-        // 특정 API는 JWT 필터를 거치지 않도록 예외 처리
         return path.startsWith("/api/v1/account/") || path.startsWith("/api/v1/auth/login");
     }
 }

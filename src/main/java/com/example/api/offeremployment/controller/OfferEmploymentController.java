@@ -5,9 +5,10 @@ import com.example.api.offeremployment.dto.OfferEmploymentCompleteRequest;
 import com.example.api.offeremployment.dto.OfferEmploymentRequest;
 import com.example.api.offeremployment.dto.OfferEmploymentResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/offeremployment")
 @RequiredArgsConstructor
+@Slf4j
 public class OfferEmploymentController {
     private final OfferEmploymentService offerEmploymentService;
 
@@ -23,6 +25,15 @@ public class OfferEmploymentController {
     public ResponseEntity<OfferEmploymentResponse> sendOfferEmployment(
             @RequestBody final OfferEmploymentRequest offerEmploymentRequest
     ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            log.error("인증 객체가 NULL입니다!");
+        } else {
+            log.info("현재 사용자: {}", authentication.getName());
+            log.info("현재 권한: {}", authentication.getAuthorities());
+        }
+
+
         final OfferEmploymentResponse offerEmploymentResponse = offerEmploymentService.sendOfferEmployment(offerEmploymentRequest);
         return ResponseEntity.ok(offerEmploymentResponse);
     }

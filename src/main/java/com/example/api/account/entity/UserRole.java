@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum UserRole implements GrantedAuthority {
-    EMPLOYEE(0, "알바생"),
-    EMPLOYER(1, "사장");
+    ROLE_EMPLOYEE(0, "알바생"),
+    ROLE_EMPLOYER(1, "사장");
 
     private final Integer code;
     private final String description;
