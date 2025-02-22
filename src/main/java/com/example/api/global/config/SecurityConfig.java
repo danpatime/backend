@@ -54,9 +54,13 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/**", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif","/**/*.webp", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                        .requestMatchers("/api/auth/login", "/oauth2/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/account/**", "/aws", "/ws/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/ws", "/ws/**").permitAll()  // ✅ WebSocket 요청 허용
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()  // ✅ Swagger 문서 허용
+                        .requestMatchers("/api/auth/login", "/oauth2/**").permitAll()  // ✅ 로그인 & OAuth2 허용
+                        .requestMatchers("/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.webp", "/**/*.svg",
+                                "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()  // ✅ 정적 리소스 허용
+                        .requestMatchers("/api/v1/account/**", "/aws", "/health").permitAll()  // ✅ 특정 API 엔드포인트 허용
+                        .anyRequest().authenticated() // 🔥 그 외 모든 요청은 인증 필요
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorizationEndpoint ->
@@ -77,10 +81,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "http://127.0.0.1:5500"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);
+
+        corsConfiguration.addExposedHeader("Upgrade");
+        corsConfiguration.addExposedHeader("Connection");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
