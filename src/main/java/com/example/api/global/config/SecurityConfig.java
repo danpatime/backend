@@ -1,6 +1,7 @@
 package com.example.api.global.config;
 
 import com.example.api.auth.entitiy.JwtAuthenticationProvider;
+import com.example.api.auth.service.JwtTokenProvider;
 import com.example.api.global.config.filter.JwtAuthenticationFilter;
 import com.example.api.oauth2.entity.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.example.api.oauth2.entity.handler.OAuth2AuthenticationFailureHandler;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -37,14 +39,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final DefaultOAuth2UserService oauth2Service;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oauth2AuthorizationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
         http
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource()))
@@ -54,13 +55,14 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/ws", "/ws/**").permitAll()  // ✅ WebSocket 요청 허용
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()  // ✅ Swagger 문서 허용
-                        .requestMatchers("/api/auth/login", "/oauth2/**").permitAll()  // ✅ 로그인 & OAuth2 허용
+                        .requestMatchers("/ws", "/ws/**").permitAll()  // WebSocket 요청 허용
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger.yaml").permitAll()  // Swagger 문서 허용
+                        .requestMatchers("/api/v1/auth/login", "/oauth2/**").permitAll()  // 로그인 & OAuth2 허용
                         .requestMatchers("/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.webp", "/**/*.svg",
-                                "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()  // ✅ 정적 리소스 허용
-                        .requestMatchers("/api/v1/account/**", "/aws", "/health").permitAll()  // ✅ 특정 API 엔드포인트 허용
-                        .anyRequest().authenticated() // 🔥 그 외 모든 요청은 인증 필요
+                                "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()  // 정적 리소스 허용
+                        .requestMatchers("/api/v1/account/**", "/aws", "/health", "/error").permitAll()  // 특정 API 엔드포인트 허용
+                        .requestMatchers("/api/v1/possible-board", "/api/v1/possible-board/**").hasRole("EMPLOYEE")
+                        .anyRequest().authenticated() //  그 외 모든 요청은 인증 필요
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorizationEndpoint ->
@@ -73,18 +75,19 @@ public class SecurityConfig {
                         .successHandler(oauth2AuthorizationSuccessHandler)
                         .failureHandler(oAuth2AuthenticationFailureHandler)
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(new JwtAuthenticationFilter(jwtAuthenticationProvider, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "http://127.0.0.1:5500"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "https://www.danpat.store", "http://127.0.0.1:5500", "https://jiangxy.github.io/websocket-debug-tool/"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(3600L);
 
         corsConfiguration.addExposedHeader("Upgrade");
         corsConfiguration.addExposedHeader("Connection");

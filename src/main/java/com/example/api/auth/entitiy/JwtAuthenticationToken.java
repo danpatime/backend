@@ -38,7 +38,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         if (authenticated) {
             throw new IllegalArgumentException("옳지 않은 과정을 통해 인증되었습니다.");
         }
-        super.setAuthenticated(false);
+        super.setAuthenticated(true);
     }
 
     @Override

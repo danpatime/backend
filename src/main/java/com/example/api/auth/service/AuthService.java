@@ -67,6 +67,7 @@ public class AuthService {
         responseBody.put("userRole", role);
         responseBody.put("name", user.getName());
         responseBody.put("profile", profile);
+        responseBody.put("nickname", user.getNickname());
         return new LoginSuccessResponse(refreshTokenCookie, responseBody);
     }
 
