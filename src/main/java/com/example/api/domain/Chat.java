@@ -2,14 +2,16 @@ package com.example.api.domain;
 
 import com.example.api.chat.controller.dto.request.ChatSendRequest;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Getter
-@EqualsAndHashCode
 @Document(collection = "chat")
 public class Chat {
     @Id
@@ -21,15 +23,15 @@ public class Chat {
     private Date sendTime;
     private Boolean isRead;
 
-    protected Chat() {
+    public Chat() {
     }
 
     public static Chat from(ChatSendRequest chatSendRequest){
         Chat chat = new Chat();
-        chat.content = chatSendRequest.content();
-        chat.roomId = chatSendRequest.roomId();
-        chat.senderId = chatSendRequest.senderId();
-        chat.receiverId = chatSendRequest.receiverId();
+        chat.content = chatSendRequest.getContent();
+        chat.roomId = chatSendRequest.getRoomId();
+        chat.senderId = chatSendRequest.getSenderId();
+        chat.receiverId = chatSendRequest.getReceiverId();
         chat.sendTime = new Date();
         chat.isRead = false;
         return chat;
@@ -46,5 +48,16 @@ public class Chat {
                 ", sendTime=" + sendTime +
                 ", isRead=" + isRead +
                 '}';
+    }
+
+    public static String utcToKstConvert(Date sendTime){
+        Instant utcInstant = sendTime.toInstant();
+
+        // KST (UTC+9)로 변환
+        ZonedDateTime kstTime = utcInstant.atZone(ZoneId.of("Asia/Seoul"));
+
+        // "YYYY-MM-DD HH:MM" 형식으로 출력
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return kstTime.format(formatter);
     }
 }

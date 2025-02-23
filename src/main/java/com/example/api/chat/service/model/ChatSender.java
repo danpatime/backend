@@ -17,7 +17,7 @@ public class ChatSender {
     }
 
     public void sendReadResponse(ReadRequest request) {
-        ReadResponse readResponse = new ReadResponse(request.userId());
+        ReadResponse readResponse = new ReadResponse(request.receiverId());
         messagingTemplate.convertAndSend("/room/" + request.roomId(), readResponse);
     }
 }

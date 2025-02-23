@@ -11,7 +11,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@EqualsAndHashCode
 @Table(name = "CHAT_ROOM")
 @NoArgsConstructor
 public class ChatRoom {

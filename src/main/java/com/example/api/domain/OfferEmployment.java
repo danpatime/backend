@@ -10,7 +10,6 @@ import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Getter
-@EqualsAndHashCode
 @Table(name = "OFFER_EMPLOYMENT")
 @NoArgsConstructor
 public class OfferEmployment {

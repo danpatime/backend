@@ -5,6 +5,7 @@ info:
   version: 1.0.0
 servers:
   - url: https://www.danpat.store
+#  - url: http://localhost:8080
 security:
   - JWT_TOKEN: []
 paths:
@@ -502,7 +503,7 @@ paths:
               email: "chulsoo@example.com"
               phoneNumber: "010-1234-5678"
               birthdate: "yyyy:mm:dd"
-              callTime: "09:00 ~18:00"
+              callTime: "09:00 ~ 18:00"
               location:
                   zipcode: "12345"
                   address: "주소"
@@ -1415,19 +1416,20 @@ paths:
               schema:
                 type: string
               example: "성공적으로 즐겨찾기를 삭제하였습니다."
-  /chat/summaries:
+  /chat/summaries/{userId}:
     get:
       tags:
-        - chat-controller
+        - ChatController
       summary: "채팅 미리보기 요약들"
       description: "채팅 미리보기 요약들"
       operationId: getChatSummaries
       parameters:
-        - name: userIdRequest
-          in: query
+        - name: userId
+          in: path
           required: true
           schema:
-            $ref: "#/components/schemas/UserIdRequest"
+            type: integer
+            format: int64
       responses:
         "200":
           description: OK
@@ -1438,17 +1440,19 @@ paths:
               example:
                 chatSummaries:
                   - roomId: 1
+                    "lastMessageId": "67ba9a9640cfc70856b32efb",
                     lastMessageContent: "안녕하세요!"
-                    lastMessageTime: "2025-02-01T15:51:55.626Z"
+                    lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
                   - roomId: 2
+                    "lastMessageId": "67ba9a9640cfc70856b32efb",
                     lastMessageContent: "알바 하실래요?"
-                    lastMessageTime: "2025-02-01T15:51:55.626Z"
+                    lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
   /chat/room/{roomId}/chats:
     get:
       tags:
-        - chat-controller
+        - ChatController
       summary: "채팅방 채팅 내용 불러오기"
       description: "채팅방 채팅 내용 불러오기"
       operationId: getMessages
@@ -1476,19 +1480,19 @@ paths:
                 items:
                   $ref: "#/components/schemas/Chat"
               example:
-                - id: "msg-12345"
+                - id: "67ba8e75e6b233324dcde1cd"
                   content: "안녕하세요!"
-                  roomId: 0
+                  roomId: 1
                   senderId: 1
                   receiverId: 2
-                  sendTime: "2025-02-01T15:56:28.378Z"
+                  sendTime: "2025-02-23 11:37"
                   isRead: true
-                - id: "msg-67890"
+                - id: "67ba8a7a7a9ed367fa9b120b"
                   content: "네, 반갑습니다!"
-                  roomId: 0
+                  roomId: 1
                   senderId: 2
                   receiverId: 1
-                  sendTime: "2025-02-01T15:57:00.123Z"
+                  sendTime: "2025-02-23 11:39"
                   isRead: false
   /api/v1/employer/businesses:
     get:
