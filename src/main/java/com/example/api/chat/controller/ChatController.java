@@ -33,7 +33,7 @@ public class ChatController {
     }
 
     @GetMapping("/chat/summaries/{userId}")
-    public ResponseEntity<ChatSummaryResponse> getChatSummaries(final @PathVariable Long userId) {
+    public ResponseEntity<ChatSummaryResponse> getChatSummaries(@PathVariable final Long userId) {
         return ResponseEntity.ok(chatService.getChatSummaries(new UserIdRequest(userId)));
     }
 

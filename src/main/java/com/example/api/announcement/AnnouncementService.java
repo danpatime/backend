@@ -2,9 +2,14 @@ package com.example.api.announcement;
 
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementResponse;
+import com.example.api.announcement.dto.PageNumberRequest;
 import com.example.api.domain.Announcement;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.util.List;
@@ -28,9 +33,11 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public List<AnnouncementResponse> getAllAnnouncements() {
-        final List<Announcement> announcements = announcementRepository.findAll();
-        return announcements.stream()
+    public List<AnnouncementResponse> getAllAnnouncements(final PageNumberRequest pageRequest) {
+
+        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by("createdDate").descending());
+        Page<Announcement> announcements = announcementRepository.findAllByOrderByCreatedDateDesc(pageable);
+        return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)
                 .collect(Collectors.toList());
     }
@@ -66,10 +73,12 @@ public class AnnouncementService {
 
     @Transactional
     public List<AnnouncementResponse> searchAnnouncements(
-            @Validated final String keyword
+            @Validated final String keyword,
+            final PageNumberRequest pageRequest
     ) {
-        final List<Announcement> announcements = announcementRepository.findByAnnouncementTitleContaining(keyword);
-        return announcements.stream()
+        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by("createdDate").descending());
+        final Page<Announcement> announcements = announcementRepository.findByAnnouncementTitleContaining(keyword, pageable);
+        return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)
                 .collect(Collectors.toList());
     }

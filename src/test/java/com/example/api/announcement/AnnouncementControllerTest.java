@@ -3,11 +3,15 @@ package com.example.api.announcement;
 import com.example.api.announcement.controller.AnnouncementController;
 import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;
+import com.example.api.announcement.dto.PageNumberRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,11 +45,11 @@ class AnnouncementControllerTest {
     @Test
     void getAnnouncements_success() {
         final AnnouncementResponse response = createMockResponse();
-        when(announcementService.getAllAnnouncements())
+        when(announcementService.getAllAnnouncements(new PageNumberRequest(1)))
                 .thenReturn(List.of(response));
-        ResponseEntity<List<AnnouncementResponse>> result = announcementController.getAnnouncements();
+        ResponseEntity<List<AnnouncementResponse>> result = announcementController.getAnnouncements(1);
         assertGetAnnouncementsResponse(result);
-        verify(announcementService, times(1)).getAllAnnouncements();
+        verify(announcementService, times(1)).getAllAnnouncements(new PageNumberRequest(1));
     }
 
     private AnnouncementRequest createMockRequest() {
