@@ -21,6 +21,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.example.api.domain.Chat.utcToKstConvert;
 import static java.util.stream.Collectors.toList;
@@ -58,7 +61,16 @@ public class ChatService {
         List<ChatRoom> chatRooms = chatRoomRepository.findByUserId(requestUserId.userId());
         List<Long> chatRoomIds = chatRooms.stream().map(ChatRoom::getChatRoomId).toList();
         List<ChatSummary> chatSummaries = chatRepository.aggregateChatSummaries(chatRoomIds, requestUserId.userId());
-        return new ChatSummaryResponse(chatSummaries);
+
+        // 3️⃣ `chatSummaries`를 `roomId` 기준으로 Map으로 변환 (빠른 조회용)
+        Map<Long, ChatSummary> chatSummaryMap = chatSummaries.stream()
+                .collect(Collectors.toMap(ChatSummary::roomId, Function.identity(), (existing, replacement) -> existing));
+
+        List<ChatSummary> completedSummaries = chatRoomIds.stream()
+                .map(roomId -> chatSummaryMap.getOrDefault(roomId, new ChatSummary(roomId, null, null, null, 0L)))
+                .collect(Collectors.toList());
+
+        return new ChatSummaryResponse(completedSummaries);
     }
 
     @Transactional(readOnly = true)
