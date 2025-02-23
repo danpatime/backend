@@ -29,4 +29,3 @@ public class SearchController {
         return ResponseEntity.ok(results);
     }
 }
-
