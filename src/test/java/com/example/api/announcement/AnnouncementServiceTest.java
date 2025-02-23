@@ -2,12 +2,17 @@ package com.example.api.announcement;
 
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementResponse;
+import com.example.api.announcement.dto.PageNumberRequest;
 import com.example.api.domain.Announcement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,11 +59,12 @@ class AnnouncementServiceTest {
     void searchAnnouncements_success() {
         final String keyword = "공지";
         final Announcement announcement = createMockAnnouncementWithTitle(keyword);
-        when(announcementRepository.findByAnnouncementTitleContaining(keyword))
+        Pageable pageable = PageRequest.of(0, 20, Sort.by("createDate"));
+        when(announcementRepository.findByAnnouncementTitleContaining(keyword, pageable).getContent())
                 .thenReturn(List.of(announcement));
-        List<AnnouncementResponse> responses = announcementService.searchAnnouncements(keyword);
+        List<AnnouncementResponse> responses = announcementService.searchAnnouncements(keyword, new PageNumberRequest(1));
         assertSearchAnnouncementResponses(responses);
-        verify(announcementRepository, times(1)).findByAnnouncementTitleContaining(keyword);
+        verify(announcementRepository, times(1)).findByAnnouncementTitleContaining(keyword, pageable);
     }
 
     private AnnouncementCommand createMockCommand() {

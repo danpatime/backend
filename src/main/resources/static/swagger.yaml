@@ -4,8 +4,8 @@ info:
   description: 단팥 백엔드 API 명세서입니다.
   version: 1.0.0
 servers:
-  - url: https://www.danpat.store
-#  - url: http://localhost:8080
+#  - url: https://www.danpat.store
+  - url: http://localhost:8080
 security:
   - JWT_TOKEN: []
 paths:
@@ -1167,6 +1167,13 @@ paths:
       tags:
         - announcement-controller
       operationId: getAnnouncements
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         "200":
           description: OK
@@ -1576,7 +1583,13 @@ paths:
           required: true
           schema:
             type: string
-            example: "점검"
+            example: "긴급"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         "200":
           description: OK

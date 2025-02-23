@@ -4,6 +4,7 @@ import com.example.api.announcement.AnnouncementService;
 import com.example.api.announcement.dto.AnnouncementCommand;
 import com.example.api.announcement.dto.AnnouncementRequest;
 import com.example.api.announcement.dto.AnnouncementResponse;
+import com.example.api.announcement.dto.PageNumberRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,9 @@ public class AnnouncementController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AnnouncementResponse>> getAnnouncements() {
-        final List<AnnouncementResponse> responses = announcementService.getAllAnnouncements();
+    public ResponseEntity<List<AnnouncementResponse>> getAnnouncements(
+            @RequestParam(required = false, defaultValue = "1") final Integer page) {
+        final List<AnnouncementResponse> responses = announcementService.getAllAnnouncements(new PageNumberRequest(page));
         return ResponseEntity.ok(responses);
     }
 
@@ -60,9 +62,10 @@ public class AnnouncementController {
 
     @GetMapping("/search")
     public ResponseEntity<List<AnnouncementResponse>> searchAnnouncements(
-            @RequestParam(required = true) final String keyword
+            @RequestParam(required = true) final String keyword,
+            @RequestParam(required = false, defaultValue = "1") final Integer page
     ) {
-        final List<AnnouncementResponse> responses = announcementService.searchAnnouncements(keyword);
+        final List<AnnouncementResponse> responses = announcementService.searchAnnouncements(keyword, new PageNumberRequest(page));
         return ResponseEntity.ok(responses);
     }
 }
