@@ -38,13 +38,13 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
             ).with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
 
             if (lastChatId != null) {
-                query.addCriteria(Criteria.where("_id").lt(new ObjectId(lastChatId)));
+                query.addCriteria(Criteria.where("_id").lte(new ObjectId(lastChatId)));
             }
 
             return mongoTemplate.find(query, Chat.class);
         }
 
-  
+
 
     @Override
     public List<ChatSummary> aggregateChatSummaries(List<Long> roomIds, Long memberId) {

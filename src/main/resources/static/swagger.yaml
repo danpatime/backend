@@ -1440,12 +1440,12 @@ paths:
               example:
                 chatSummaries:
                   - roomId: 1
-                    "lastMessageId": "67ba9a9640cfc70856b32efb",
+                    lastMessageId: "67ba9a9640cfc70856b32efb"
                     lastMessageContent: "안녕하세요!"
                     lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
                   - roomId: 2
-                    "lastMessageId": "67ba9a9640cfc70856b32efb",
+                    lastMessageId: "67ba9a9640cfc70856b32efb"
                     lastMessageContent: "알바 하실래요?"
                     lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
