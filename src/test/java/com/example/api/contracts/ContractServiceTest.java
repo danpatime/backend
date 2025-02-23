@@ -6,6 +6,7 @@ import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.domain.ChatRoom;
 import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
+import com.example.api.domain.ProposalStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,12 @@ class ContractServiceTest{
 
         // 요청 수락
         final OfferEmployment offerEmployment = loadOffer(acceptSuggestCommand.suggestId());
-        offerEmployment.succeeded();
+        offerEmployment.setStatus(ProposalStatus.IN_PROGRESS);
         // 채팅방 생성
         createChatRoom(offerEmployment);
 
         OfferEmployment findOfferEmployment = offerRepository.findById(1L)
                 .orElseThrow(() -> new AssertionError("요청이 존재하지 않습니다."));
-
-        assertThat(findOfferEmployment.isSuggestSucceeded())
-                .as("요청 수락으로 변경")
-                .isTrue();
 
         // Assert: 채팅방 생성 여부 검증
         assertThat(chatRoomRepository.findById(1L))

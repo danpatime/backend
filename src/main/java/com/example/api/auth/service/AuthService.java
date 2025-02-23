@@ -114,6 +114,9 @@ public class AuthService {
         responseBody.put("accessToken", null);
         responseBody.put("userId", null);
         responseBody.put("userRole", null);
+        responseBody.put("name", null);
+        responseBody.put("profile", null);
+        responseBody.put("nickname", null);
         return new LoginSuccessResponse(null, responseBody);
     }
 

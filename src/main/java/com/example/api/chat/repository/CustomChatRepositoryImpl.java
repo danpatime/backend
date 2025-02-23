@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -34,18 +31,18 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
         mongoTemplate.updateMulti(query, update, Chat.class);
     }
 
-    @Override
-    public List<Chat> findChats(Long chatRoomID, String lastChatId) {
-        Query query = new Query(
-                Criteria.where("roomId").is(chatRoomID)
-        ).with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
+        @Override
+        public List<Chat> findChats(Long chatRoomID, String lastChatId) {
+            Query query = new Query(
+                    Criteria.where("roomId").is(chatRoomID)
+            ).with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
 
-        if (lastChatId != null) {
-            query.addCriteria(Criteria.where("_id").lt(new ObjectId(lastChatId)));
+            if (lastChatId != null) {
+                query.addCriteria(Criteria.where("_id").lt(new ObjectId(lastChatId)));
+            }
+
+            return mongoTemplate.find(query, Chat.class);
         }
-
-        return mongoTemplate.find(query, Chat.class);
-    }
 
   
 
@@ -58,8 +55,12 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
 
         AggregationOperation group = Aggregation.group("roomId")
                 .first("roomId").as("roomId")
-                .first("content").as("lastChatContent")
-                .first("sendTime").as("lastChatTime")
+                .first("content").as("lastMessageContent")
+                .first(DateOperators.DateToString.dateOf("sendTime")
+                        .toString("%Y-%m-%d %H:%M")  // ✅ 형식 설정
+                        .withTimezone(DateOperators.Timezone.valueOf("Asia/Seoul")))  // ✅ KST (UTC+9) 변환
+                .as("lastMessageTime")
+                .first(ConvertOperators.ToString.toString("$_id")).as("lastMessageId")
                 .sum(ConditionalOperators
                         .when(new Criteria().andOperator(
                                 Criteria.where("receiverId").is(memberId),
@@ -67,7 +68,7 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
                         ))
                         .then(1)
                         .otherwise(0))
-                .as("numberOfUnreadChats");
+                .as("numberOfUnreadMessages");
 
         Aggregation aggregation = Aggregation.newAggregation(match, sort, group);
 

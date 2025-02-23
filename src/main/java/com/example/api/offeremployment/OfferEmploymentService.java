@@ -29,9 +29,9 @@ public class OfferEmploymentService {
     public OfferEmploymentResponse sendOfferEmployment(final OfferEmploymentRequest offerEmploymentRequest) {
         final OfferEmploymentCommand offerEmploymentCommand = offerEmploymentRequest.toCommand();
         final Account employee = accountRepository.findById(offerEmploymentCommand.employeeId())
-                .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + offerEmploymentCommand.employeeId()));
+                .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
         final Business business = businessRepository.findById(offerEmploymentCommand.businessId())
-                .orElseThrow(() -> new IllegalArgumentException("Business not found with ID: " + offerEmploymentCommand.businessId()));
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUSINESS_DOMAIN_EXCEPTION));
         final OfferEmployment offerEmployment = OfferEmployment.fromCommand(
                 offerEmploymentCommand,
                 employee,
