@@ -25,7 +25,6 @@ public class ContractReviewController {
     private final ContractReviewService contractReviewService;
     private final ReviewQueryService reviewQueryService;
 
-
     /**
      * @param requestMemberId 고용자 ( employer ID ) 가 본인이 작성한 리뷰 목록 가져오기
      * @return

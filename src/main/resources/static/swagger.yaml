@@ -867,6 +867,7 @@ paths:
     get:
       tags:
         - announcement-controller
+      summary: "공지사항 세부 조회"
       operationId: getAnnouncement
       parameters:
         - name: announcementId
@@ -894,6 +895,7 @@ paths:
       tags:
         - announcement-controller
       operationId: updateAnnouncement
+      summary: "공지사항 업데이트"
       parameters:
         - name: announcementId
           in: path
@@ -927,6 +929,7 @@ paths:
     delete:
       tags:
         - announcement-controller
+      summary: "공지사항 삭제"
       operationId: deleteAnnouncement
       parameters:
         - name: announcementId
@@ -1138,7 +1141,8 @@ paths:
   /api/v1/support/inquiry:
     post:
       tags:
-        - inquiry-controller
+        - InquiryController
+      summary: "문의사항 작성"
       operationId: createInquiry
       requestBody:
         content:
@@ -1166,6 +1170,7 @@ paths:
     get:
       tags:
         - announcement-controller
+      summary: "공지사항 리스트 조회(20개씩 조회)"
       operationId: getAnnouncements
       parameters:
         - name: page
@@ -1197,6 +1202,7 @@ paths:
     post:
       tags:
         - announcement-controller
+      summary: "공지사항 작성"
       operationId: createAnnouncement
       requestBody:
         content:
@@ -1225,6 +1231,7 @@ paths:
     post:
       tags:
         - ReviewReportController
+      summary: "리뷰 신고하기"
       operationId: reportReview
       parameters:
         - name: reviewId
@@ -1297,7 +1304,8 @@ paths:
   /api/search/search:
     post:
       tags:
-        - search-controller
+        - SearchController
+      summary: "근무 가능 알바생 조회(알바 공고 검색)"
       operationId: searchAccounts
       requestBody:
         content:
@@ -1537,7 +1545,8 @@ paths:
   /api/v1/support/my-inquiries:
     get:
       tags:
-        - inquiry-controller
+        - InquiryController
+      summary: "나의 문의사항 조회"
       operationId: getMyInquiries
       parameters:
         - name: accountId
@@ -1576,6 +1585,7 @@ paths:
     get:
       tags:
         - announcement-controller
+      summary: "특정 키워드로 공지사항 검색(제목)"
       operationId: searchAnnouncements
       parameters:
         - name: keyword
@@ -1608,8 +1618,9 @@ paths:
   /api/v1/review:
     get:
       tags:
-        - review-controller
+        - ReviewController
       operationId: getAllReviews
+      summary: "알바 후기 전체 조회"
       responses:
         "200":
           description: OK
@@ -1637,8 +1648,9 @@ paths:
   /api/v1/review/{reviewId}:
     get:
       tags:
-        - review-controller
+        - ReviewController
       operationId: getReviewsByEmployee
+      summary: "특정 알바 후기 조회"
       parameters: [ ]
       responses:
         "200":
@@ -1660,7 +1672,8 @@ paths:
   /api/v1/review/my/reviews:
     get:
       tags:
-        - review-controller
+        - ReviewController
+      summary: "나를 대상으로 작성된 리뷰 보기"
       operationId: getMyReviews
       parameters:
         - name: accountId
@@ -1696,7 +1709,8 @@ paths:
   /api/v1/review/available:
     get:
       tags:
-        - review-controller
+        - ReviewController
+      summary: "작성할 수 있는 리뷰 목록 보기"
       operationId: getAvailableReviewTargets
       parameters:
         - name: businessId
