@@ -28,14 +28,13 @@ public enum ErrorCode {
     FAIL_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "-501", "이메일 전송에 실패하였습니다."),
     FAIL_SAVE_CODE(HttpStatus.INTERNAL_SERVER_ERROR, "-502", "코드 저장에 실패하였습니다."),
 
-
+    REVIEW_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "-501", "찾을 수 없는 리뷰"),
     ACCOUNT_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "찾을 수 없는 계정"),
 
     POSSIBLE_TIME_REGISTER_EXCEPTION(HttpStatus.BAD_REQUEST, "-401", "알바 가능 시간 등록 에러"),
     POSSIBLE_TIME_NULL_EXCEPTION(HttpStatus.BAD_REQUEST, "-402", "알바 가능 시간 존재 에러"),
 
     CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "카테고리 에러"),
-
 
     BUSINESS_DOMAIN_EXCEPTION(HttpStatus.BAD_REQUEST, "-700", "비즈니스 도메인 에러"),
 

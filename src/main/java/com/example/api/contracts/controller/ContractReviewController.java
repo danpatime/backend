@@ -1,10 +1,11 @@
 package com.example.api.contracts.controller;
 
+import com.example.api.announcement.dto.PageNumberRequest;
 import com.example.api.contracts.ReviewQueryService;
 import com.example.api.contracts.ContractReviewService;
 import com.example.api.contracts.dto.AddReviewCommand;
 import com.example.api.contracts.dto.QueryEmployersReviewCommand;
-import com.example.api.contracts.dto.ReviewResponse;
+import com.example.api.review.dto.ReviewResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -12,11 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,12 +26,13 @@ public class ContractReviewController {
      * @param requestMemberId 고용자 ( employer ID ) 가 본인이 작성한 리뷰 목록 가져오기
      * @return
      */
-    @GetMapping("/review/my")
+    @GetMapping("/review/my/employer")
     public ResponseEntity<List<ReviewResponse>> getMyReview(
-            @AuthenticationPrincipal final Long requestMemberId
+            @AuthenticationPrincipal final Long requestMemberId,
+            @RequestParam final Integer page
     ) {
         final QueryEmployersReviewCommand command = new QueryEmployersReviewCommand(requestMemberId);
-        return ResponseEntity.ok(reviewQueryService.loadReviewsWithEmployerId(command));
+        return ResponseEntity.ok(reviewQueryService.loadReviewsWithEmployerId(command, new PageNumberRequest(page)));
     }
 
     @PostMapping("/review")
@@ -50,12 +48,16 @@ public class ContractReviewController {
     record AddReviewRequest(
             @NotNull
             Long contractId,
+            @NotNull
+            Long businessId,
+            @NotNull
+            Long employeeId,
             @Range(min = 0, max = 5)
             Integer reviewScore,
             String reviewContent
     ) {
         AddReviewCommand toCommand(final Long requestMemberId) {
-            return new AddReviewCommand(requestMemberId, contractId, reviewContent, reviewScore);
+            return new AddReviewCommand(requestMemberId, businessId, employeeId, contractId, reviewContent, reviewScore);
         }
     }
 }

@@ -12,7 +12,7 @@ import static jakarta.persistence.FetchType.*;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Table(name = "FLAVORED_CATEGORY", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"EMPLOYEE_ID", "CATEGORY_ID"})
+        @UniqueConstraint(columnNames = {"EMPLOYEE_ID", "SUB_CATEGORY_ID"})
 })
 public class FlavoredCategory extends BaseEntity{
     @Id
