@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 
 @Entity
 @Getter
 @Table(name = "REVIEW")
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class Review extends BaseEntity {
     @Id
     @Column(name ="REVIEW_ID")
@@ -33,7 +34,9 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_CONTENT")
     private String reviewContent;
-    public Review(int reviewStarPoint, String reviewContent, Contract contract) {
+    public Review(Business business, Account employee, Integer reviewStarPoint, String reviewContent, Contract contract) {
+        this.writer = business;
+        this.employee = employee;
         this.reviewStarPoint = reviewStarPoint;
         this.reviewContent = reviewContent;
         this.contract = contract;

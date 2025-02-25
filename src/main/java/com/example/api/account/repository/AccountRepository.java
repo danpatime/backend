@@ -43,4 +43,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("select new com.example.api.setting.dto.EmailConsentResponse(a.emailReceivable) from Account a where a.accountId = :userId")
     Optional<EmailConsentResponse> findEmailReceivableById(@Param("userId") Long userId);
+
+    Optional<Account> findByAccountId(Long accountId);
 }

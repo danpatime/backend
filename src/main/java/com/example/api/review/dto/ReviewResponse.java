@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 
 public record ReviewResponse(
         Long reviewId, //Id
-        String businessName,
         Long businessId,
+        String businessName,
+        Long employeeId,
+        String employeeNickname,
         LocalDateTime contractStartTime,
         LocalDateTime contractEndTime,
         int reviewStarPoint,
@@ -15,8 +17,10 @@ public record ReviewResponse(
     public static ReviewResponse from(final Review review) {
         return new ReviewResponse(
                 review.getReviewId(),
-                review.getContract().getOfferEmployment().getBusiness().getBusinessName(),
-                review.getContract().getOfferEmployment().getBusiness().getBusinessId(),
+                review.getWriter().getBusinessId(),
+                review.getWriter().getBusinessName(),
+                review.getEmployee().getAccountId(),
+                review.getEmployee().getNickname(),
                 review.getContract().getContractStartTime(),
                 review.getContract().getContractEndTime(),
                 review.getReviewStarPoint(),

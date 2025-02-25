@@ -1,21 +1,24 @@
 package com.example.api.review.service;
 
+import com.example.api.announcement.dto.PageNumberRequest;
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.contracts.ContractRepository;
+import com.example.api.domain.Review;
+import com.example.api.global.exception.BusinessException;
+import com.example.api.global.exception.ErrorCode;
 import com.example.api.review.dto.ReviewResponse;
 import com.example.api.review.dto.ReviewAvailableCommand;
 import com.example.api.review.dto.ReviewAvailableResponse;
 import com.example.api.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-
-import com.example.api.domain.Review;
-import com.example.api.review.dto.ReviewCommand;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -23,62 +26,36 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ContractRepository contractRepository;
 
-    @Transactional
-    public List<ReviewResponse> getAllReviews() {
-        return reviewRepository.findReviewsByDynamicQuery(null)
-                .stream()
+    @Transactional(readOnly = true)  // 리뷰 전체 조회
+    public List<ReviewResponse> getAllReviews(final String nickname, final PageNumberRequest pageNumberRequest) {
+        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by("createdDate").descending());
+        return reviewRepository.findReviews(nickname, pageable).getContent();
+    }
+
+    @Transactional(readOnly = true)  // 리뷰 상세 조회
+    public ReviewResponse getReviewDetail(
+            @Validated final Long reviewId
+    ) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new BusinessException(ErrorCode.REVIEW_NOT_FOUND_EXCEPTION));
+        return ReviewResponse.from(review);
+    }
+
+    @Transactional(readOnly = true)  // 나를 대상으로 쓰인 리뷰 조회
+    public List<ReviewResponse> getMyReviews(
+            @Validated final EmployeeIdRequest employeeIdRequest,
+            final PageNumberRequest pageNumberRequest
+    ) {
+        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by("createdDate").descending());
+        return reviewRepository.findAllByEmployee_AccountId(employeeIdRequest.employeeId(), pageable).stream()
                 .map(ReviewResponse::from)
                 .toList();
     }
 
-    @Transactional
-    public List<ReviewResponse> getReviewsByEmployee(@Validated final Long reviewId) {
-        return reviewRepository.findReviewsByDynamicQuery(reviewId)
-                .stream()
-                .map(ReviewResponse::from)
-                .toList();
-    }
-
-    @Transactional
-    public List<ReviewResponse> getReviews(@Validated final ReviewCommand reviewCommand) {
-        final List<Review> reviews = reviewRepository.findReviewsByEmployee_AccountId(reviewCommand.accountId());
-        return mapToReviewResponses(reviews);
-    }
-
-    @Transactional
-    public List<ReviewResponse> getReviewsByEmployeeWithDetails(@Validated final ReviewCommand reviewCommand) {
-        final List<Review> reviews = reviewRepository.findReviewsByAccountIdWithDetails(reviewCommand.accountId());
-        return mapToReviewResponses(reviews);
-    }
-
-    private List<ReviewResponse> mapToReviewResponses(final List<Review> reviews) {
-        return reviews.stream()
-                .map(this::mapToReviewResponse)
-                .toList();
-    }
-
-    private ReviewResponse mapToReviewResponse(final Review review) {
-        final String businessName = review.getContract().getOfferEmployment().getBusiness().getBusinessName();
-        final Long businessId = review.getContract().getOfferEmployment().getBusiness().getBusinessId();
-        final LocalDateTime contractStartTime = review.getContract().getContractStartTime();
-        final LocalDateTime contractEndTime = review.getContract().getContractEndTime();
-        final int reviewStarPoint = review.getReviewStarPoint();
-        final String reviewContent = review.getReviewContent();
-
-        return new ReviewResponse(
-                review.getReviewId(),
-                businessName,
-                businessId,
-                contractStartTime,
-                contractEndTime,
-                reviewStarPoint,
-                reviewContent
-        );
-    }
-
-    @Transactional
+    @Transactional(readOnly = true)  // 작성 가능한 리뷰 조회
     public List<ReviewAvailableResponse> getAvailableReviewTargets(
-            final ReviewAvailableCommand command) {
-        return contractRepository.findAvailableReviewsByBusinessId(command.businessId());
+            final ReviewAvailableCommand command,
+            final PageNumberRequest pageNumberRequest) {
+        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by("createdDate").descending());
+        return contractRepository.findAvailableReviewsByBusinessId(command.businessId(), pageable).getContent();
     }
 }

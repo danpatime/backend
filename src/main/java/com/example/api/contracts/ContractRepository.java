@@ -12,6 +12,8 @@ import java.util.Optional;
 import com.example.api.domain.PossibleBoard;
 import com.example.api.review.dto.ReviewAvailableResponse;
 import com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,15 +43,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("SELECT c FROM Contract c JOIN FETCH c.offerEmployment JOIN FETCH c.offerEmployment.business.employer WHERE c.contractId = :contractId")
     Optional<Contract> loadContractWithOfferEmployment(@Param("contractId") final Long contractId);
 
-    @Query("select new com.example.api.review.dto." +
-            "ReviewAvailableResponse(e.accountId, e.name) " +
-            "from Contract c " +
-            "join c.offerEmployment oe " +
-            "join oe.employee e " +
-            "join oe.business b " +
-            "where b.businessId = :businessId and oe.status = 'TERMINATED'")
-    List<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId);
-
     @Query("select new com.example.api.suggest.controller.dto.request.OfferEmploymentDetailRequest(e.name, b.businessName, oe.status, c.contractHourlyPay, c.contractStartTime, c.contractEndTime, cr.chatRoomId) " +
             "from Contract c " +
             "join c.offerEmployment oe " +
@@ -65,4 +58,14 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "Join oe.business b on oe.business.businessId = b.businessId " +
             "where oe.employee.accountId = :employeeId and c.contractStartTime >= :currentMonth")
     List<ContractDetailRequest> findScheduleFromCurrentMonth(@Param("employeeId")Long employeeId, @Param("currentMonth") LocalDateTime currentMonth);
+
+    @Query("select new com.example.api.review.dto." +
+            "ReviewAvailableResponse(e.accountId, e.name) " +
+            "from Contract c " +
+            "join c.offerEmployment oe " +
+            "join oe.employee e " +
+            "join oe.business b " +
+            "where b.businessId = :businessId and oe.status = 'TERMINATED' " +
+            "and c.contractId not in (select r.contract.contractId from Review r)")
+    Page<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId, Pageable pageable);
 }

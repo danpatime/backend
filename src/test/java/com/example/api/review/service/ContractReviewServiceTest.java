@@ -2,7 +2,8 @@ package com.example.api.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.api.review.dto.ReviewCommand;
+import com.example.api.announcement.dto.PageNumberRequest;
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.review.dto.ReviewResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,18 +22,18 @@ public class ContractReviewServiceTest {
     }
 
     @Test
-    void testGetReviews() {
-        ReviewCommand reviewCommand = new ReviewCommand(1L);
-        List<ReviewResponse> reviews = reviewService.getReviews(reviewCommand);
+    void testGetMyReviews() {
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(1L);
+        List<ReviewResponse> reviews = reviewService.getMyReviews(employeeIdRequest, new PageNumberRequest(1));
         assertThat(reviews).isNotEmpty();
         assertThat(reviews.get(0).businessName()).isEqualTo("Tech Solutions Inc.");
         assertThat(reviews.get(0).reviewContent()).isEqualTo("Good work");
     }
 
     @Test
-    void testGetReviewsWhenNoReviews() {
-        ReviewCommand reviewCommand = new ReviewCommand(999L);
-        List<ReviewResponse> reviews = reviewService.getReviews(reviewCommand);
+    void testGetReviewsWhenNoMyReviews() {
+        EmployeeIdRequest employeeIdRequest = new EmployeeIdRequest(999L);
+        List<ReviewResponse> reviews = reviewService.getMyReviews(employeeIdRequest, new PageNumberRequest(1));
         assertThat(reviews).isEmpty();
     }
 }

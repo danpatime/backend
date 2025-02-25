@@ -16,7 +16,7 @@ import java.util.List;
 public class SearchController {
     private final SearchService searchService;
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public ResponseEntity<List<SearchResponse>> searchAccounts(
             @RequestBody @Validated final SearchRequest request
     ) {
