@@ -34,6 +34,7 @@ public class BusinessService {
         final Business targetBusiness = businessRepository.findById(command.businessId())
                 .orElseThrow();
         businessUpdateManager.update(targetBusiness, command);
+        businessRepository.save(targetBusiness);
     }
 
     @Transactional

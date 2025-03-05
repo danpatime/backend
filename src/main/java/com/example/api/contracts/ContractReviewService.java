@@ -3,12 +3,16 @@ package com.example.api.contracts;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.business.BusinessRepository;
 import com.example.api.contracts.dto.AddReviewCommand;
+import com.example.api.contracts.dto.DeleteReviewRequest;
+import com.example.api.contracts.update.ContractReviewManager;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
 import com.example.api.domain.Contract;
 import com.example.api.domain.Review;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
+import com.example.api.review.dto.ModifyReviewRequest;
+import com.example.api.review.dto.ReviewResponse;
 import com.example.api.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,7 @@ public class ContractReviewService {
     private final ReviewRepository reviewRepository;
     private final BusinessRepository businessRepository;
     private final AccountRepository accountRepository;
+    private final ContractReviewManager contractReviewManager;
 
     @Transactional
     public void saveReview(@Validated final AddReviewCommand command) {
@@ -38,5 +43,18 @@ public class ContractReviewService {
         if (!business.getEmployer().getAccountId().equals(requestMemberId)) {
             throw new BusinessException("본인의 계약에만 리뷰가 가능합니다", ErrorCode.CONTRACT_EXCEPTION);
         }
+    }
+
+    @Transactional
+    public ReviewResponse modifyReview(@Validated final ModifyReviewRequest command) {
+        Review review = reviewRepository.findById(command.reviewId()).orElseThrow(() -> new BusinessException(ErrorCode.REVIEW_NOT_FOUND_EXCEPTION));
+        contractReviewManager.update(review, command);
+        Review savedReview = reviewRepository.save(review);
+        return ReviewResponse.from(savedReview);
+    }
+
+    @Transactional
+    public void deleteReview(final DeleteReviewRequest deleteReviewRequest) {
+        reviewRepository.deleteById(deleteReviewRequest.reviewId());
     }
 }

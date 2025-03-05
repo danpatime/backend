@@ -41,6 +41,14 @@ public class Review extends BaseEntity {
         this.reviewContent = reviewContent;
         this.contract = contract;
     }
+
+    public void setReviewStarPoint(int reviewStarPoint) {
+        this.reviewStarPoint = reviewStarPoint;
+    }
+
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
 }
 
 

@@ -1,14 +1,11 @@
 package com.example.api.contracts;
 
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.domain.*;
-
-import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,6 @@ import java.util.List;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.example.api.offeremployment.entity.OfferEmploymentMapper;
-import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -81,7 +77,6 @@ public class ContractService {
             possibleBoardRepository.saveAll(updatedWorkHours);
         }
     }
-
 
     private Contract loadContract(final Long contractId) {
         return contractRepository.findById(contractId)

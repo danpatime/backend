@@ -30,9 +30,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
+            String requestURI = request.getRequestURI();
+
+            // 🔹 refresh 요청은 필터 검증 제외
+            if (requestURI.equals("/api/v1/auth/refresh")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             String accessToken = jwtTokenProvider.extractAccessToken(request);
             if (accessToken != null) {
                 if (!jwtTokenProvider.isNotExpiredToken(accessToken)) {
+                    log.info("ExpiredToken: {}", accessToken);
                     throw new BusinessException(ErrorCode.EXPIRED_ACCESS_TOKEN.getErrorDescription(), ErrorCode.EXPIRED_ACCESS_TOKEN);
                 }
 

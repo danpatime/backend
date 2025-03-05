@@ -8,12 +8,14 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
 
@@ -71,7 +73,8 @@ public class JwtTokenProvider {
                     .getBody();
             return claims.get("userId", Long.class);
         } catch (ExpiredJwtException e) {
-            throw new BusinessException(ErrorCode.EXPIRED_ACCESS_TOKEN);
+            log.info("getUserIdFromToken Error: {}", token);
+            throw new BusinessException(ErrorCode.EXPIRED_REFRESH_TOKEN);
         } catch (Exception e) {
             throw new BusinessException(ErrorCode.INVALID_TOKEN);
         }

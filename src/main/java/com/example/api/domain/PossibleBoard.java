@@ -37,4 +37,3 @@ public class PossibleBoard extends BaseEntity{
         this.endTime = endTime;
     }
 }
-

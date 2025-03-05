@@ -12,6 +12,7 @@ import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
@@ -68,6 +70,7 @@ public class AuthService {
         responseBody.put("name", user.getName());
         responseBody.put("profile", profile);
         responseBody.put("nickname", user.getNickname());
+        responseBody.put("email", user.getEmail());
         return new LoginSuccessResponse(refreshTokenCookie, responseBody);
     }
 
@@ -117,6 +120,7 @@ public class AuthService {
         responseBody.put("name", null);
         responseBody.put("profile", null);
         responseBody.put("nickname", null);
+        responseBody.put("email", null);
         return new LoginSuccessResponse(null, responseBody);
     }
 

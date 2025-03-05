@@ -1,7 +1,7 @@
 package com.example.api.search.controller;
 
-import com.example.api.search.SearchService;
-import com.example.api.search.dto.SearchCommand;
+import com.example.api.announcement.dto.PageNumberRequest;
+import com.example.api.search.service.SearchService;
 import com.example.api.search.dto.SearchRequest;
 import com.example.api.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +18,10 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<List<SearchResponse>> searchAccounts(
-            @RequestBody @Validated final SearchRequest request
+            @ModelAttribute @Validated final SearchRequest request,
+            @RequestParam(required = false, defaultValue = "1") final Integer page
     ) {
-        final SearchCommand command = new SearchCommand(
-                request.category(),
-                request.startTime(),
-                request.endTime()
-        );
-        final List<SearchResponse> results = searchService.searchAccounts(command);
+        final List<SearchResponse> results = searchService.searchAccounts(request, new PageNumberRequest(page));
         return ResponseEntity.ok(results);
     }
 }
