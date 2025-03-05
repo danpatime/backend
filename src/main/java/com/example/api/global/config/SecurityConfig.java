@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/ws", "/ws/**").permitAll()  // WebSocket 요청 허용
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger.yaml").permitAll()  // Swagger 문서 허용
-                        .requestMatchers("/api/v1/auth/login", "/oauth2/**").permitAll()  // 로그인 & OAuth2 허용
+                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/refresh","/oauth2/**").permitAll()  // 로그인 & OAuth2 허용
                         .requestMatchers("/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.webp", "/**/*.svg",
                                 "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()  // 정적 리소스 허용
                         .requestMatchers("/api/v1/account/**", "/aws", "/health", "/error").permitAll()  // 특정 API 엔드포인트 허용

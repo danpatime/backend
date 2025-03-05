@@ -2,6 +2,7 @@ package com.example.api.review.controller;
 
 import com.example.api.announcement.dto.PageNumberRequest;
 import com.example.api.board.dto.request.EmployeeIdRequest;
+import com.example.api.review.dto.ModifyReviewRequest;
 import com.example.api.review.service.ReviewService;
 import com.example.api.review.dto.ReviewResponse;
 import com.example.api.review.dto.ReviewAvailableCommand;
@@ -26,7 +27,6 @@ public class ReviewController {
             @RequestParam(defaultValue = "1", required = false) final Integer page,
             @RequestParam(required = false) final String nickname
     ) {
-        log.info("nickname = {}", nickname);
         final List<ReviewResponse> reviews = reviewService.getAllReviews(nickname, new PageNumberRequest(page));
         return ResponseEntity.ok(reviews);
     }

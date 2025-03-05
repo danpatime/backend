@@ -32,9 +32,9 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<Map<String, String>> refresh(
-            @Valid @RequestBody final RefreshTokenRequest refreshTokenRequest,
+            @Valid @CookieValue(value = "refreshToken") final String refreshToken,
             HttpServletResponse response) {
-        LoginSuccessResponse loginSuccessResponse = authService.refreshAuthToken(refreshTokenRequest);
+        LoginSuccessResponse loginSuccessResponse = authService.refreshAuthToken(new RefreshTokenRequest(refreshToken));
         response.addCookie(loginSuccessResponse.refreshTokenCookie());
         return ResponseEntity.ok(loginSuccessResponse.responseBody());
     }

@@ -65,7 +65,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             "join c.offerEmployment oe " +
             "join oe.employee e " +
             "join oe.business b " +
-            "where b.businessId = :businessId and oe.status = 'TERMINATED' " +
+            "where b.businessId = :businessId and oe.status = 'COMPLETED' " +
             "and c.contractId not in (select r.contract.contractId from Review r)")
     Page<ReviewAvailableResponse> findAvailableReviewsByBusinessId(@Param("businessId") Long businessId, Pageable pageable);
 }

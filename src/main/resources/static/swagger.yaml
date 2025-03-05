@@ -206,6 +206,10 @@ paths:
                 accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                 userId: "123"
                 userRole: "EMPLOYEE"
+                name: "이름"
+                profile: "프로필"
+                nickname: "닉네임"
+                email: "이메일"
   /api/v1/auth/refresh:
     post:
       tags:
@@ -213,14 +217,6 @@ paths:
       summary: "refreshToken으로 accessToken 재발급 요청"
       description: "refreshToken으로 accessToken 재발급 요청"
       operationId: refresh
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RefreshTokenRequest"
-            example:
-              refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        required: true
       responses:
         "200":
           description: OK
@@ -234,6 +230,10 @@ paths:
                 accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                 userId: "123"
                 userRole: "EMPLOYEE"
+                name: "이름"
+                profile: "프로필"
+                nickname: "닉네임"
+                email: "이메일"
   /api/v1/auth/logout:
     post:
       tags:
@@ -254,6 +254,10 @@ paths:
                 accessToken: null
                 userId: null
                 userRole: null
+                name: null
+                profile: null
+                nickname: null
+                email: null
   /api/v1/possible-board:
     post:
       tags:
@@ -1325,22 +1329,105 @@ paths:
                   contractEndTime: "2025-01-05T19:00:00"
                   reviewStarPoint: 4
                   reviewContent: "업무 진행이 원활했습니다."
+  /api/v1/contracts/review/modify:
+    put:
+      tags:
+        - ContractReviewController
+      summary: "리뷰 수정하기"
+      description: "리뷰 수정하기"
+      operationId: modifyReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifyReviewRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              example: "성공적으로 삭제되었습니다."
+  /api/v1/contracts/review/delete:
+    delete:
+      tags:
+        - ContractReviewController
+      summary: "리뷰 삭제하기"
+      description: "리뷰 삭제하기"
+      operationId: modifyReview
+      parameters:
+        - name: reviewId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              example: "성공적으로 삭제되었습니다."
   /api/search/search:
     get:
       tags:
         - SearchController
       summary: "근무 가능 알바생 조회(알바 공고 검색)"
       operationId: searchAccounts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SearchRequest"
-            example:
-              category: "IT"
-              startTime: "2025-01-01T09:00:00"
-              endTime: "2025-01-01T18:00:00"
-        required: true
+      parameters:
+        - name: sido
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "경기"
+        - name: sigugun
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "남양주시"
+        - name: dong
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "별내동"
+        - name: subCategoryId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          example: 8002
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2025-02-26"
+        - name: startTime
+          in: query
+          required: false
+          schema:
+            type: string
+            format: time
+          example : "14:00"
+        - name: endTime
+          in: query
+          required: false
+          schema:
+            type: string
+            format: time
+          example: "16:00"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 1
+
       responses:
         "200":
           description: OK
@@ -1351,16 +1438,72 @@ paths:
                 items:
                   $ref: "#/components/schemas/SearchResponse"
                 example:
-                  - name: "John Doe"
+                  - employeeId : 2
+                    name: "John Doe"
                     sex: "Male"
                     age: 30
                     starPoint: 4.5
-                    workCount: 50
-                  - name: "Jane Smith"
+                    workCount: 7
+                    externalCareerList:
+                      - externalCareerId: 1
+                        category:
+                          - categoryId: 1
+                            categoryName: "외식•음료"
+                        workCount: 1
+                      - externalCareerId: 2
+                        category:
+                          - categoryId: 2
+                            categoryName: "유통•판매"
+                        workCount: 1
+                    flavoredCategoryList:
+                      - categoryId: 1
+                        categoryName: "외식•음료"
+                        subCategoryId: 1001
+                        subCategoryName: "전체"
+                      - categoryId: 2
+                        categoryName: "유통•판매"
+                        subCategoryId: 1001
+                        subCategoryName: "전체"
+                    flavoredDistrictList:
+                      - sido: "경기"
+                        sigugun: "남양주시"
+                        dong: "별내동"
+                      - sido: "경기"
+                        sigugun: "남양주시"
+                        dong: "별내동"
+                  - employeeId : 3
+                    name: "Jane Smith"
                     sex: "Female"
                     age: 28
                     starPoint: 4.8
-                    workCount: 60
+                    workCount: 5
+                    externalCareerList:
+                      - externalCareerId: 1
+                        category:
+                          - categoryId: 1
+                            categoryName: "외식•음료"
+                        workCount: 1
+                      - externalCareerId: 2
+                        category:
+                          - categoryId: 2
+                            categoryName: "유통•판매"
+                        workCount: 1
+                    flavoredCategoryList:
+                      - categoryId: 1
+                        categoryName: "외식•음료"
+                        subCategoryId: 1001
+                        subCategoryName: "전체"
+                      - categoryId: 2
+                        categoryName: "유통•판매"
+                        subCategoryId: 1001
+                        subCategoryName: "전체"
+                    flavoredDistrictList:
+                      - sido: "경기"
+                        sigugun: "남양주시"
+                        dong: "별내동"
+                      - sido: "경기"
+                        sigugun: "남양주시"
+                        dong: "별내동"
   /api/v1/employer/favorites/employees:
     get:
       tags:
@@ -1682,7 +1825,7 @@ paths:
                     businessName: "또 다른 사업장"
                     businessId: 20
                     employeeId: 3,
-                    employeeNickname: "닉네임2",
+                    employeeNickname: "닉네임2"
                     contractStartTime: "2025-01-02T09:00:00"
                     contractEndTime: "2025-01-02T18:00:00"
                     reviewStarPoint: 4
@@ -2487,17 +2630,29 @@ components:
     SearchRequest:
       type: object
       properties:
-        category:
+        sido:
           type: string
+        sigugun:
+          type: string
+        dong:
+          type: string
+        categoryId:
+          type: integer
+        date:
+          type: string
+          format: date
         startTime:
           type: string
-          format: date-time
+          pattern: "^([0-1][0-9]|2[0-3]):([0-5][0-9])$"
+          example: "09:00"
         endTime:
-          type: string
-          format: date-time
+          pattern: "^([0-1][0-9]|2[0-3]):([0-5][0-9])$"
+          example: "09:00"
     SearchResponse:
       type: object
       properties:
+        employeeId:
+          type: integer
         name:
           type: string
         sex:
@@ -2511,6 +2666,12 @@ components:
         workCount:
           type: integer
           format: int32
+        externalCareerList:
+          type: array
+        flavoredCategoryList:
+          type: array
+        flavoredDistrictList:
+          type: array
     UserIdRequest:
       type: object
       properties:
@@ -2726,6 +2887,19 @@ components:
         receivable:
           type: boolean
           example: true
+
+    ModifyReviewRequest:
+      type: object
+      properties:
+        reviewId:
+          type: integer
+          example: 2
+        reviewScore:
+          type: integer
+          example: 5
+        reviewContent:
+          type: string
+          example: "일 잘하네여"
 
   securitySchemes:
     JWT_TOKEN:
