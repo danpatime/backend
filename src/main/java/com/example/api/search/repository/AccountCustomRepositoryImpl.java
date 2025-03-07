@@ -50,6 +50,7 @@ public class AccountCustomRepositoryImpl implements AccountCustomRepository {
                 .groupBy(employee.accountId)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(employee.createdDate.desc())
                 .fetch();
 
         long total = Optional.ofNullable(queryFactory

@@ -23,7 +23,7 @@ public class ReviewQueryService {
             final QueryEmployersReviewCommand command,
             final PageNumberRequest pageNumberRequest
     ) {
-        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1, 15, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1, 15, Sort.by(Sort.Direction.DESC,"createdDate"));
         return reviewRepository.loadReviewsByEmployerId(command.employerId(), pageable).getContent()
                 .stream()
                 .map(ReviewResponse::from)

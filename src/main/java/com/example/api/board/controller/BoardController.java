@@ -106,13 +106,25 @@ public class BoardController {
     }
 
     @PostMapping("/work-hours")
-    public ResponseEntity<?> updatePossibleTimes(
+    public ResponseEntity<List<WorkHourResponse>> updatePossibleTimes(
             @RequestBody final AddPossibleTimeRequest addPossibleTimeRequest,
             @AuthenticationPrincipal final Long requestMemberId
     ) {
         final AddPossibleTimeCommand addPossibleTimeCommand = addPossibleTimeRequest.toCommand(requestMemberId);
         boardService.addPossibleBoard(addPossibleTimeCommand);
-        return ResponseEntity.ok().build();
+        List<WorkHourResponse> workHours = boardService.getWorkHours(new EmployeeIdRequest(requestMemberId));
+        return ResponseEntity.ok(workHours);
+    }
+
+    @PostMapping("/work-hours/delete")
+    public ResponseEntity<List<WorkHourResponse>> deletePossibleTimes(
+            @RequestBody final AddPossibleTimeRequest addPossibleTimeRequest,
+            @AuthenticationPrincipal final Long requestMemberId
+    ) {
+        final AddPossibleTimeCommand addPossibleTimeCommand = addPossibleTimeRequest.toCommand(requestMemberId);
+        boardService.deletePossibleTimes(addPossibleTimeCommand);
+        List<WorkHourResponse> workHours = boardService.getWorkHours(new EmployeeIdRequest(requestMemberId));
+        return ResponseEntity.ok(workHours);
     }
 
     @PostMapping()

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -68,6 +69,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return path.startsWith("/api/v1/account/") || path.startsWith("/api/v1/auth/login");
+        List<String> notFilterURIs = List.of("/api/v1/review", "/api/search/search");
+
+        if (notFilterURIs.stream().anyMatch(path::equals)) {
+            return true;
+        }
+
+        return path.startsWith("/api/v1/account") || path.startsWith("/api/v1/auth/login");
     }
+
 }
