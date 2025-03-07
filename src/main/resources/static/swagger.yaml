@@ -450,11 +450,57 @@ paths:
               schema:
                 type: object
               example:
-                possibleTimes:
-                  - startTime: "2025-02-10T09:00:00"
-                    endTime: "2025-02-10T18:00:00"
-                  - startTime: "2025-02-13T10:00:00"
-                    endTime: "2025-02-13T19:00:00"
+                - id: 101
+                  title: null
+                  startTime: "2024-02-01T09:00:00"
+                  endTime: "2024-02-01T18:00:00"
+                  status: "AVAILABLE"
+                - id: 102
+                  title: "김태영닷컴"
+                  startTime: "2024-02-02T10:00:00"
+                  endTime: "2024-02-02T19:00:00"
+                  status: "COMPLETED"
+  /api/v1/possible-board/work-hours/delete:
+    post:
+      tags:
+        - BoardController
+      summary: "알바생이 근무 가능 시간 삭제 요청"
+      description: "알바생이 근무 가능 시간 삭제 요청"
+      operationId: deletePossibleTimes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddPossibleTimeRequest"
+            example:
+              possibleTimes:
+                - startTime: "2025-02-10T09:00:00"
+                  endTime: "2025-02-10T18:00:00"
+                - startTime: "2025-02-13T10:00:00"
+                  endTime: "2025-02-13T19:00:00"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+              example:
+                - id: 101
+                  title: null
+                  startTime: "2024-02-01T09:00:00"
+                  endTime: "2024-02-01T18:00:00"
+                  status: "AVAILABLE"
+                - id: 102
+                  title: "김태영닷컴"
+                  startTime: "2024-02-02T10:00:00"
+                  endTime: "2024-02-02T19:00:00"
+                  status: "COMPLETED"
+
+
+
+
   /api/v1/possible-board/personal-info:
     get:
       tags:

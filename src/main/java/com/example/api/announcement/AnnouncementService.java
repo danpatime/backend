@@ -35,7 +35,7 @@ public class AnnouncementService {
     @Transactional
     public List<AnnouncementResponse> getAllAnnouncements(final PageNumberRequest pageRequest) {
 
-        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by(Sort.Direction.DESC, "createdDate"));
         Page<Announcement> announcements = announcementRepository.findAllByOrderByCreatedDateDesc(pageable);
         return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)
@@ -76,7 +76,7 @@ public class AnnouncementService {
             @Validated final String keyword,
             final PageNumberRequest pageRequest
     ) {
-        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by(Sort.Direction.DESC,"createdDate"));
         final Page<Announcement> announcements = announcementRepository.findByAnnouncementTitleContaining(keyword, pageable);
         return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)

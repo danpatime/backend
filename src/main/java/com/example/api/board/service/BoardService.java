@@ -211,4 +211,12 @@ public class BoardService {
         accountRepository.save(user);
         return new IntroductionResponse(request.introduction());
     }
+
+    @Transactional
+    public void deletePossibleTimes(AddPossibleTimeCommand addPossibleTimeCommand) {
+        final List<PossibleTime> possibleTimes = addPossibleTimeCommand.possibleTimes().stream()
+                .map(possibleTimeRange -> new PossibleTime(possibleTimeRange.startTime(), possibleTimeRange.endTime()))
+                .collect(Collectors.toList());
+        deleteDuplicatedPeriod(possibleTimes);
+    }
 }

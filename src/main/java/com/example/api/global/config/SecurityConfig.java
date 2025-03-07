@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/refresh","/oauth2/**").permitAll()  // 로그인 & OAuth2 허용
                         .requestMatchers("/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.webp", "/**/*.svg",
                                 "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()  // 정적 리소스 허용
-                        .requestMatchers("/api/v1/account/**", "/aws", "/health", "/error").permitAll()  // 특정 API 엔드포인트 허용
+                        .requestMatchers("/api/v1/account/**", "/aws", "/api/v1/review", "/api/search/search", "/health", "/error").permitAll()  // 특정 API 엔드포인트 허용
                         .requestMatchers("/api/v1/possible-board", "/api/v1/possible-board/**").hasRole("EMPLOYEE")
                         .anyRequest().authenticated() //  그 외 모든 요청은 인증 필요
                 )
@@ -83,7 +83,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "https://www.danpat.store", "http://127.0.0.1:5500", "https://jiangxy.github.io"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "https://www.danpat.store",
+                "http://127.0.0.1:5500", "https://jiangxy.github.io", "https://kauth.kakao.com"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);

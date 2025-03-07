@@ -53,6 +53,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 .where(nicknameContains(nickname))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(review.createdDate.desc())
                 .fetch();
 
         long total = Optional.ofNullable(queryFactory
