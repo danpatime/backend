@@ -1,6 +1,5 @@
 package com.example.api.inquiry.controller;
 
-import com.example.api.domain.Account;
 import com.example.api.domain.Inquiry;
 import com.example.api.inquiry.InquiryService;
 import com.example.api.inquiry.dto.InquiryRequest;
@@ -8,6 +7,7 @@ import com.example.api.inquiry.dto.InquiryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController

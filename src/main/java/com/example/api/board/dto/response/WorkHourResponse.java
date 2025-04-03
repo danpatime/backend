@@ -13,8 +13,8 @@ public record WorkHourResponse(
         LocalDateTime endTime,
         Status status
 ) {
-        public enum Status {
-                COMPLETED,
-                AVAILABLE
-        }
+    public enum Status {
+        COMPLETED,
+        AVAILABLE
+    }
 }

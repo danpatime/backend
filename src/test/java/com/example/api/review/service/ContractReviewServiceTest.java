@@ -1,7 +1,5 @@
 package com.example.api.review.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.example.api.announcement.dto.PageNumberRequest;
 import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.review.dto.ReviewResponse;
@@ -11,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class ContractReviewServiceTest {

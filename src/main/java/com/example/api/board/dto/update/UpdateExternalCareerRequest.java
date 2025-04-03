@@ -8,5 +8,6 @@ public record UpdateExternalCareerRequest(
     public record ExternalCareerRequest(
             Long subCategoryId,
             Integer workCount
-    ){}
+    ) {
+    }
 }

@@ -9,23 +9,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class AnnouncementControllerTest {
-    @InjectMocks
-    private AnnouncementController announcementController;
-    @Mock
-    private AnnouncementService announcementService;
     private static final String DEFAULT_TITLE = "공지사항 제목";
     private static final String DEFAULT_TYPE = "공지사항";
     private static final String DEFAULT_CONTENT = "공지사항 내용";
     private static final int DEFAULT_VIEW_COUNT = 100;
+    @InjectMocks
+    private AnnouncementController announcementController;
+    @Mock
+    private AnnouncementService announcementService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);

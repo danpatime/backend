@@ -1,7 +1,8 @@
 package com.example.api.contracts.dto;
 
-import java.time.LocalDateTime;
 import org.springframework.lang.NonNull;
+
+import java.time.LocalDateTime;
 
 public record UpdateContractConditionCommand(
         @NonNull

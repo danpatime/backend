@@ -26,7 +26,7 @@ public record SearchRequest(
     }
 
 
-    public LocalDateTime getEndDateTime(){
+    public LocalDateTime getEndDateTime() {
         if (this.date == null || this.endTime == null) {
             return null;
         }

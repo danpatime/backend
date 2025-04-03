@@ -7,7 +7,7 @@ servers:
   - url: https://www.danpat.store
 #  - url: http://localhost:8080
 security:
-  - JWT_TOKEN: []
+  - JWT_TOKEN: [ ]
 paths:
   /api/v1/account/validation/business-number:
     post:
@@ -516,24 +516,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/PersonalInfoResponse"
               example:
-                  name: "김태영"
-                  nickname: "김태일"
-                  age: 25
-                  sex: "남"
-                  email: "chulsoo@example.com"
-                  phoneNumber: "010-1234-5678"
-                  profile: "https://danpat.s3.ap-northeast-2.amazonaws.com/user-uploads/1/profile.png"
-                  birthdate: "yyyy.mm.dd"
-                  callTime: "hh:mm~hh:mm"
-                  starPoint: 4.5
-                  workCount: 100
-                  location:
-                    zipcode: "12345"
-                    address: "주소"
-                    detailAddress: "상세 주소"
-                    sido: "경기"
-                    sigugun: "남양주시"
-                    dong: "별내면"
+                name: "김태영"
+                nickname: "김태일"
+                age: 25
+                sex: "남"
+                email: "chulsoo@example.com"
+                phoneNumber: "010-1234-5678"
+                profile: "https://danpat.s3.ap-northeast-2.amazonaws.com/user-uploads/1/profile.png"
+                birthdate: "yyyy.mm.dd"
+                callTime: "hh:mm~hh:mm"
+                starPoint: 4.5
+                workCount: 100
+                location:
+                  zipcode: "12345"
+                  address: "주소"
+                  detailAddress: "상세 주소"
+                  sido: "경기"
+                  sigugun: "남양주시"
+                  dong: "별내면"
     post:
       tags:
         - BoardController
@@ -555,12 +555,12 @@ paths:
               birthdate: "yyyy:mm:dd"
               callTime: "09:00 ~ 18:00"
               location:
-                  zipcode: "12345"
-                  address: "주소"
-                  detailAddress: "상세 주소"
-                  sido: "경기"
-                  sigugun: "남양주시"
-                  dong: "별내면"
+                zipcode: "12345"
+                address: "주소"
+                detailAddress: "상세 주소"
+                sido: "경기"
+                sigugun: "남양주시"
+                dong: "별내면"
         required: true
       responses:
         "200":
@@ -892,6 +892,7 @@ paths:
                   businessName: "김태영닷컴"
                   workTime: "2024.02.20 12:00~14:00"
                   chatRoomId: 1
+                  contractId: 2
   /api/v1/employment-suggests/employee/status:
     get:
       tags:
@@ -1361,6 +1362,7 @@ paths:
                   businessName: "테스트 사업장"
                   businessId: 10
                   employeeId: 3
+                  employeeName: "이름"
                   employeeNickname: "닉네임"
                   contractStartTime: "2025-01-01T09:00:00"
                   contractEndTime: "2025-01-01T18:00:00"
@@ -1459,7 +1461,7 @@ paths:
           schema:
             type: string
             format: time
-          example : "14:00"
+          example: "14:00"
         - name: endTime
           in: query
           required: false
@@ -1484,7 +1486,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/SearchResponse"
                 example:
-                  - employeeId : 2
+                  - employeeId: 2
                     name: "John Doe"
                     sex: "Male"
                     age: 30
@@ -1517,7 +1519,7 @@ paths:
                       - sido: "경기"
                         sigugun: "남양주시"
                         dong: "별내동"
-                  - employeeId : 3
+                  - employeeId: 3
                     name: "Jane Smith"
                     sex: "Female"
                     age: 28
@@ -1663,8 +1665,6 @@ paths:
           description: OK
           content:
             '*/*':
-              schema:
-                $ref: "#/components/schemas/ChatSummaryResponse"
               example:
                 chatSummaries:
                   - roomId: 1
@@ -1672,11 +1672,15 @@ paths:
                     lastMessageContent: "안녕하세요!"
                     lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
+                    myNickname: "요청한 사용자 닉네임"
+                    opponentNickname: "상대방 닉네임"
                   - roomId: 2
                     lastMessageId: "67ba9a9640cfc70856b32efb"
                     lastMessageContent: "알바 하실래요?"
                     lastMessageTime: "2025-02-23 12:48"
                     numberOfUnreadMessages: 2
+                    myNickname: "요청한 사용자 닉네임"
+                    opponentNickname: "상대방 닉네임"
   /chat/room/{roomId}/chats:
     get:
       tags:
@@ -1737,7 +1741,7 @@ paths:
               schema:
                 type: object
               example:
-                - businessId : 10
+                - businessId: 10
                   businessName: "김태영닷컴"
                   businessLocation:
                     zipcode: "12093"
@@ -1746,7 +1750,7 @@ paths:
                     sido: "경기"
                     sigugun: "남양주시"
                     dong: "별내동"
-                - businessId : 11
+                - businessId: 11
                   businessName: "김태영법조타운"
                   businessLocation:
                     zipcode: "404320"
@@ -1862,6 +1866,7 @@ paths:
                     businessName: "테스트 사업장"
                     businessId: 1
                     employeeId: 2
+                    employeeName: "이름"
                     employeeNickname: "닉네임1"
                     contractStartTime: "2025-01-01T09:00:00"
                     contractEndTime: "2025-01-01T18:00:00"
@@ -1871,6 +1876,7 @@ paths:
                     businessName: "또 다른 사업장"
                     businessId: 20
                     employeeId: 3,
+                    employeeName: "이름"
                     employeeNickname: "닉네임2"
                     contractStartTime: "2025-01-02T09:00:00"
                     contractEndTime: "2025-01-02T18:00:00"
@@ -1978,9 +1984,11 @@ paths:
                 items:
                   $ref: "#/components/schemas/ReviewAvailableResponse"
                 example:
-                  - employeeId: 1001
+                  - contractId: 2
+                    employeeId: 1001
                     employeeName: "김철수"
-                  - employeeId: 1002
+                  - contractId: 3
+                    employeeId: 1002
                     employeeName: "이영희"
   /api/v1/setting/email-consent:
     get:
@@ -2079,7 +2087,7 @@ components:
           type: string
     ModifyBusinessRequest:
       required:
-      - businessId
+        - businessId
       type: object
       properties:
         businessId:
@@ -2123,15 +2131,15 @@ components:
         nationality:
           type: string
           enum:
-          - KOREAN
-          - FOREIGN
+            - KOREAN
+            - FOREIGN
         roles:
           type: array
           items:
             type: string
             enum:
-            - EMPLOYEE
-            - EMPLOYER
+              - EMPLOYEE
+              - EMPLOYER
         sex:
           type: string
         age:
@@ -2155,8 +2163,8 @@ components:
           $ref: "#/components/schemas/LoginUserRequest"
     InquiryRequest:
       required:
-      - createdBy
-      - inquiryType
+        - createdBy
+        - inquiryType
       type: object
       properties:
         inquiryType:
@@ -2177,8 +2185,8 @@ components:
           format: int64
     InquiryResponse:
       required:
-      - createdBy
-      - inquiryId
+        - createdBy
+        - inquiryId
       type: object
       properties:
         inquiryId:
@@ -2356,8 +2364,8 @@ components:
           type: string
     OfferEmploymentCompleteRequest:
       required:
-      - employeeId
-      - suggestId
+        - employeeId
+        - suggestId
       type: object
       properties:
         suggestId:
@@ -2508,7 +2516,7 @@ components:
           type: string
     AcceptSuggestCommand:
       required:
-      - suggestId
+        - suggestId
       type: object
       properties:
         suggestId:
@@ -2516,7 +2524,7 @@ components:
           format: int64
     AddReviewRequest:
       required:
-      - contractId
+        - contractId
       type: object
       properties:
         contractId:
@@ -2552,15 +2560,15 @@ components:
           type: string
     RefreshTokenRequest:
       required:
-      - refreshToken
+        - refreshToken
       type: object
       properties:
         refreshToken:
           type: string
     LoginRequest:
       required:
-      - loginId
-      - password
+        - loginId
+        - password
       type: object
       properties:
         loginId:
@@ -2569,10 +2577,10 @@ components:
           type: string
     BusinessNumberRequest:
       required:
-      - businessName
-      - businessOpenDate
-      - businessRegistrationNumber
-      - representationName
+        - businessName
+        - businessOpenDate
+        - businessRegistrationNumber
+        - representationName
       type: object
       properties:
         businessRegistrationNumber:
@@ -2585,16 +2593,16 @@ components:
           type: string
     SignUpEmployerRequest:
       required:
-      - businessName
-      - businessOpenDate
-      - businessRegistrationNumber
-      - location
-      - loginId
-      - nationality
-      - password
-      - phoneNumber
-      - representationName
-      - role
+        - businessName
+        - businessOpenDate
+        - businessRegistrationNumber
+        - location
+        - loginId
+        - nationality
+        - password
+        - phoneNumber
+        - representationName
+        - role
       type: object
       properties:
         loginId:
@@ -2616,25 +2624,25 @@ components:
         nationality:
           type: string
           enum:
-          - KOREAN
-          - FOREIGN
+            - KOREAN
+            - FOREIGN
         role:
           type: string
           enum:
-          - EMPLOYEE
-          - EMPLOYER
+            - EMPLOYEE
+            - EMPLOYER
         phoneNumber:
           type: string
     SignUpEmployeeRequest:
       required:
-      - emailReceivable
-      - loginId
-      - name
-      - nationality
-      - nickname
-      - password
-      - phoneNumber
-      - role
+        - emailReceivable
+        - loginId
+        - name
+        - nationality
+        - nickname
+        - password
+        - phoneNumber
+        - role
       type: object
       properties:
         loginId:
@@ -2650,13 +2658,13 @@ components:
         nationality:
           type: string
           enum:
-          - KOREAN
-          - FOREIGN
+            - KOREAN
+            - FOREIGN
         role:
           type: string
           enum:
-          - EMPLOYEE
-          - EMPLOYER
+            - EMPLOYEE
+            - EMPLOYER
         phoneNumber:
           type: string
         emailReceivable:
@@ -2788,6 +2796,10 @@ components:
         businessId:
           type: integer
           format: int64
+        employeeName:
+          type: string
+        employeeNickname:
+          type: string
         contractStartTime:
           type: string
           format: date-time
@@ -2880,19 +2892,19 @@ components:
         employeeInfo:
           $ref: "#/components/schemas/EmployeeInfoDTO"
     ContractScheduleResponse:
-        type: object
-        properties:
-          contractId:
-            type: number
-            format: int64
-          businessName:
-            type: string
-          startTime:
-            type: string
-            format: date-time
-          endTime:
-            type: string
-            format: data-time
+      type: object
+      properties:
+        contractId:
+          type: number
+          format: int64
+        businessName:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: data-time
     EmployeeInfoDTO:
       type: object
       properties:

@@ -1,6 +1,9 @@
 package com.example.api.search.repository;
 
-import com.example.api.domain.*;
+import com.example.api.domain.QAccount;
+import com.example.api.domain.QFlavoredCategory;
+import com.example.api.domain.QFlavoredDistrict;
+import com.example.api.domain.QPossibleBoard;
 import com.example.api.search.dto.SearchRequest;
 import com.example.api.search.dto.SearchResponse;
 import com.querydsl.core.BooleanBuilder;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.util.StringUtils.*;
+import static org.springframework.util.StringUtils.hasText;
 
 @Repository
 public class AccountCustomRepositoryImpl implements AccountCustomRepository {
@@ -36,12 +39,12 @@ public class AccountCustomRepositoryImpl implements AccountCustomRepository {
         builderConditionCheck(searchRequest, builder);
 
         List<SearchResponse> content = queryFactory.select(Projections.constructor(SearchResponse.class,
-                employee.accountId,
-                employee.name,
-                employee.sex,
-                employee.age,
-                employee.starPoint,
-                employee.workCount
+                        employee.accountId,
+                        employee.name,
+                        employee.sex,
+                        employee.age,
+                        employee.starPoint,
+                        employee.workCount
                 )).from(employee)
                 .join(possibleBoard).on(employee.accountId.eq(possibleBoard.employee.accountId))
                 .join(flavoredCategory).on(employee.accountId.eq(flavoredCategory.employee.accountId))
@@ -66,7 +69,7 @@ public class AccountCustomRepositoryImpl implements AccountCustomRepository {
     }
 
     private void builderConditionCheck(SearchRequest searchRequest, BooleanBuilder builder) {
-        if (hasText(searchRequest.sido()) && hasText(searchRequest.sigugun()) && hasText(searchRequest.dong())){
+        if (hasText(searchRequest.sido()) && hasText(searchRequest.sigugun()) && hasText(searchRequest.dong())) {
             builder.and(flavoredDistrict.location.sido.eq(searchRequest.sido()))
                     .and(flavoredDistrict.location.sigugun.eq(searchRequest.sigugun()))
                     .and(flavoredDistrict.location.dong.eq(searchRequest.dong()));
@@ -100,7 +103,7 @@ public class AccountCustomRepositoryImpl implements AccountCustomRepository {
             );
         }
 
-        if(searchRequest.subCategoryId() != null) {
+        if (searchRequest.subCategoryId() != null) {
             builder.and(flavoredCategory.subCategory.subCategoryId.eq(searchRequest.subCategoryId()));
         }
     }

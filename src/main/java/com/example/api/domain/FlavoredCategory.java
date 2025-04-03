@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -14,7 +14,7 @@ import static jakarta.persistence.FetchType.*;
 @Table(name = "FLAVORED_CATEGORY", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"EMPLOYEE_ID", "SUB_CATEGORY_ID"})
 })
-public class FlavoredCategory extends BaseEntity{
+public class FlavoredCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FLAVORED_CATEGORY_ID")

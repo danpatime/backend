@@ -1,11 +1,14 @@
 package com.example.api.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -13,7 +16,7 @@ import static jakarta.persistence.FetchType.*;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Table(name = "POSSIBLE_BOARD")
-public class PossibleBoard extends BaseEntity{
+public class PossibleBoard extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POSSIBLE_ID")

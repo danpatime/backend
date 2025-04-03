@@ -1,6 +1,5 @@
 package com.example.api.reviewreport;
 
-import com.example.api.domain.Account;
 import com.example.api.domain.Review;
 import com.example.api.domain.ReviewReport;
 import com.example.api.reviewreport.dto.ReviewReportCommand;

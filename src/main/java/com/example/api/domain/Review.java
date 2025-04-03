@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 
 @Entity
 @Getter
@@ -13,7 +12,7 @@ import org.checkerframework.checker.units.qual.A;
 @EqualsAndHashCode(callSuper = false)
 public class Review extends BaseEntity {
     @Id
-    @Column(name ="REVIEW_ID")
+    @Column(name = "REVIEW_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
@@ -34,6 +33,7 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_CONTENT")
     private String reviewContent;
+
     public Review(Business business, Account employee, Integer reviewStarPoint, String reviewContent, Contract contract) {
         this.writer = business;
         this.employee = employee;

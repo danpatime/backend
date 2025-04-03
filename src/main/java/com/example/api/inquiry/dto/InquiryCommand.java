@@ -2,6 +2,7 @@ package com.example.api.inquiry.dto;
 
 import com.example.api.domain.Account;
 import org.springframework.lang.NonNull;
+
 import java.time.LocalDateTime;
 
 public record InquiryCommand(

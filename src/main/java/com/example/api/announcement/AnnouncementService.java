@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class AnnouncementService {
     @Transactional
     public List<AnnouncementResponse> getAllAnnouncements(final PageNumberRequest pageRequest) {
 
-        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Pageable pageable = PageRequest.of(pageRequest.page() - 1, 20, Sort.by(Sort.Direction.DESC, "createdDate"));
         Page<Announcement> announcements = announcementRepository.findAllByOrderByCreatedDateDesc(pageable);
         return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)
@@ -76,7 +77,7 @@ public class AnnouncementService {
             @Validated final String keyword,
             final PageNumberRequest pageRequest
     ) {
-        Pageable pageable = PageRequest.of(pageRequest.page()-1, 20, Sort.by(Sort.Direction.DESC,"createdDate"));
+        Pageable pageable = PageRequest.of(pageRequest.page() - 1, 20, Sort.by(Sort.Direction.DESC, "createdDate"));
         final Page<Announcement> announcements = announcementRepository.findByAnnouncementTitleContaining(keyword, pageable);
         return announcements.getContent().stream()
                 .map(AnnouncementResponse::new)

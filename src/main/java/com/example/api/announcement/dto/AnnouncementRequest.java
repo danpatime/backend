@@ -8,12 +8,12 @@ public record AnnouncementRequest(
         String announcementType,
         String announcementContent
 ) {
-        public AnnouncementCommand toCommand() {
-                return new AnnouncementCommand(
-                        this.announcementTitle,
-                        this.announcementType,
-                        this.announcementContent
-                );
-        }
+    public AnnouncementCommand toCommand() {
+        return new AnnouncementCommand(
+                this.announcementTitle,
+                this.announcementType,
+                this.announcementContent
+        );
+    }
 }
 

@@ -2,7 +2,7 @@ package com.example.api.global.response.success;
 
 import org.springframework.http.HttpStatus;
 
-public enum ReviewSuccess implements SuccessCode{
+public enum ReviewSuccess implements SuccessCode {
     LOOK_UP_ALL_REVIEW_SUCCESS(HttpStatus.OK, "REVIEW001", "모든 리뷰 조회에 성공했습니다."),
     LOOK_UP_DETAIL_REVIEW_SUCCESS(HttpStatus.OK, "REVIEW002", "리뷰 상세 조회에 성공했습니다."),
     LOOK_UP_MY_REVIEW_SUCCESS(HttpStatus.OK, "REVIEW003", "내가 쓴 리뷰 조회에 성공했습니다."),

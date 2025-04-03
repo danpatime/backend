@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomChatRepositoryImpl implements CustomChatRepository {
     private final MongoTemplate mongoTemplate;
-    
+
 
     @Override
     public void markChatsAsRead(Long chatRoomId, Long readBy) {
@@ -31,19 +31,18 @@ public class CustomChatRepositoryImpl implements CustomChatRepository {
         mongoTemplate.updateMulti(query, update, Chat.class);
     }
 
-        @Override
-        public List<Chat> findChats(Long chatRoomID, String lastChatId) {
-            Query query = new Query(
-                    Criteria.where("roomId").is(chatRoomID)
-            ).with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
+    @Override
+    public List<Chat> findChats(Long chatRoomID, String lastChatId) {
+        Query query = new Query(
+                Criteria.where("roomId").is(chatRoomID)
+        ).with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
 
-            if (lastChatId != null) {
-                query.addCriteria(Criteria.where("_id").lte(new ObjectId(lastChatId)));
-            }
-
-            return mongoTemplate.find(query, Chat.class);
+        if (lastChatId != null) {
+            query.addCriteria(Criteria.where("_id").lte(new ObjectId(lastChatId)));
         }
 
+        return mongoTemplate.find(query, Chat.class);
+    }
 
 
     @Override

@@ -23,7 +23,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     }
 
     @Override
-    public Map<String, Object> getAttributes(){
+    public Map<String, Object> getAttributes() {
         return Map.of(
                 "userId", userId,
                 "name", name,

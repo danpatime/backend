@@ -4,7 +4,6 @@ import com.example.api.JpaTestWithInitData;
 import com.example.api.chat.repository.ChatRoomRepository;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
 import com.example.api.domain.ChatRoom;
-import com.example.api.domain.Contract;
 import com.example.api.domain.OfferEmployment;
 import com.example.api.domain.ProposalStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -12,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @JpaTestWithInitData
-class ContractServiceTest{
+class ContractServiceTest {
     @Autowired
     OfferRepository offerRepository;
     @Autowired

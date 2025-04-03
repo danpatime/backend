@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface FlavoredDistrictRepository extends JpaRepository<FlavoredDistrict, Long> {
     @Query("select new com.example.api.board.dto.response.FlavoredDistrictResponse(fd.location.sido, fd.location.sigugun, fd.location.dong) " +
-    "from FlavoredDistrict fd where fd.employee.accountId = :employeeId")
+            "from FlavoredDistrict fd where fd.employee.accountId = :employeeId")
     List<FlavoredDistrictResponse> findAllByEmployeeId(Long employeeId);
 
     @Modifying

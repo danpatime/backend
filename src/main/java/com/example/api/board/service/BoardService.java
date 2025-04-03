@@ -6,16 +6,16 @@ import com.example.api.board.dto.request.AddIntroductionRequest;
 import com.example.api.board.dto.request.AddPossibleTimeCommand;
 import com.example.api.board.dto.request.ContractDetailRequest;
 import com.example.api.board.dto.request.EmployeeIdRequest;
+import com.example.api.board.dto.response.*;
 import com.example.api.board.dto.update.UpdateExternalCareerRequest;
 import com.example.api.board.dto.update.UpdatePreferredCategoriesRequest;
-import com.example.api.board.dto.response.*;
 import com.example.api.board.dto.update.UpdatePreferredDistrictsRequest;
 import com.example.api.board.entitiy.PossibleMapper;
 import com.example.api.board.entitiy.PossibleTime;
+import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.*;
 import com.example.api.domain.repository.*;
-import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.github.jknack.handlebars.internal.lang3.tuple.Pair;
@@ -47,8 +47,36 @@ public class BoardService {
     private final SubCategoryRepository subCategoryRepository;
     private final ContractRepository contractRepository;
 
+    @NotNull
+    private static List<Long> filterRemovableExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer) {
+        return allExternalCareer.stream()
+                .filter(savedAll -> request.newExternalCareers().stream()
+                        .noneMatch(externalCareerRequest ->
+                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
+                                        savedAll.workCount().equals(externalCareerRequest.workCount())))
+                .map(ExternalCareerResponse::externalCareerId)
+                .collect(Collectors.toList());
+    }
+
+    @NotNull
+    private static List<ExternalCareer> filterNewExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer, Map<Long, SubCategory> subCategoryMap, Account user) {
+        return request.newExternalCareers().stream()
+                .filter(externalCareerRequest -> allExternalCareer.stream()
+                        .noneMatch(savedAll ->
+                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
+                                        savedAll.workCount().equals(externalCareerRequest.workCount())))
+                .map(updateRequest -> {
+                    SubCategory subCategory = subCategoryMap.get(updateRequest.subCategoryId());
+                    if (subCategory == null) {
+                        throw new BusinessException(ErrorCode.CATEGORY_EXCEPTION);
+                    }
+                    return new ExternalCareer(user, subCategory, updateRequest.workCount());
+                })
+                .collect(Collectors.toList());
+    }
+
     @Transactional(readOnly = true)
-    public PersonalInfoResponse getPersonalInfoResponse(final EmployeeIdRequest employeeIdRequest){
+    public PersonalInfoResponse getPersonalInfoResponse(final EmployeeIdRequest employeeIdRequest) {
         Account user = accountRepository.findByEmployeeId(employeeIdRequest.employeeId()).orElseThrow(() ->
                 new BusinessException(ErrorCode.NULL_USER));
         return PersonalInfoResponse.of(user);
@@ -65,7 +93,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<WorkHourResponse> getWorkHours(final EmployeeIdRequest employeeIdRequest)  {
+    public List<WorkHourResponse> getWorkHours(final EmployeeIdRequest employeeIdRequest) {
         List<PossibleBoard> boardScheduleFromCurrentMonth = possibleBoardRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
         List<ContractDetailRequest> contractScheduleFromCurrentMonth = contractRepository.findScheduleFromCurrentMonth(employeeIdRequest.employeeId(), LocalDate.now().atStartOfDay());
         List<WorkHourResponse> possibleBoardResponses = possibleMapper.toWorkResponseFromPossibleBoard(boardScheduleFromCurrentMonth);
@@ -75,12 +103,12 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<ExternalCareerResponse> getExternalCareers(final EmployeeIdRequest employeeIdRequest)  {
+    public List<ExternalCareerResponse> getExternalCareers(final EmployeeIdRequest employeeIdRequest) {
         return externalCareerRepository.findAllByEmployeeId(employeeIdRequest.employeeId());
     }
 
     @Transactional(readOnly = true)
-    public List<InternalCareerResponse> getInternalCareers(final EmployeeIdRequest employeeIdRequest)  {
+    public List<InternalCareerResponse> getInternalCareers(final EmployeeIdRequest employeeIdRequest) {
         return offerEmploymentRepository.findAllInternalCareerResponseByEmployeeId(employeeIdRequest.employeeId());
     }
 
@@ -154,7 +182,7 @@ public class BoardService {
                 .collect(Collectors.toSet());
 
         Map<Long, SubCategory> subCategoryMap = subCategoryRepository.findAllById(subCategoryIds).stream()
-                .collect(Collectors.toMap(SubCategory::getSubCategoryId,  subCategory -> subCategory));
+                .collect(Collectors.toMap(SubCategory::getSubCategoryId, subCategory -> subCategory));
 
         List<ExternalCareer> newList = filterNewExternalCareers(request, allExternalCareer, subCategoryMap, user);
         List<Long> oldList = filterRemovableExternalCareers(request, allExternalCareer);
@@ -167,34 +195,6 @@ public class BoardService {
         }
 
         return externalCareerRepository.findAllByEmployeeId(user.getAccountId());
-    }
-
-    @NotNull
-    private static List<Long> filterRemovableExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer) {
-        return allExternalCareer.stream()
-                .filter(savedAll -> request.newExternalCareers().stream()
-                        .noneMatch(externalCareerRequest ->
-                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
-                                        savedAll.workCount().equals(externalCareerRequest.workCount())))
-                .map(ExternalCareerResponse::externalCareerId)
-                .collect(Collectors.toList());
-    }
-
-    @NotNull
-    private static List<ExternalCareer> filterNewExternalCareers(UpdateExternalCareerRequest request, List<ExternalCareerResponse> allExternalCareer, Map<Long, SubCategory> subCategoryMap, Account user) {
-        return request.newExternalCareers().stream()
-                .filter(externalCareerRequest -> allExternalCareer.stream()
-                        .noneMatch(savedAll ->
-                                savedAll.subCategory().subCategoryId().equals(externalCareerRequest.subCategoryId()) &&
-                                        savedAll.workCount().equals(externalCareerRequest.workCount())))
-                .map(updateRequest -> {
-                    SubCategory subCategory = subCategoryMap.get(updateRequest.subCategoryId());
-                    if (subCategory == null) {
-                        throw new BusinessException(ErrorCode.CATEGORY_EXCEPTION);
-                    }
-                    return new ExternalCareer(user, subCategory, updateRequest.workCount());
-                })
-                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

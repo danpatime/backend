@@ -1,6 +1,9 @@
 package com.example.api.board.controller;
 
-import com.example.api.board.dto.request.*;
+import com.example.api.board.dto.request.AddIntroductionRequest;
+import com.example.api.board.dto.request.AddPossibleTimeCommand;
+import com.example.api.board.dto.request.AddPossibleTimeRequest;
+import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.board.dto.response.*;
 import com.example.api.board.dto.update.UpdateExternalCareerRequest;
 import com.example.api.board.dto.update.UpdatePersonalInfoRequest;
@@ -8,13 +11,13 @@ import com.example.api.board.dto.update.UpdatePreferredCategoriesRequest;
 import com.example.api.board.dto.update.UpdatePreferredDistrictsRequest;
 import com.example.api.board.service.BoardService;
 import com.example.api.board.service.EmployeeService;
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/possible-board")
@@ -25,52 +28,52 @@ public class BoardController {
     private final EmployeeService employeeService;
 
     /**
-     *  1. 회원 정보
-     *  2. 희망 근무지
-     *  2. 희망 카테고리
-     *  3. 근무 가능 시간 (캘린더)
-     *  4. 외부 경력
-     *  5. 내부 경력
+     * 1. 회원 정보
+     * 2. 희망 근무지
+     * 2. 희망 카테고리
+     * 3. 근무 가능 시간 (캘린더)
+     * 4. 외부 경력
+     * 5. 내부 경력
      */
     @GetMapping("/personal-info")
-    public ResponseEntity<PersonalInfoResponse> getPersonalInfo(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<PersonalInfoResponse> getPersonalInfo(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getPersonalInfoResponse(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/work-preferences/districts")
-    public ResponseEntity<List<FlavoredDistrictResponse>> getPreferredDistricts(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<List<FlavoredDistrictResponse>> getPreferredDistricts(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getPreferredDistricts(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/work-preferences/category")
-    public ResponseEntity<List<FlavoredCategoryResponse>> getPreferredCategories(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<List<FlavoredCategoryResponse>> getPreferredCategories(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getPreferredCategories(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/work-hours")
-    public ResponseEntity<List<WorkHourResponse>> getWorkHours(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<List<WorkHourResponse>> getWorkHours(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getWorkHours(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/external-career")
-    public ResponseEntity<List<ExternalCareerResponse>> getExternalCareers(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<List<ExternalCareerResponse>> getExternalCareers(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getExternalCareers(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/internal-career")
-    public ResponseEntity<List<InternalCareerResponse>> getInternalCareers(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<List<InternalCareerResponse>> getInternalCareers(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getInternalCareers(new EmployeeIdRequest(employeeId)));
     }
 
     @GetMapping("/introduction")
-    public ResponseEntity<IntroductionResponse> getIntroduction(@AuthenticationPrincipal final Long employeeId){
+    public ResponseEntity<IntroductionResponse> getIntroduction(@AuthenticationPrincipal final Long employeeId) {
         return ResponseEntity.ok(boardService.getIntroduction(new EmployeeIdRequest(employeeId)));
     }
 
     @PostMapping("/introduction")
     public ResponseEntity<IntroductionResponse> postIntroduction(
             @AuthenticationPrincipal final Long employeeId,
-            @RequestBody final AddIntroductionRequest request){
+            @RequestBody final AddIntroductionRequest request) {
         return ResponseEntity.ok(boardService.postIntroduction(new EmployeeIdRequest(employeeId), request));
     }
 
@@ -78,7 +81,7 @@ public class BoardController {
     public ResponseEntity<PersonalInfoResponse> updatePersonalInfo(
             @AuthenticationPrincipal final Long employeeId,
             @RequestBody final UpdatePersonalInfoRequest request
-    ){
+    ) {
         employeeService.updatePersonalInfo(new EmployeeIdRequest(employeeId), request);
         return ResponseEntity.ok(employeeService.updatePersonalInfo(new EmployeeIdRequest(employeeId), request));
     }
@@ -87,21 +90,21 @@ public class BoardController {
     public ResponseEntity<List<FlavoredDistrictResponse>> updatePreferredDistricts(
             @AuthenticationPrincipal final Long employeeId,
             @RequestBody final UpdatePreferredDistrictsRequest request
-    ){
+    ) {
         return ResponseEntity.ok(boardService.updatePreferredDistrict(new EmployeeIdRequest(employeeId), request));
     }
 
     @PostMapping("/work-preferences/category")
     public ResponseEntity<List<FlavoredCategoryResponse>> updatePreferredCategories(
             @AuthenticationPrincipal final Long employeeId,
-            @RequestBody final UpdatePreferredCategoriesRequest request){
+            @RequestBody final UpdatePreferredCategoriesRequest request) {
         return ResponseEntity.ok(boardService.updatePreferredCategories(new EmployeeIdRequest(employeeId), request));
     }
 
     @PostMapping("/external-career")
     public ResponseEntity<List<ExternalCareerResponse>> updateExternalCareers(
             @AuthenticationPrincipal final Long employeeId,
-            @RequestBody final UpdateExternalCareerRequest request){
+            @RequestBody final UpdateExternalCareerRequest request) {
         return ResponseEntity.ok(boardService.updateExternalCareers(new EmployeeIdRequest(employeeId), request));
     }
 

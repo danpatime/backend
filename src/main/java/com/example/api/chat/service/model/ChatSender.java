@@ -13,7 +13,7 @@ public class ChatSender {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void send(Chat chat) {
-        messagingTemplate.convertAndSend("/room/"+ chat.getRoomId(), chat);
+        messagingTemplate.convertAndSend("/room/" + chat.getRoomId(), chat);
     }
 
     public void sendReadResponse(ReadRequest request) {

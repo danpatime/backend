@@ -2,8 +2,8 @@ package com.example.api.board.entitiy;
 
 import com.example.api.board.dto.request.ContractDetailRequest;
 import com.example.api.board.dto.response.WorkHourResponse;
-import com.example.api.domain.*;
-
+import com.example.api.domain.Account;
+import com.example.api.domain.PossibleBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

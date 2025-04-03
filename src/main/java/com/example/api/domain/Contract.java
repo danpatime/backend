@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Contract extends BaseEntity {
     @Id
-    @Column(name ="CONTRACT_ID")
+    @Column(name = "CONTRACT_ID")
     private Long contractId;
 
     @OneToOne(fetch = FetchType.LAZY)

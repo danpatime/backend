@@ -8,25 +8,25 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record SignUpEmployeeRequest(
-    @NotBlank
-    String loginId,
-    @NotBlank
-    String password,
-    @NotBlank
-    String name,
-    @NotBlank
-    String nickname,
-    @ValidEmail
-    String email,
-    @NotNull
-    Nationality nationality ,
-    @NotNull
-    UserRole role,
-    @NotBlank
-    String phoneNumber,
-    @NotNull
-    Boolean emailReceivable,
-    @NotNull
-    Location location
-    ) {
+        @NotBlank
+        String loginId,
+        @NotBlank
+        String password,
+        @NotBlank
+        String name,
+        @NotBlank
+        String nickname,
+        @ValidEmail
+        String email,
+        @NotNull
+        Nationality nationality,
+        @NotNull
+        UserRole role,
+        @NotBlank
+        String phoneNumber,
+        @NotNull
+        Boolean emailReceivable,
+        @NotNull
+        Location location
+) {
 }

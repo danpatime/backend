@@ -6,13 +6,15 @@ import com.example.api.chat.controller.dto.request.UserIdRequest;
 import com.example.api.chat.controller.dto.response.ChatResponse;
 import com.example.api.chat.controller.dto.response.ChatSummaryResponse;
 import com.example.api.chat.service.ChatService;
-import com.example.api.domain.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -40,6 +42,6 @@ public class ChatController {
     @GetMapping("/chat/room/{roomId}/chats")
     public ResponseEntity<List<ChatResponse>> getMessages(@PathVariable("roomId") final Long chatRoomId,
                                                           @RequestParam(value = "lastChatId", required = false) final String chatId) {
-        return ResponseEntity.ok(chatService.getChats(chatRoomId,chatId));
+        return ResponseEntity.ok(chatService.getChats(chatRoomId, chatId));
     }
 }

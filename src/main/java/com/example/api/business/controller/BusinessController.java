@@ -1,24 +1,19 @@
 package com.example.api.business.controller;
 
-import com.example.api.domain.Location;
 import com.example.api.business.BusinessQueryService;
 import com.example.api.business.BusinessService;
 import com.example.api.business.dto.AddBusinessCommand;
 import com.example.api.business.dto.BusinessDetailsResponse;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.business.dto.QueryBusinessDetailCommand;
+import com.example.api.domain.Location;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/business")

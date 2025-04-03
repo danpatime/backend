@@ -21,7 +21,7 @@ public class CustomUserDetailService {
         Account user = accountRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
 
-        if(user.isDeleted())
+        if (user.isDeleted())
             throw new BusinessException(ErrorCode.DELETED_USER);
 
         Collection<SimpleGrantedAuthority> authorities = user.getRoles().stream()

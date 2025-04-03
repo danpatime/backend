@@ -40,6 +40,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                         business.businessId,
                         business.businessName,
                         employee.accountId,
+                        employee.name,
                         employee.nickname,
                         contract.contractStartTime,
                         contract.contractEndTime,

@@ -7,4 +7,5 @@ public record AnnouncementCommand(
         String announcementTitle,
         String announcementType,
         String announcementContent
-) {}
+) {
+}

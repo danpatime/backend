@@ -3,10 +3,6 @@ package com.example.api.domain;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
-import org.checkerframework.checker.units.qual.C;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

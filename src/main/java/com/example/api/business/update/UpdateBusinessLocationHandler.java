@@ -1,16 +1,17 @@
 package com.example.api.business.update;
 
-import com.example.api.domain.Location;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
-import java.util.Objects;
+import com.example.api.domain.Location;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
-class UpdateBusinessLocationHandler implements BusinessUpdateHandler{
+class UpdateBusinessLocationHandler implements BusinessUpdateHandler {
     @Override
     public void update(Business business, ModifyBusinessCommand command) {
         if (Objects.nonNull(command.location())) {

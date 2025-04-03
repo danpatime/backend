@@ -3,8 +3,9 @@ package com.example.api.global.exception;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.List;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 @JsonPropertyOrder(value = {"errorCode"})

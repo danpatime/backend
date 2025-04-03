@@ -37,7 +37,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         Oauth2UserInfoRequest userInfo = new Oauth2UserInfoRequest(oAuth2Response.getName(), oAuth2Response.getEmail(), UserRole.of(0));
 
         Account user = accountRepository.findByEmail(oAuth2Response.getEmail()).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return saveOauth2Account(userInfo);
         }
         return new CustomUserDetails(user.getAccountId(), user.getName(), user.getEmail(), user.getRoles());
@@ -45,7 +45,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
     private OAuth2Response createOAuth2Response(final String registrationId, final OAuth2User oAuth2User) {
         for (OAuth2ResponseHandler oauth2ResponseHandler : oauth2ResponseHandlers) {
-            if(oauth2ResponseHandler.supports(registrationId)) {
+            if (oauth2ResponseHandler.supports(registrationId)) {
                 return oauth2ResponseHandler.createResponse(oAuth2User.getAttributes());
             }
         }

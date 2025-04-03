@@ -2,11 +2,10 @@ package com.example.api.account.service;
 
 import com.example.api.account.dto.*;
 import com.example.api.account.entity.Code;
+import com.example.api.account.entity.MailSender;
 import com.example.api.account.entity.UserRole;
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.account.repository.CodeRepository;
-import com.example.api.account.entity.MailSender;
-import com.example.api.account.repository.LocationRepository;
 import com.example.api.business.BusinessRepository;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
@@ -50,11 +49,11 @@ public class AccountService {
     }
 
     @Transactional
-    public String saveCode(@Validated final Code code){
+    public String saveCode(@Validated final Code code) {
         try {
             codeRepository.save(code);
             return "이메일 전송을 완료하였습니다.";
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new BusinessException(ErrorCode.FAIL_SAVE_CODE);
         }
     }
@@ -63,7 +62,7 @@ public class AccountService {
     public String verifyEmail(@Validated final EmailCodeRequest request) {
         Code findCode = codeRepository.findFirstByEmailOrderByCreatedAtDesc(request.email()).orElseThrow(() -> new BusinessException(ErrorCode.EXPIRATION_DATE_END));
         log.info("find code = {}", findCode.getCode());
-        if(findCode.getCode().equals(request.code())){
+        if (findCode.getCode().equals(request.code())) {
             return "유효한 이메일입니다.";
         } else {
             throw new BusinessException(ErrorCode.INCORRECT_CODE);
@@ -100,6 +99,7 @@ public class AccountService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND_EXCEPTION));
         account.setDeleted(true);
     }
+
     private Account saveEmployeeAccount(final SignUpEmployeeRequest request) {
         Collection<UserRole> roles = List.of(request.role());
         Account account = new Account(
@@ -153,7 +153,7 @@ public class AccountService {
     }
 
     @Transactional
-    public String verifyBusinessNumber(@Validated final BusinessNumberRequest request){
+    public String verifyBusinessNumber(@Validated final BusinessNumberRequest request) {
         URI uri = createUrl();
         HttpEntity<Map<String, Object>> requestEntity = getBusinessValidateApiRequestEntity(request);
 

@@ -9,9 +9,9 @@ import java.util.Base64;
 import java.util.Optional;
 
 public class CookieUtils {
-    public static Optional<Cookie> getCookie(final HttpServletRequest request, final String name) {
-        Cookie[] cookies = request.getCookies();
 
+    public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
@@ -19,22 +19,28 @@ public class CookieUtils {
                 }
             }
         }
-
         return Optional.empty();
     }
 
-    public static void addCookie(final HttpServletResponse response, final String name, final String value, final int maxAge) {
+    public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
+
+        // SameSite=None 및 추가 속성 설정
+        String cookieString = String.format(
+                "%s=%s; Max-Age=%d; Path=/; Secure; HttpOnly; SameSite=None",
+                name, value, maxAge
+        );
+        response.setHeader("Set-Cookie", cookieString);
     }
 
-    public static void deleteCookie(final HttpServletRequest request, final HttpServletResponse response, final String name) {
+    public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length > 0) {
-            for (Cookie cookie: cookies) {
+            for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
                     cookie.setValue("");
                     cookie.setPath("/");
@@ -45,13 +51,11 @@ public class CookieUtils {
         }
     }
 
-    public static String serialize(final Object object) {
-        return Base64.getUrlEncoder()
-                .encodeToString(SerializationUtils.serialize(object));
+    public static String serialize(Object object) {
+        return Base64.getUrlEncoder().encodeToString(SerializationUtils.serialize(object));
     }
 
-    public static <T> T deserialize(final Cookie cookie, final Class<T> cls) {
-        return cls.cast(SerializationUtils.deserialize(
-                Base64.getUrlDecoder().decode(cookie.getValue())));
+    public static <T> T deserialize(Cookie cookie, Class<T> cls) {
+        return cls.cast(SerializationUtils.deserialize(Base64.getUrlDecoder().decode(cookie.getValue())));
     }
 }

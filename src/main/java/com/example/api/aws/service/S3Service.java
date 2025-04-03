@@ -5,11 +5,13 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.auth.dto.LoginUserRequest;
-import com.example.api.aws.dto.*;
+import com.example.api.aws.dto.OldKeyRequest;
+import com.example.api.aws.dto.S3UploadRequest;
+import com.example.api.aws.dto.UploadProfileRequest;
+import com.example.api.aws.dto.UploadProfileResponse;
+import com.example.api.global.config.AmazonConfig;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import com.example.api.global.config.AmazonConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -89,7 +91,7 @@ public class S3Service {
         amazonS3.deleteObject(amazonConfig.getBucket(), request.oldKey());
     }
 
-    public String getImage(final OldKeyRequest request){
+    public String getImage(final OldKeyRequest request) {
         return amazonS3.getUrl(amazonConfig.getBucket(), request.oldKey()).toString();
     }
 }

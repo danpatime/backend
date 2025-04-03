@@ -23,4 +23,4 @@ public class Code {
         this.code = code;
         this.createdAt = new Date();
     }
-    }
+}

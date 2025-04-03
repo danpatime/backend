@@ -4,12 +4,11 @@ import com.example.api.account.repository.AccountRepository;
 import com.example.api.business.dto.AddBusinessCommand;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.business.update.BusinessUpdateManager;
-import com.example.api.domain.*;
+import com.example.api.domain.Account;
+import com.example.api.domain.Business;
+import com.example.api.domain.BusinessCategory;
+import com.example.api.domain.SubCategory;
 import com.example.api.domain.repository.BusinessCategoryRepository;
-import com.example.api.domain.repository.CategoryRepository;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.api.domain.repository.SubCategoryRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
@@ -18,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 @Service
 @Slf4j

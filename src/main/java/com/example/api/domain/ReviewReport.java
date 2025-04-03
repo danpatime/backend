@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
-import static jakarta.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @Setter

@@ -2,8 +2,6 @@ package com.example.api.suggest.controller;
 
 import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.contracts.dto.AcceptSuggestCommand;
-import com.example.api.contracts.dto.QueryAllSuggestsForMeCommand;
-import com.example.api.contracts.dto.SuggestedBusinessResponse;
 import com.example.api.suggest.controller.dto.SuggestStatusDTO;
 import com.example.api.suggest.controller.dto.request.BusinessIdRequest;
 import com.example.api.suggest.service.SuggestService;

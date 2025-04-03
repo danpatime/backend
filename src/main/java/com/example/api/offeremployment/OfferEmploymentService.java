@@ -9,13 +9,14 @@ import com.example.api.domain.ProposalStatus;
 import com.example.api.domain.repository.OfferEmploymentRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import com.example.api.offeremployment.dto.*;
+import com.example.api.offeremployment.dto.OfferEmploymentCommand;
+import com.example.api.offeremployment.dto.OfferEmploymentCompleteRequest;
+import com.example.api.offeremployment.dto.OfferEmploymentRequest;
+import com.example.api.offeremployment.dto.OfferEmploymentResponse;
 import com.example.api.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

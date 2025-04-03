@@ -22,7 +22,7 @@ public class OfferEmploymentMapper {
     public List<SuggestStatusDTO> currentSuggestStatusCheck(List<OfferEmployment> offerList) {
         List<SuggestStatusDTO> suggestStatusDTOList = new ArrayList<>();
         for (OfferEmployment offer : offerList) {
-            if(contractRepository.existsById(offer.getSuggestId())) {
+            if (contractRepository.existsById(offer.getSuggestId())) {
                 OfferEmploymentDetailRequest contractDetail = contractRepository.findContractByContractId(offer.getSuggestId());
                 suggestStatusDTOList.add(makeSuggestStatusDTO(contractDetail));
             } else {
@@ -52,7 +52,8 @@ public class OfferEmploymentMapper {
                 suggest.hourlyPayment(),
                 suggest.businessName(),
                 workTimeStr,
-                suggest.chatRoomId()
+                suggest.chatRoomId(),
+                suggest.contractId()
         );
     }
 }

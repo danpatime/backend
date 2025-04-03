@@ -6,13 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "EXTERNAL_CAREER")
-public class ExternalCareer extends BaseEntity{
+public class ExternalCareer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EXTERNAL_CAREER_ID")

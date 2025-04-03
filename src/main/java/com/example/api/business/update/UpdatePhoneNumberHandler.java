@@ -1,6 +1,5 @@
 package com.example.api.business.update;
 
-import com.example.api.business.domain.BusinessName;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;

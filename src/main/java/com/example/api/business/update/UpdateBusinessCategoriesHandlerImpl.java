@@ -3,20 +3,19 @@ package com.example.api.business.update;
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
 import com.example.api.domain.BusinessCategory;
-import com.example.api.domain.Category;
 import com.example.api.domain.SubCategory;
 import com.example.api.domain.repository.BusinessCategoryRepository;
-import com.example.api.domain.repository.CategoryRepository;
 import com.example.api.domain.repository.SubCategoryRepository;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)

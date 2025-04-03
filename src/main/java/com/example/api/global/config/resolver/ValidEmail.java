@@ -8,10 +8,12 @@ import java.lang.annotation.*;
 
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = { ValidEmailValidator.class })
+@Constraint(validatedBy = {ValidEmailValidator.class})
 @Documented
 public @interface ValidEmail {
     String message() default "이메일이 유효하지 않습니다.";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

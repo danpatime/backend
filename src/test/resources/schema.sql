@@ -11,7 +11,7 @@ drop table if exists employer cascade;
 drop table if exists exteranl_carrer cascade;
 drop table if exists flavored cascade;
 drop table if exists offer_employment cascade;
-drop table if exists possible_board cascade ;
+drop table if exists possible_board cascade;
 drop table if exists review cascade;
 drop table if exists scrap cascade;
 
@@ -205,86 +205,86 @@ create table scrap
 
 alter table if exists business
     add constraint FKrmvi7a8hp1gvo4fs2vifp1u8s
-        foreign key (business_employer_id)
-            references employer;
+    foreign key (business_employer_id)
+    references employer;
 
 
 alter table if exists business_category
     add constraint FKpphxqd3m7af7xsylvpb26gqp8
-        foreign key (business_id)
-            references business;
+    foreign key (business_id)
+    references business;
 
 alter table if exists business_category
     add constraint FKh2g43n4c0mukqvpami4x0st36
-        foreign key (categorey_id)
-            references category;
+    foreign key (categorey_id)
+    references category;
 
 alter table if exists chat
     add constraint FKijoxkthso6n3r8bian3xu8dau
-        foreign key (account_unique_id)
-            references account;
+    foreign key (account_unique_id)
+    references account;
 
 alter table if exists chat
     add constraint FK44b6elhh512d2722l09i6qdku
-        foreign key (chat_room_id)
-            references chat_room;
+    foreign key (chat_room_id)
+    references chat_room;
 
 alter table if exists chat_room
     add constraint FKs40aoy58klwk8k66k90vpvxek
-        foreign key (suggest_id)
-            references offer_employment;
+    foreign key (suggest_id)
+    references offer_employment;
 
 alter table if exists contract
     add constraint FKcvp9vmfpl0bm6b6c63l2ormj6
-        foreign key (suggest_id)
-            references offer_employment;
+    foreign key (suggest_id)
+    references offer_employment;
 
 alter table if exists employee
     add constraint FKcfg6ajo8oske94exynxpf7tf9
-        foreign key (account_id)
-            references account;
+    foreign key (account_id)
+    references account;
 
 alter table if exists employer
     add constraint FKj4pj26t1ecnkh85f5dehhvj95
-        foreign key (account_id)
-            references account;
+    foreign key (account_id)
+    references account;
 
 alter table if exists exteranl_carrer
     add constraint FK47yjhdvwno2buwixnbbiipuvs
-        foreign key (employee_id)
-            references employee;
+    foreign key (employee_id)
+    references employee;
 
 alter table if exists flavored
     add constraint FK5fko12aoyvyiogwi3bxr7p5pf
-        foreign key (category_id)
-            references category;
+    foreign key (category_id)
+    references category;
 
 alter table if exists flavored
     add constraint FKgp8oorhip9jq4ulnlj3qo6tqj
-        foreign key (employee_id)
-            references employee;
+    foreign key (employee_id)
+    references employee;
 
 alter table if exists offer_employment
     add constraint FK8xi6px87at3h94jr4434dxt6h
-        foreign key (business_id)
-            references business;
+    foreign key (business_id)
+    references business;
 
 alter table if exists offer_employment
     add constraint FK8d521thyf88sosfv3kdni94cc
-        foreign key (employee_id)
-            references employee;
+    foreign key (employee_id)
+    references employee;
 
 alter table if exists possible_board
     add constraint FKpo0s6j32cqd4dqtregricmak0
-        foreign key (employee_id)
-            references employee;
+    foreign key (employee_id)
+    references employee;
 
 alter table if exists scrap
     add constraint FKqml51wgiigjp3arbctk13hk1x
-        foreign key (employee_employee_id)
-            references employee;
+    foreign key (employee_employee_id)
+    references employee;
 
 alter table if exists scrap
     add constraint FK7atea93v4sptxh64isjnikhgm
-        foreign key (employer_employer_id)
-            references employer;
+    foreign key (employer_employer_id)
+    references employer;

@@ -5,14 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "BUSINESS_CATEGORY")
 @NoArgsConstructor
-public class BusinessCategory extends BaseEntity{
+public class BusinessCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BUSINESS_CATEGORY_ID")

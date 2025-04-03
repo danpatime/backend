@@ -3,11 +3,9 @@ package com.example.api.oauth2.entity.handler;
 import com.example.api.oauth2.dto.KakaoResponse;
 import com.example.api.oauth2.dto.OAuth2Response;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Component
 @Slf4j

@@ -18,7 +18,7 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public Code sendEmail(final EmailRequest emailRequest){
+    public Code sendEmail(final EmailRequest emailRequest) {
         String code = codeGenerator.generateCode();
 
         try {

@@ -2,7 +2,7 @@ package com.example.api.global.response.success;
 
 import org.springframework.http.HttpStatus;
 
-public enum ContractSuccess implements SuccessCode{
+public enum ContractSuccess implements SuccessCode {
     // 계약이 아닌 조건이므로 컨트롤러 위치 변경 필요
     LOOK_UP_ALL_SUGGEST_SUCCESS(HttpStatus.OK, "CONTRACT001", "모든 제안들 조회를 성공했습니다."),
     // 요것두

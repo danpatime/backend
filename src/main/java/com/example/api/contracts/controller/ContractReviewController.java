@@ -1,22 +1,22 @@
 package com.example.api.contracts.controller;
 
 import com.example.api.announcement.dto.PageNumberRequest;
-import com.example.api.contracts.ReviewQueryService;
 import com.example.api.contracts.ContractReviewService;
+import com.example.api.contracts.ReviewQueryService;
 import com.example.api.contracts.dto.AddReviewCommand;
 import com.example.api.contracts.dto.DeleteReviewRequest;
 import com.example.api.contracts.dto.QueryEmployersReviewCommand;
 import com.example.api.review.dto.ModifyReviewRequest;
-import com.example.api.review.dto.ReviewAvailableResponse;
 import com.example.api.review.dto.ReviewResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,6 +48,22 @@ public class ContractReviewController {
         return ResponseEntity.ok("리뷰가 성공적으로 작성되었습니다.");
     }
 
+    @PutMapping("/review/modify") // 리뷰 수정
+    public ResponseEntity<ReviewResponse> modifyReview(
+            @RequestBody ModifyReviewRequest modifyReviewRequest
+    ) {
+        ReviewResponse updatedReview = contractReviewService.modifyReview(modifyReviewRequest);
+        return ResponseEntity.ok(updatedReview);
+    }
+
+    @DeleteMapping("/review/delete") // 리뷰 삭제
+    public ResponseEntity<String> deleteReview(
+            @RequestParam final Long reviewId
+    ) {
+        contractReviewService.deleteReview(new DeleteReviewRequest(reviewId));
+        return ResponseEntity.ok("리뷰 삭제하였습니다");
+    }
+
     record AddReviewRequest(
             @NotNull
             Long contractId,
@@ -62,21 +78,5 @@ public class ContractReviewController {
         AddReviewCommand toCommand(final Long requestMemberId) {
             return new AddReviewCommand(requestMemberId, businessId, employeeId, contractId, reviewContent, reviewScore);
         }
-    }
-
-    @PutMapping("/review/modify") // 리뷰 수정
-    public ResponseEntity<ReviewResponse> modifyReview(
-            @RequestBody ModifyReviewRequest modifyReviewRequest
-    ) {
-         ReviewResponse updatedReview = contractReviewService.modifyReview(modifyReviewRequest);
-        return ResponseEntity.ok(updatedReview);
-    }
-
-    @DeleteMapping("/review/delete") // 리뷰 삭제
-    public ResponseEntity<String> deleteReview(
-            @RequestParam final Long reviewId
-    ) {
-        contractReviewService.deleteReview(new DeleteReviewRequest(reviewId));
-        return ResponseEntity.ok("리뷰 삭제하였습니다");
     }
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -44,18 +44,6 @@ public class Business extends BaseEntity {
     @Column(name = "BUSINESS_REGISTRATION_NUMBER")
     private String registrationNumber;
 
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public void setRepresentationName(String representationName) {
-        this.representationName = representationName;
-    }
-
     public Business(String businessName, Location location, String representationName) {
         this.businessName = businessName;
         this.location = location;
@@ -75,5 +63,17 @@ public class Business extends BaseEntity {
         this.employer = employer;
         this.businessName = businessName;
         this.location = location;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setRepresentationName(String representationName) {
+        this.representationName = representationName;
     }
 }

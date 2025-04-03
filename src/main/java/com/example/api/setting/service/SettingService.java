@@ -1,7 +1,6 @@
 package com.example.api.setting.service;
 
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.board.dto.request.EmployeeIdRequest;
 import com.example.api.domain.Account;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;

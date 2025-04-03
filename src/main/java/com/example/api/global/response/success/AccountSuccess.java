@@ -2,7 +2,7 @@ package com.example.api.global.response.success;
 
 import org.springframework.http.HttpStatus;
 
-public enum AccountSuccess implements SuccessCode{
+public enum AccountSuccess implements SuccessCode {
     SEND_EMAIL_SUCCESS(HttpStatus.OK, "ACCOUNT001", "이메일 전송에 성공했습니다."),
     VERIFY_EMAIL_SUCCESS(HttpStatus.OK, "ACCOUNT002", "이메일 전송에 성공했습니다."),
     SIGN_UP_EMPLOYER_SUCCESS(HttpStatus.OK, "ACCOUNT003", "알바생 회원가입에 성공했습니다."),

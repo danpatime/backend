@@ -6,9 +6,9 @@ import com.example.api.contracts.ContractRepository;
 import com.example.api.domain.Review;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import com.example.api.review.dto.ReviewResponse;
 import com.example.api.review.dto.ReviewAvailableCommand;
 import com.example.api.review.dto.ReviewAvailableResponse;
+import com.example.api.review.dto.ReviewResponse;
 import com.example.api.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +28,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)  // 리뷰 전체 조회
     public List<ReviewResponse> getAllReviews(final String nickname, final PageNumberRequest pageNumberRequest) {
-        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Pageable pageable = PageRequest.of(pageNumberRequest.page() - 1, 15, Sort.by(Sort.Direction.DESC, "createdDate"));
         return reviewRepository.findReviews(nickname, pageable).getContent();
     }
 
@@ -45,7 +45,7 @@ public class ReviewService {
             @Validated final EmployeeIdRequest employeeIdRequest,
             final PageNumberRequest pageNumberRequest
     ) {
-        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by(Sort.Direction.DESC,"createdDate"));
+        Pageable pageable = PageRequest.of(pageNumberRequest.page() - 1, 15, Sort.by(Sort.Direction.DESC, "createdDate"));
         return reviewRepository.findAllByEmployee_AccountId(employeeIdRequest.employeeId(), pageable).stream()
                 .map(ReviewResponse::from)
                 .toList();
@@ -55,7 +55,7 @@ public class ReviewService {
     public List<ReviewAvailableResponse> getAvailableReviewTargets(
             final ReviewAvailableCommand command,
             final PageNumberRequest pageNumberRequest) {
-        Pageable pageable = PageRequest.of(pageNumberRequest.page()-1 , 15, Sort.by(Sort.Direction.DESC,"createdDate"));
+        Pageable pageable = PageRequest.of(pageNumberRequest.page() - 1, 15, Sort.by(Sort.Direction.DESC, "createdDate"));
         return contractRepository.findAvailableReviewsByBusinessId(command.businessId(), pageable).getContent();
     }
 }

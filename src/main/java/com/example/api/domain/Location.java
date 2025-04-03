@@ -3,11 +3,7 @@ package com.example.api.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
-
-import java.util.Objects;
 
 @Entity
 @Getter

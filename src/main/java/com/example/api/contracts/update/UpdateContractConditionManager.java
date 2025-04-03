@@ -2,11 +2,12 @@ package com.example.api.contracts.update;
 
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.domain.Contract;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -15,7 +15,7 @@ public record SearchCommand(
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         LocalDateTime endDateTime
 ) {
-    public static SearchCommand of(SearchRequest searchRequest, Long employeeId){
+    public static SearchCommand of(SearchRequest searchRequest, Long employeeId) {
         return new SearchCommand(
                 employeeId,
                 searchRequest.sido(),

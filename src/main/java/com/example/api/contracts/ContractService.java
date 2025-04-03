@@ -4,12 +4,7 @@ import com.example.api.account.repository.AccountRepository;
 import com.example.api.board.repository.PossibleBoardRepository;
 import com.example.api.contracts.dto.*;
 import com.example.api.contracts.update.UpdateContractConditionManager;
-import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.domain.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.example.api.offeremployment.entity.OfferEmploymentMapper;
@@ -18,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service

@@ -15,18 +15,20 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class AnnouncementServiceTest {
+    private static final String DEFAULT_TITLE = "공지사항 제목";
+    private static final String DEFAULT_TYPE = "공지사항";
+    private static final String DEFAULT_CONTENT = "공지사항 내용";
     @InjectMocks
     private AnnouncementService announcementService;
     @Mock
     private AnnouncementRepository announcementRepository;
-    private static final String DEFAULT_TITLE = "공지사항 제목";
-    private static final String DEFAULT_TYPE = "공지사항";
-    private static final String DEFAULT_CONTENT = "공지사항 내용";
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);

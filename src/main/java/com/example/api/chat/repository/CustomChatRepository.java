@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CustomChatRepository {
     void markChatsAsRead(Long chatRoomId, Long readBy);
+
     List<Chat> findChats(Long chatRoomId, String lastChatId);
+
     List<ChatSummary> aggregateChatSummaries(List<Long> chatRoomIds, Long memberId);
 }

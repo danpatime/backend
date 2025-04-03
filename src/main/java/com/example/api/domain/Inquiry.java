@@ -40,6 +40,7 @@ public class Inquiry extends BaseEntity {
 
     @Column(name = "ANSWER_DATE")
     private LocalDateTime answerDate;
+
     public enum InquiryStatus {
         WAITING, COMPLETED
     }

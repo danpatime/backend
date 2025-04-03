@@ -2,8 +2,9 @@ package com.example.api.board.entitiy;
 
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import java.time.LocalDateTime;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class PossibleTime {
@@ -24,6 +25,6 @@ public class PossibleTime {
         if (startTime.isBefore(endTime)) {
             return;
         }
-        throw new BusinessException("종료 시간이 시작시간보다 이릅니다. 시작 시간: " + startTime + "종료 시간 : "  + endTime, ErrorCode.POSSIBLE_TIME_REGISTER_EXCEPTION);
+        throw new BusinessException("종료 시간이 시작시간보다 이릅니다. 시작 시간: " + startTime + "종료 시간 : " + endTime, ErrorCode.POSSIBLE_TIME_REGISTER_EXCEPTION);
     }
 }

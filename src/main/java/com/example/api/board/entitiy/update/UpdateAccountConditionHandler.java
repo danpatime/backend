@@ -5,5 +5,6 @@ import com.example.api.domain.Account;
 
 public interface UpdateAccountConditionHandler {
     void update(final Account account, final UpdateAccountConditionCommand updateAccountConditionCommand);
+
     boolean supports(final UpdateAccountConditionCommand updateAccountConditionCommand);
 }

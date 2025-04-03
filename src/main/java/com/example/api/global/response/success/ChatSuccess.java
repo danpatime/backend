@@ -2,7 +2,7 @@ package com.example.api.global.response.success;
 
 import org.springframework.http.HttpStatus;
 
-public enum ChatSuccess implements SuccessCode{
+public enum ChatSuccess implements SuccessCode {
     SEND_CHAT_SUCCESS(HttpStatus.OK, "CHAT001", "채팅 전송에 성공했습니다."),
     READ_CHAT_SUCCESS(HttpStatus.OK, "CHAT002", "채팅 읽기에 성공했습니다."),
     SUMMARIZE_CHAT_SUCCESS(HttpStatus.OK, "CHAT003", "채팅 요약에 성공했습니다"),

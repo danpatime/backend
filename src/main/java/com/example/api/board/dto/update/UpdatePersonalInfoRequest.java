@@ -12,5 +12,5 @@ public record UpdatePersonalInfoRequest(
         String birthdate,
         String callTime,
         Location location
-) implements UpdateAccountConditionCommand{
+) implements UpdateAccountConditionCommand {
 }

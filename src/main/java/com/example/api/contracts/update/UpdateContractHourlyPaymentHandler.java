@@ -2,8 +2,9 @@ package com.example.api.contracts.update;
 
 import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import com.example.api.domain.Contract;
-import java.util.Objects;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 class UpdateContractHourlyPaymentHandler implements UpdateContractConditionHandler {

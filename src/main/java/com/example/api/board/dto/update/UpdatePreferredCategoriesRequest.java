@@ -8,5 +8,6 @@ public record UpdatePreferredCategoriesRequest(
     public record PreferredCategoryIdsRequest(
             Long categoryId,
             Long subCategoryId
-    ){}
+    ) {
+    }
 }

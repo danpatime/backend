@@ -2,9 +2,10 @@ package com.example.api.business.update;
 
 import com.example.api.business.dto.ModifyBusinessCommand;
 import com.example.api.domain.Business;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

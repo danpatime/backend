@@ -11,6 +11,10 @@ public record BusinessNumberResponse(
         @JsonProperty("status_code") String statusCode,
         List<Data> data
 ) {
+    public String getValid() {
+        return data.get(0).valid;
+    }
+
     private record Data(
             @JsonProperty("b_no") String businessNumber,
             String valid,
@@ -18,6 +22,7 @@ public record BusinessNumberResponse(
             Status status
     ) {
     }
+
     private record RequestParam(
             @JsonProperty("b_no") String businessNumber,
             @JsonProperty("start_dt") String startDate,
@@ -25,6 +30,7 @@ public record BusinessNumberResponse(
             @JsonProperty("b_nm") String businessName
     ) {
     }
+
     private record Status(
             @JsonProperty("b_no") String businessNumber,
             @JsonProperty("b_stt") String businessStatus,
@@ -38,9 +44,5 @@ public record BusinessNumberResponse(
             @JsonProperty("rbf_tax_type") String rbfTaxType,
             @JsonProperty("rbf_tax_type_cd") String rbfTaxTypeCode
     ) {
-    }
-
-    public String getValid(){
-        return data.get(0).valid;
     }
 }

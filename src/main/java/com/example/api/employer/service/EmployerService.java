@@ -2,10 +2,10 @@ package com.example.api.employer.service;
 
 import com.example.api.account.repository.AccountRepository;
 import com.example.api.business.BusinessRepository;
+import com.example.api.domain.Account;
 import com.example.api.domain.Scrap;
 import com.example.api.domain.repository.ExternalCareerRepository;
 import com.example.api.domain.repository.FlavoredCategoryRepository;
-import com.example.api.domain.Account;
 import com.example.api.domain.repository.FlavoredDistrictRepository;
 import com.example.api.employer.controller.dto.EmployerBusinessesRequest;
 import com.example.api.employer.controller.dto.EmployerIdRequest;

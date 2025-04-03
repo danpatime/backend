@@ -17,7 +17,7 @@ public record PersonalInfoResponse(
         String callTime,
         Location location
 ) {
-    public static PersonalInfoResponse of(Account user){
+    public static PersonalInfoResponse of(Account user) {
         return new PersonalInfoResponse(
                 user.getName(),
                 user.getNickname(),

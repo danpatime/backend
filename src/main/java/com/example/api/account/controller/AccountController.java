@@ -46,8 +46,7 @@ public class AccountController {
     }
 
     /**
-     * @param memberId
-     * 현재, 로그인된 사용자에 대해서만 계정 삭제 요청이 가능하도록 구현
+     * @param memberId 현재, 로그인된 사용자에 대해서만 계정 삭제 요청이 가능하도록 구현
      * @return
      */
     @DeleteMapping("/my")

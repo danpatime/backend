@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Getter
@@ -84,7 +83,7 @@ public class Account extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.nationality = nationality;
         this.roles = roles;
-        this.starPoint =  0.0f;
+        this.starPoint = 0.0f;
         this.workCount = 0;
         this.openStatus = true;
         this.emailReceivable = emailReceivable;
@@ -119,15 +118,15 @@ public class Account extends BaseEntity {
         this.workCount = workCount;
     }
 
-    public LoginUserRequest getLoginUser(){
+    public LoginUserRequest getLoginUser() {
         return new LoginUserRequest(accountId);
     }
 
-    public void updateOpenStatus(UpdateOpenStatusRequest request){
+    public void updateOpenStatus(UpdateOpenStatusRequest request) {
         this.openStatus = request.openStatus();
     }
 
-    public void updateUserInfo(UpdatePersonalInfoRequest request){
+    public void updateUserInfo(UpdatePersonalInfoRequest request) {
         this.name = request.name();
         this.sex = request.sex();
         this.age = request.age();
@@ -139,7 +138,7 @@ public class Account extends BaseEntity {
         this.location = request.location();
     }
 
-    public void setDeleted(boolean deleted){
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

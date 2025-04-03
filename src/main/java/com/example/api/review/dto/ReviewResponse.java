@@ -1,6 +1,7 @@
 package com.example.api.review.dto;
 
 import com.example.api.domain.Review;
+
 import java.time.LocalDateTime;
 
 public record ReviewResponse(
@@ -8,6 +9,7 @@ public record ReviewResponse(
         Long businessId,
         String businessName,
         Long employeeId,
+        String employeeName,
         String employeeNickname,
         LocalDateTime contractStartTime,
         LocalDateTime contractEndTime,
@@ -20,6 +22,7 @@ public record ReviewResponse(
                 review.getWriter().getBusinessId(),
                 review.getWriter().getBusinessName(),
                 review.getEmployee().getAccountId(),
+                review.getEmployee().getName(),
                 review.getEmployee().getNickname(),
                 review.getContract().getContractStartTime(),
                 review.getContract().getContractEndTime(),

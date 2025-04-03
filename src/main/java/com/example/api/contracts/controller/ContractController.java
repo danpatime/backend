@@ -1,14 +1,15 @@
 package com.example.api.contracts.controller;
 
 import com.example.api.contracts.ContractService;
-import com.example.api.contracts.dto.*;
-
-import java.time.LocalDateTime;
-
+import com.example.api.contracts.dto.AcceptContractCommand;
+import com.example.api.contracts.dto.ContractDTO;
+import com.example.api.contracts.dto.UpdateContractConditionCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,16 +24,6 @@ class ContractController {
         final UpdateContractConditionCommand updateCommand = updateContractConditionRequest.toCommand(contractId);
         contractService.updateContract(updateCommand);
         return ResponseEntity.ok("근무 조건이 변경되었습니다.");
-    }
-
-    record UpdateContractConditionRequest(
-            LocalDateTime suggestStartDateTime,
-            LocalDateTime suggestEndDateTime,
-            Integer suggestHourlyPayment
-    ) {
-        UpdateContractConditionCommand toCommand(final Long contractId) {
-            return new UpdateContractConditionCommand(contractId, this.suggestStartDateTime, this.suggestEndDateTime, this.suggestHourlyPayment);
-        }
     }
 
     @PostMapping("/api/v1/contracts/{contractId}/accepts")
@@ -51,5 +42,15 @@ class ContractController {
         final AcceptContractCommand contractStatusCommand = new AcceptContractCommand(contractId, null);
         ContractDTO contractDTO = contractService.getContractInfo(contractStatusCommand);
         return ResponseEntity.ok(contractDTO);
+    }
+
+    record UpdateContractConditionRequest(
+            LocalDateTime suggestStartDateTime,
+            LocalDateTime suggestEndDateTime,
+            Integer suggestHourlyPayment
+    ) {
+        UpdateContractConditionCommand toCommand(final Long contractId) {
+            return new UpdateContractConditionCommand(contractId, this.suggestStartDateTime, this.suggestEndDateTime, this.suggestHourlyPayment);
+        }
     }
 }

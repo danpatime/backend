@@ -1,12 +1,13 @@
 package com.example.api.domain;
 
-import com.example.api.account.entity.Nationality;
 import com.example.api.offeremployment.dto.OfferEmploymentCommand;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import static jakarta.persistence.FetchType.*;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -37,6 +38,15 @@ public class OfferEmployment {
     @Column(name = "SUGGEST_REGISTER_TIME")
     private LocalDateTime suggestRegisterTime;
 
+    public OfferEmployment(Business business, Account employee, LocalDateTime suggestStartTime, LocalDateTime suggestEndTime, int suggestHourlyPay) {
+        this.business = business;
+        this.employee = employee;
+        this.suggestStartTime = suggestStartTime;
+        this.suggestEndTime = suggestEndTime;
+        this.suggestHourlyPay = suggestHourlyPay;
+        this.status = ProposalStatus.PENDING;
+    }
+
     public static OfferEmployment fromCommand(OfferEmploymentCommand offerEmploymentCommand, Account employee, Business business) {
         return new OfferEmployment(
                 business,
@@ -45,15 +55,6 @@ public class OfferEmployment {
                 offerEmploymentCommand.suggestEndTime(),
                 offerEmploymentCommand.suggestHourlyPay()
         );
-    }
-
-    public OfferEmployment(Business business, Account employee, LocalDateTime suggestStartTime, LocalDateTime suggestEndTime, int suggestHourlyPay) {
-        this.business = business;
-        this.employee = employee;
-        this.suggestStartTime = suggestStartTime;
-        this.suggestEndTime = suggestEndTime;
-        this.suggestHourlyPay = suggestHourlyPay;
-        this.status = ProposalStatus.PENDING;
     }
 
     @PrePersist

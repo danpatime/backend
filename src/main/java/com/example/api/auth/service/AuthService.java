@@ -1,8 +1,8 @@
 package com.example.api.auth.service;
 
 import com.example.api.account.repository.AccountRepository;
-import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.dto.*;
+import com.example.api.auth.entitiy.RefreshToken;
 import com.example.api.auth.repository.TokenRepository;
 import com.example.api.aws.dto.OldKeyRequest;
 import com.example.api.aws.service.S3Service;
@@ -10,6 +10,7 @@ import com.example.api.domain.Account;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
 import com.example.api.global.properties.JwtProperties;
+import com.example.api.oauth2.dto.AccessTokenRequest;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,14 +45,14 @@ public class AuthService {
         final Account user = accountRepository.findUserByLoginId(loginId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
 
-        if(user.isDeleted())
+        if (user.isDeleted())
             throw new BusinessException(ErrorCode.DELETED_USER);
 
         return user;
     }
 
     private void checkPassword(final LoginRequest request, final Account user) {
-        if(!passwordEncoder.matches(request.password(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new BusinessException(ErrorCode.INCORRECT_PASSWORD);
         }
     }
@@ -86,7 +87,7 @@ public class AuthService {
 
     private String generateRefreshToken(final Account user) {
         RefreshToken token = new RefreshToken(user);
-        if(tokenRepository.findByUser(user).isPresent()) {
+        if (tokenRepository.findByUser(user).isPresent()) {
             tokenRepository.deleteAllByUser(user);
         }
 
@@ -98,8 +99,8 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginSuccessResponse refreshAuthToken(@Validated final RefreshTokenRequest request){
-        if(!jwtTokenProvider.isNotExpiredToken(request.refreshToken())){
+    public LoginSuccessResponse refreshAuthToken(@Validated final RefreshTokenRequest request) {
+        if (!jwtTokenProvider.isNotExpiredToken(request.refreshToken())) {
             throw new BusinessException(ErrorCode.EXPIRED_REFRESH_TOKEN);
         }
 
@@ -126,5 +127,12 @@ public class AuthService {
 
     private Account getUserById(final Long userId) {
         return accountRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+    }
+
+    @Transactional
+    public LoginSuccessResponse oauth2Login(AccessTokenRequest request) {
+        Long userId = jwtTokenProvider.getUserIdFromToken(request.accessToken());
+        Account user = accountRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.NULL_USER));
+        return generateAuthToken(user);
     }
 }

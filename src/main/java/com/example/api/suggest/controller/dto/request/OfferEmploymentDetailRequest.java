@@ -11,6 +11,7 @@ public record OfferEmploymentDetailRequest(
         Integer hourlyPayment,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        Long chatRoomId
+        Long chatRoomId,
+        Long contractId
 ) {
 }

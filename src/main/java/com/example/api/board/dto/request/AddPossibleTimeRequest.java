@@ -1,6 +1,7 @@
 package com.example.api.board.dto.request;
 
 import com.example.api.board.dto.request.AddPossibleTimeCommand.PossibleTimeRange;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

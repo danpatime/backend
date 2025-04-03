@@ -10,7 +10,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @NoArgsConstructor
 @Table(name = "SUB_CATEGORY")
-public class SubCategory extends BaseEntity{
+public class SubCategory extends BaseEntity {
     @Id
     @Column(name = "SUB_CATEGORY_ID")
     private Long subCategoryId;
@@ -19,6 +19,6 @@ public class SubCategory extends BaseEntity{
     @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category category;
 
-        @Column(name = "SUB_CATEGORY_NAME")
+    @Column(name = "SUB_CATEGORY_NAME")
     private String subCategoryName;
 }

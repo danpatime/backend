@@ -1,6 +1,5 @@
 package com.example.api.business;
 
-import com.example.api.domain.Location;
 import com.example.api.business.dto.BusinessDetailsResponse;
 import com.example.api.business.dto.BusinessOwner;
 import com.example.api.business.dto.CategoryInfo;
@@ -8,13 +7,15 @@ import com.example.api.business.dto.QueryBusinessDetailCommand;
 import com.example.api.domain.Account;
 import com.example.api.domain.Business;
 import com.example.api.domain.BusinessCategory;
+import com.example.api.domain.Location;
 import com.example.api.global.exception.BusinessException;
 import com.example.api.global.exception.ErrorCode;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

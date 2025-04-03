@@ -1,13 +1,14 @@
 package com.example.api.search.controller;
 
 import com.example.api.announcement.dto.PageNumberRequest;
-import com.example.api.search.service.SearchService;
 import com.example.api.search.dto.SearchRequest;
 import com.example.api.search.dto.SearchResponse;
+import com.example.api.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
